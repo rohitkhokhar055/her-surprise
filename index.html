@@ -2,979 +2,863 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Something Special Awaits... 💚</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Something Special Awaits...</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito:wght@300;400;600;700&family=Sacramento&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Sacramento&family=Nunito:wght@300;400;600&display=swap');
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --green: #00ff88;
-      --green-dim: #00cc6a;
-      --green-glow: rgba(0,255,136,0.35);
-      --dark: #050c12;
-      --card-bg: rgba(5, 20, 35, 0.82);
-      --border: rgba(0,255,136,0.25);
+      --green2: #00cc66;
+      --dark: #050510;
+      --card-bg: rgba(10, 10, 30, 0.85);
     }
 
     html, body {
-      width: 100%;
-      min-height: 100%;
+      width: 100%; height: 100%;
       overflow-x: hidden;
-    }
-
-    body {
       font-family: 'Nunito', sans-serif;
       background: var(--dark);
-      color: #e0ffe8;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      position: relative;
+      color: #fff;
     }
 
-    /* ── Animated gradient background ── */
-    .bg-gradient {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      background: linear-gradient(135deg, #010a10, #021a12, #03120a, #01070f);
-      background-size: 400% 400%;
-      animation: bgShift 12s ease infinite;
+    /* ── BACKGROUND ── */
+    #bg {
+      position: fixed; inset: 0; z-index: 0;
+      background: linear-gradient(135deg, #050510 0%, #0a0a2e 30%, #0d1a0d 60%, #050510 100%);
+      animation: bgShift 12s ease-in-out infinite alternate;
     }
     @keyframes bgShift {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      0%   { filter: hue-rotate(0deg) brightness(1); }
+      100% { filter: hue-rotate(20deg) brightness(1.15); }
     }
 
-    /* aurora layers */
     .aurora {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .aurora::before, .aurora::after {
-      content: '';
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.18;
-      animation: auroraDrift 18s ease-in-out infinite alternate;
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
     }
     .aurora::before {
-      width: 70vw; height: 70vw;
-      background: radial-gradient(circle, #00ff88 0%, transparent 70%);
-      top: -20%; left: -20%;
+      content: '';
+      position: absolute;
+      top: -40%; left: -20%;
+      width: 80%; height: 80%;
+      background: radial-gradient(ellipse, rgba(0,255,136,0.07) 0%, transparent 70%);
+      animation: auroraMove 8s ease-in-out infinite alternate;
     }
     .aurora::after {
-      width: 60vw; height: 60vw;
-      background: radial-gradient(circle, #00aaff 0%, transparent 70%);
-      bottom: -20%; right: -20%;
-      animation-duration: 22s;
-      animation-delay: -8s;
+      content: '';
+      position: absolute;
+      bottom: -40%; right: -20%;
+      width: 80%; height: 80%;
+      background: radial-gradient(ellipse, rgba(0,100,255,0.06) 0%, transparent 70%);
+      animation: auroraMove 10s ease-in-out infinite alternate-reverse;
     }
-    @keyframes auroraDrift {
-      from { transform: translate(0,0) scale(1); }
-      to   { transform: translate(6vw, 4vh) scale(1.12); }
+    @keyframes auroraMove {
+      0%   { transform: translate(0,0) scale(1); }
+      100% { transform: translate(5%,5%) scale(1.1); }
     }
 
-    /* ── Particles ── */
-    #particles {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
+    /* ── STARS ── */
+    #stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: #fff;
+      animation: twinkle var(--d) ease-in-out infinite alternate;
     }
+    @keyframes twinkle {
+      0%   { opacity: 0.1; transform: scale(0.8); }
+      100% { opacity: 1;   transform: scale(1.2); }
+    }
+
+    /* ── PARTICLES ── */
+    #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
     .particle {
       position: absolute;
       border-radius: 50%;
       background: var(--green);
       opacity: 0;
-      animation: floatUp linear infinite;
+      animation: floatUp var(--d) ease-in var(--delay) infinite;
     }
     @keyframes floatUp {
-      0%   { transform: translateY(0) scale(1);   opacity: 0; }
-      10%  { opacity: 0.6; }
-      90%  { opacity: 0.2; }
-      100% { transform: translateY(-100vh) scale(0.4); opacity: 0; }
+      0%   { opacity: 0;    transform: translateY(0) scale(1); }
+      20%  { opacity: 0.6; }
+      80%  { opacity: 0.3; }
+      100% { opacity: 0;    transform: translateY(-100vh) scale(0.3); }
     }
 
-    /* ── Stars ── */
-    .star {
-      position: absolute;
-      border-radius: 50%;
-      background: #fff;
-      animation: twinkle ease-in-out infinite alternate;
-    }
-    @keyframes twinkle {
-      from { opacity: 0.1; transform: scale(0.8); }
-      to   { opacity: 0.9; transform: scale(1.2); }
+    /* ── LAYOUT ── */
+    #app {
+      position: relative; z-index: 10;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 20px;
     }
 
-    /* ── Main card ── */
+    /* ── CARD ── */
     .card {
-      position: relative;
-      z-index: 10;
-      width: min(520px, 92vw);
       background: var(--card-bg);
-      border: 1px solid var(--border);
+      border: 1px solid rgba(0,255,136,0.25);
       border-radius: 24px;
-      padding: 2.6rem 2.2rem 2.2rem;
-      backdrop-filter: blur(18px);
+      padding: clamp(24px, 5vw, 48px);
+      max-width: 520px;
+      width: 100%;
+      backdrop-filter: blur(20px);
       box-shadow:
-        0 0 0 1px rgba(0,255,136,0.08),
         0 0 40px rgba(0,255,136,0.08),
-        0 20px 60px rgba(0,0,0,0.7);
-      animation: cardIn 1.2s cubic-bezier(.22,1,.36,1) both;
+        0 0 80px rgba(0,255,136,0.04),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+      animation: cardGlow 3s ease-in-out infinite alternate;
     }
-    @keyframes cardIn {
-      from { opacity: 0; transform: translateY(40px) scale(0.95); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    /* inner glow border animation */
-    .card::before {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      border-radius: 25px;
-      background: linear-gradient(135deg, rgba(0,255,136,0.35), transparent 50%, rgba(0,170,255,0.2));
-      z-index: -1;
-      opacity: 0.5;
-      animation: borderGlow 4s ease-in-out infinite alternate;
-    }
-    @keyframes borderGlow {
-      from { opacity: 0.3; }
-      to   { opacity: 0.7; }
+    @keyframes cardGlow {
+      0%   { box-shadow: 0 0 40px rgba(0,255,136,0.08), 0 0 80px rgba(0,255,136,0.04), inset 0 1px 0 rgba(255,255,255,0.05); }
+      100% { box-shadow: 0 0 60px rgba(0,255,136,0.18), 0 0 120px rgba(0,255,136,0.08), inset 0 1px 0 rgba(255,255,255,0.08); }
     }
 
-    /* ── Header ── */
-    .title-top {
+    /* ── TITLE ── */
+    .subtitle {
       font-family: 'Sacramento', cursive;
-      font-size: clamp(1.5rem, 5vw, 2.1rem);
+      font-size: clamp(1.4rem, 4vw, 2rem);
       color: var(--green);
       text-align: center;
-      letter-spacing: 1px;
-      text-shadow: 0 0 20px var(--green-glow);
-      margin-bottom: 0.2rem;
-      animation: pulseText 3s ease-in-out infinite alternate;
+      margin-bottom: 4px;
+      opacity: 0.85;
     }
-    @keyframes pulseText {
-      from { text-shadow: 0 0 12px var(--green-glow); }
-      to   { text-shadow: 0 0 30px var(--green-glow), 0 0 60px rgba(0,255,136,0.2); }
-    }
-
-    .title-main {
+    .title {
       font-family: 'Cinzel', serif;
-      font-size: clamp(1.3rem, 4.5vw, 2rem);
-      font-weight: 700;
+      font-size: clamp(1.1rem, 3.5vw, 1.6rem);
       text-align: center;
       letter-spacing: 3px;
       text-transform: uppercase;
-      background: linear-gradient(135deg, #00ff88, #00ffcc, #00aaff);
+      background: linear-gradient(135deg, #fff 0%, var(--green) 50%, #fff 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 0.3rem;
+      margin-bottom: 28px;
     }
 
-    .title-sub {
-      text-align: center;
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.35);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 1.8rem;
-    }
-
-    /* ── Divider ── */
-    .divider {
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--green), transparent);
-      margin: 1.4rem 0;
-      opacity: 0.4;
-    }
-
-    /* ── Countdown ── */
+    /* ── COUNTDOWN ── */
     .countdown-label {
-      text-align: center;
-      font-size: 0.72rem;
-      letter-spacing: 3px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 4px;
       text-transform: uppercase;
       color: rgba(255,255,255,0.4);
-      margin-bottom: 0.9rem;
+      text-align: center;
+      margin-bottom: 12px;
     }
-
-    .countdown {
-      display: flex;
-      justify-content: center;
-      gap: clamp(0.5rem, 2vw, 1.2rem);
-      margin-bottom: 0.5rem;
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 28px;
     }
-
-    .time-block {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .countdown-box {
       background: rgba(0,255,136,0.05);
-      border: 1px solid rgba(0,255,136,0.18);
+      border: 1px solid rgba(0,255,136,0.2);
       border-radius: 14px;
-      padding: 0.7rem 0.85rem;
-      min-width: 62px;
-      position: relative;
-      overflow: hidden;
+      padding: 14px 8px;
+      text-align: center;
+      transition: all 0.3s;
     }
-    .time-block::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(0,255,136,0.04) 0%, transparent 100%);
+    .countdown-box:hover {
+      background: rgba(0,255,136,0.1);
+      border-color: rgba(0,255,136,0.4);
     }
-
-    .time-num {
+    .countdown-num {
       font-family: 'Cinzel', serif;
-      font-size: clamp(1.5rem, 5vw, 2.1rem);
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
       font-weight: 700;
       color: var(--green);
       line-height: 1;
-      text-shadow: 0 0 14px var(--green-glow);
-      transition: all 0.3s;
+      display: block;
+      text-shadow: 0 0 20px rgba(0,255,136,0.5);
     }
-
-    .time-unit {
-      font-size: 0.58rem;
+    .countdown-unit {
+      font-size: 0.6rem;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: rgba(255,255,255,0.35);
-      margin-top: 0.35rem;
+      margin-top: 4px;
+      display: block;
     }
 
-    .colon {
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,255,136,0.3), transparent);
+      margin: 20px 0;
+    }
+
+    /* ── PASSWORD ── */
+    .pass-label {
       font-family: 'Cinzel', serif;
-      font-size: clamp(1.4rem, 4vw, 2rem);
-      font-weight: 700;
-      color: rgba(0,255,136,0.5);
-      align-self: center;
-      margin-top: -8px;
-      animation: colonBlink 1s step-end infinite;
-    }
-    @keyframes colonBlink {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.2; }
-    }
-
-    /* ── Password section ── */
-    .pw-section {
-      margin-top: 1.5rem;
-    }
-
-    .pw-label {
-      font-size: 0.75rem;
-      letter-spacing: 2px;
+      font-size: 0.65rem;
+      letter-spacing: 4px;
       text-transform: uppercase;
       color: rgba(255,255,255,0.4);
       text-align: center;
-      margin-bottom: 0.9rem;
+      margin-bottom: 12px;
     }
-
-    .pw-row {
+    .pass-row {
       display: flex;
-      gap: 0.6rem;
+      gap: 10px;
+      margin-bottom: 14px;
     }
-
-    .pw-input {
+    #passInput {
       flex: 1;
-      background: rgba(0,255,136,0.04);
-      border: 1px solid rgba(0,255,136,0.22);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(0,255,136,0.2);
       border-radius: 12px;
-      padding: 0.75rem 1.1rem;
+      padding: 12px 16px;
+      color: #fff;
       font-family: 'Nunito', sans-serif;
       font-size: 1rem;
-      color: #e0ffe8;
       outline: none;
       transition: border-color 0.3s, box-shadow 0.3s;
-      letter-spacing: 2px;
     }
-    .pw-input::placeholder { color: rgba(255,255,255,0.2); letter-spacing: 1px; }
-    .pw-input:focus {
-      border-color: rgba(0,255,136,0.55);
-      box-shadow: 0 0 0 3px rgba(0,255,136,0.1);
+    #passInput:focus {
+      border-color: rgba(0,255,136,0.5);
+      box-shadow: 0 0 16px rgba(0,255,136,0.1);
     }
-    .pw-input.error {
-      border-color: rgba(255,80,80,0.6);
-      box-shadow: 0 0 0 3px rgba(255,80,80,0.1);
-      animation: shake 0.4s ease;
-    }
-    @keyframes shake {
-      0%,100% { transform: translateX(0); }
-      20% { transform: translateX(-8px); }
-      40% { transform: translateX(8px); }
-      60% { transform: translateX(-5px); }
-      80% { transform: translateX(5px); }
-    }
+    #passInput::placeholder { color: rgba(255,255,255,0.2); }
+    #passInput:disabled { opacity: 0.4; cursor: not-allowed; }
 
-    .pw-btn {
-      background: linear-gradient(135deg, #00cc6a, #00ff88);
+    #passBtn {
+      background: linear-gradient(135deg, var(--green2), var(--green));
       border: none;
       border-radius: 12px;
-      padding: 0.75rem 1.3rem;
-      font-family: 'Nunito', sans-serif;
+      padding: 12px 20px;
+      color: #050510;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
       font-weight: 700;
-      font-size: 0.9rem;
-      color: #021a12;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
       letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s;
       white-space: nowrap;
     }
-    .pw-btn:hover:not(:disabled) {
+    #passBtn:hover:not(:disabled) {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0,255,136,0.35);
+      box-shadow: 0 8px 24px rgba(0,255,136,0.35);
     }
-    .pw-btn:active:not(:disabled) { transform: scale(0.97); }
-    .pw-btn:disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
-    }
+    #passBtn:active:not(:disabled) { transform: translateY(0); }
+    #passBtn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-    /* ── Message box ── */
-    .msg-box {
-      margin-top: 1rem;
-      min-height: 2.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    #passMsg {
+      min-height: 44px;
       text-align: center;
       font-size: 0.88rem;
       line-height: 1.5;
       border-radius: 10px;
-      padding: 0.6rem 1rem;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 0.4s, transform 0.4s;
-      pointer-events: none;
+      padding: 10px 14px;
+      display: none;
+      animation: fadeIn 0.4s ease;
     }
-    .msg-box.show {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
+    #passMsg.wrong {
+      background: rgba(255,60,60,0.1);
+      border: 1px solid rgba(255,60,60,0.2);
+      color: #ff8080;
     }
-    .msg-box.teaser {
-      background: rgba(255,80,80,0.08);
-      border: 1px solid rgba(255,80,80,0.2);
-      color: #ff9999;
-    }
-    .msg-box.wip {
-      background: rgba(0,255,136,0.06);
-      border: 1px solid rgba(0,255,136,0.2);
+    #passMsg.correct {
+      background: rgba(0,255,136,0.08);
+      border: 1px solid rgba(0,255,136,0.25);
       color: var(--green);
     }
-    .msg-box.locked {
-      background: rgba(255,150,0,0.07);
+    #passMsg.locked {
+      background: rgba(255,150,0,0.08);
       border: 1px solid rgba(255,150,0,0.2);
-      color: #ffcc77;
+      color: #ffaa44;
     }
 
-    /* attempts counter */
-    .attempts-info {
+    .attempts-left {
       text-align: center;
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       color: rgba(255,255,255,0.25);
-      margin-top: 0.55rem;
+      margin-top: 8px;
       letter-spacing: 1px;
     }
-    .attempts-info span {
-      color: rgba(255,150,100,0.7);
-      font-weight: 700;
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── Anime character overlay ── */
-    .char-wrapper {
+    /* ── REDIRECT OVERLAY ── */
+    #redirectOverlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #000;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 1.5s ease;
+    }
+    #redirectOverlay.show {
+      opacity: 1; pointer-events: all;
+    }
+    #redirectOverlay .msg {
+      font-family: 'Sacramento', cursive;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: var(--green);
+      text-align: center;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    #redirectOverlay .sub {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.4);
+      margin-top: 16px;
+      letter-spacing: 2px;
+    }
+    @keyframes pulse {
+      0%, 100% { text-shadow: 0 0 20px rgba(0,255,136,0.4); }
+      50%       { text-shadow: 0 0 60px rgba(0,255,136,0.9); }
+    }
+
+    /* ── ANIME CHARACTERS ── */
+    .anime-char {
       position: fixed;
-      z-index: 100;
+      z-index: 1000;
       display: flex;
       flex-direction: column;
       align-items: center;
       pointer-events: none;
-      opacity: 0;
       transition: opacity 0.4s ease, transform 0.4s ease;
     }
-    .char-wrapper.top-left    { top: 0; left: 0; align-items: flex-start; }
-    .char-wrapper.top-right   { top: 0; right: 0; align-items: flex-end; }
-    .char-wrapper.bottom-left { bottom: 0; left: 0; align-items: flex-start; flex-direction: column-reverse; }
-    .char-wrapper.bottom-right{ bottom: 0; right: 0; align-items: flex-end; flex-direction: column-reverse; }
+    .anime-char.corner-tl { top: 0; left: 0; flex-direction: column; align-items: flex-start; }
+    .anime-char.corner-tr { top: 0; right: 0; flex-direction: column; align-items: flex-end; }
+    .anime-char.corner-bl { bottom: 0; left: 0; flex-direction: column-reverse; align-items: flex-start; }
+    .anime-char.corner-br { bottom: 0; right: 0; flex-direction: column-reverse; align-items: flex-end; }
 
-    .char-wrapper.visible { opacity: 1; }
+    .anime-char img {
+      width: clamp(70px, 14vw, 110px);
+      height: clamp(70px, 14vw, 110px);
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(0,255,136,0.4));
+    }
+    .anime-char.corner-tl img { transform: scaleX(1); }
+    .anime-char.corner-tr img { transform: scaleX(-1); }
+    .anime-char.corner-bl img { transform: scaleX(1); }
+    .anime-char.corner-br img { transform: scaleX(-1); }
 
-    .char-bubble {
-      background: rgba(5,18,30,0.92);
+    .dialogue {
+      background: rgba(10,10,30,0.92);
       border: 1px solid rgba(0,255,136,0.35);
       border-radius: 14px;
-      padding: 0.55rem 0.85rem;
-      font-size: clamp(0.68rem, 2.2vw, 0.8rem);
-      color: #ccffdd;
+      padding: 8px 14px;
+      font-size: clamp(0.65rem, 2vw, 0.78rem);
+      color: #fff;
       max-width: clamp(130px, 28vw, 200px);
       line-height: 1.45;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 12px rgba(0,255,136,0.1);
-      text-align: center;
-      position: relative;
-      margin: 0 6px;
       backdrop-filter: blur(10px);
+      margin: 6px;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
-    .char-bubble .char-name {
-      font-size: 0.65rem;
+    .dialogue .char-name {
+      color: var(--green);
       font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 0.25rem;
+      font-size: 0.7rem;
+      display: block;
+      margin-bottom: 3px;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 1px;
     }
 
-    .char-img {
-      width: clamp(80px, 18vw, 130px);
-      height: clamp(80px, 18vw, 130px);
-      object-fit: contain;
-      filter: drop-shadow(0 0 12px rgba(0,255,136,0.3));
-    }
+    /* hidden states */
+    .anime-char.corner-tl { transform: translate(-110%, -110%); opacity: 0; }
+    .anime-char.corner-tr { transform: translate(110%, -110%); opacity: 0; }
+    .anime-char.corner-bl { transform: translate(-110%, 110%); opacity: 0; }
+    .anime-char.corner-br { transform: translate(110%, 110%); opacity: 0; }
 
-    /* corner-specific transforms for slide-in */
-    .char-wrapper.top-left    { transform: translate(-40px, -40px); }
-    .char-wrapper.top-right   { transform: translate(40px, -40px); }
-    .char-wrapper.bottom-left { transform: translate(-40px, 40px); }
-    .char-wrapper.bottom-right{ transform: translate(40px, 40px); }
-    .char-wrapper.visible     { transform: translate(0, 0); }
-
-    /* ── Footer line ── */
-    .footer-hint {
-      position: fixed;
-      bottom: 1rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      font-size: 0.65rem;
-      color: rgba(255,255,255,0.15);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    /* ── Countdown ended overlay ── */
-    #redirectMsg {
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      background: #010a10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 1s;
-    }
-    #redirectMsg.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    #redirectMsg .redir-text {
-      font-family: 'Sacramento', cursive;
-      font-size: clamp(2rem, 8vw, 3.5rem);
-      color: var(--green);
-      text-shadow: 0 0 30px var(--green-glow);
-      text-align: center;
-      animation: pulseText 2s ease-in-out infinite alternate;
-    }
-    #redirectMsg .redir-sub {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.35);
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-
-    /* ── Responsive tweaks ── */
-    @media (max-width: 480px) {
-      .card { padding: 2rem 1.4rem 1.8rem; }
-      .time-block { min-width: 52px; padding: 0.6rem 0.65rem; }
-      .pw-btn { padding: 0.75rem 1rem; font-size: 0.8rem; }
-    }
+    .anime-char.show.corner-tl { transform: translate(0, 0); opacity: 1; }
+    .anime-char.show.corner-tr { transform: translate(0, 0); opacity: 1; }
+    .anime-char.show.corner-bl { transform: translate(0, 0); opacity: 1; }
+    .anime-char.show.corner-br { transform: translate(0, 0); opacity: 1; }
   </style>
 </head>
 <body>
 
   <!-- Background layers -->
-  <div class="bg-gradient"></div>
+  <div id="bg"></div>
   <div class="aurora"></div>
+  <div id="stars"></div>
   <div id="particles"></div>
 
-  <!-- Redirect overlay -->
-  <div id="redirectMsg">
-    <div class="redir-text">The wait is over… 🌙</div>
-    <div class="redir-sub">Opening your surprise...</div>
-  </div>
+  <!-- Main app -->
+  <div id="app">
+    <div class="card">
+      <p class="subtitle">Something is coming...</p>
+      <h1 class="title">A Special Surprise Awaits</h1>
 
-  <!-- Main card -->
-  <div class="card" id="mainCard">
-    <div class="title-top">for the girl who deserves the world</div>
-    <div class="title-main">Something Special</div>
-    <div class="title-sub">is being prepared just for you</div>
-
-    <div class="divider"></div>
-
-    <div class="countdown-label">✦ unlocks in ✦</div>
-    <div class="countdown" id="countdown">
-      <div class="time-block"><span class="time-num" id="cDays">00</span><span class="time-unit">Days</span></div>
-      <div class="colon">:</div>
-      <div class="time-block"><span class="time-num" id="cHours">00</span><span class="time-unit">Hours</span></div>
-      <div class="colon">:</div>
-      <div class="time-block"><span class="time-num" id="cMins">00</span><span class="time-unit">Mins</span></div>
-      <div class="colon">:</div>
-      <div class="time-block"><span class="time-num" id="cSecs">00</span><span class="time-unit">Secs</span></div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="pw-section">
-      <div class="pw-label">✦ have a secret key? ✦</div>
-      <div class="pw-row">
-        <input
-          type="password"
-          class="pw-input"
-          id="pwInput"
-          placeholder="enter password..."
-          maxlength="40"
-          autocomplete="off"
-        />
-        <button class="pw-btn" id="pwBtn" onclick="checkPassword()">Unlock</button>
+      <p class="countdown-label">✦ Time Remaining ✦</p>
+      <div class="countdown-grid">
+        <div class="countdown-box">
+          <span class="countdown-num" id="cd-days">00</span>
+          <span class="countdown-unit">Days</span>
+        </div>
+        <div class="countdown-box">
+          <span class="countdown-num" id="cd-hours">00</span>
+          <span class="countdown-unit">Hours</span>
+        </div>
+        <div class="countdown-box">
+          <span class="countdown-num" id="cd-mins">00</span>
+          <span class="countdown-unit">Minutes</span>
+        </div>
+        <div class="countdown-box">
+          <span class="countdown-num" id="cd-secs">00</span>
+          <span class="countdown-unit">Seconds</span>
+        </div>
       </div>
-      <div class="msg-box" id="msgBox"></div>
-      <div class="attempts-info" id="attemptsInfo"></div>
+
+      <div class="divider"></div>
+
+      <p class="pass-label">✦ Enter Secret Password ✦</p>
+      <div class="pass-row">
+        <input type="password" id="passInput" placeholder="type here..." maxlength="32" />
+        <button id="passBtn">Unlock</button>
+      </div>
+      <div id="passMsg"></div>
+      <p class="attempts-left" id="attemptsLeft"></p>
     </div>
   </div>
 
-  <!-- Anime character wrappers (all 4 corners) -->
-  <div class="char-wrapper top-left"     id="corner-tl">
-    <div class="char-bubble" id="bubble-tl"><div class="char-name" id="name-tl"></div><span id="text-tl"></span></div>
-    <img class="char-img" id="img-tl" src="" alt="" />
-  </div>
-  <div class="char-wrapper top-right"    id="corner-tr">
-    <div class="char-bubble" id="bubble-tr"><div class="char-name" id="name-tr"></div><span id="text-tr"></span></div>
-    <img class="char-img" id="img-tr" src="" alt="" />
-  </div>
-  <div class="char-wrapper bottom-left"  id="corner-bl">
-    <img class="char-img" id="img-bl" src="" alt="" />
-    <div class="char-bubble" id="bubble-bl"><div class="char-name" id="name-bl"></div><span id="text-bl"></span></div>
-  </div>
-  <div class="char-wrapper bottom-right" id="corner-br">
-    <img class="char-img" id="img-br" src="" alt="" />
-    <div class="char-bubble" id="bubble-br"><div class="char-name" id="name-br"></div><span id="text-br"></span></div>
+  <!-- Redirect overlay -->
+  <div id="redirectOverlay">
+    <p class="msg">The time has come... 💚</p>
+    <p class="sub">Opening your surprise...</p>
   </div>
 
-  <div class="footer-hint">15 · 04 · 2026 · 00:01</div>
+  <!-- Anime character slots (one per corner) -->
+  <div class="anime-char corner-tl" id="char-tl">
+    <div class="dialogue" id="dlg-tl"><span class="char-name" id="name-tl"></span><span id="txt-tl"></span></div>
+    <img id="img-tl" src="" alt="" />
+  </div>
+  <div class="anime-char corner-tr" id="char-tr">
+    <div class="dialogue" id="dlg-tr"><span class="char-name" id="name-tr"></span><span id="txt-tr"></span></div>
+    <img id="img-tr" src="" alt="" />
+  </div>
+  <div class="anime-char corner-bl" id="char-bl">
+    <img id="img-bl" src="" alt="" />
+    <div class="dialogue" id="dlg-bl"><span class="char-name" id="name-bl"></span><span id="txt-bl"></span></div>
+  </div>
+  <div class="anime-char corner-br" id="char-br">
+    <img id="img-br" src="" alt="" />
+    <div class="dialogue" id="dlg-br"><span class="char-name" id="name-br"></span><span id="txt-br"></span></div>
+  </div>
 
-  <script>
-    /* ══════════════════════════════════════════
-       CONFIG — CHANGE THESE
-    ══════════════════════════════════════════ */
-    const TARGET_DATE   = new Date('2026-04-15T00:01:00');
-    const CORRECT_PASS  = 'mystar';          // ← change your password here
-    const MAX_ATTEMPTS  = 10;
-    const LS_KEY_COUNT  = 'pw_attempt_count';
-    const LS_KEY_DATE   = 'pw_attempt_date';
+<script>
+  /* ═══════════════════════════════════════════
+     CONFIG — change these values
+  ═══════════════════════════════════════════ */
+  const TARGET       = new Date('2026-04-15T00:01:00'); // countdown target
+  const CORRECT_PASS = 'mystar';                         // your password
+  const MAX_ATTEMPTS = 10;                               // attempts per day
+  const LS_COUNT     = 'pw_count';
+  const LS_DATE      = 'pw_date';
+  const LS_LOG       = 'pw_log';
 
-    /* ══════════════════════════════════════════
-       TELEGRAM CONFIG — YOUR BOT
-    ══════════════════════════════════════════ */
-    const BOT_TOKEN = '8768367657:AAF_pVZxIzXGpnWUpnhoVNHVn-6aOH2QgNs';
-    const CHAT_ID   = '5484213571';
+  const BOT_TOKEN    = '8768367657:AAF_pVZxIzXGpnWUpnhoVNHVn-6aOH2QgNs';
+  const CHAT_ID      = '5484213571';
 
-    /* ══════════════════════════════════════════
-       TELEGRAM SENDER FUNCTION
-    ══════════════════════════════════════════ */
-    function sendTelegram(msg) {
-      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: CHAT_ID,
-          text: msg,
-          parse_mode: 'HTML'
-        })
-      }).catch(() => {}); // silent fail — never break the page
+  /* ═══════════════════════════════════════════
+     TELEGRAM
+  ═══════════════════════════════════════════ */
+  function getDeviceInfo() {
+    const ua = navigator.userAgent;
+    let device  = /Mobile|Android|iPhone|iPad/.test(ua) ? '📱 Mobile' : '💻 Desktop';
+    let os      = 'Unknown';
+    if      (/Windows/.test(ua))  os = 'Windows';
+    else if (/Android/.test(ua))  os = 'Android';
+    else if (/iPhone/.test(ua))   os = 'iPhone';
+    else if (/iPad/.test(ua))     os = 'iPad';
+    else if (/Mac/.test(ua))      os = 'MacOS';
+    else if (/Linux/.test(ua))    os = 'Linux';
+    let browser = 'Unknown';
+    if      (/Edg/.test(ua))                          browser = 'Edge';
+    else if (/Chrome/.test(ua))                       browser = 'Chrome';
+    else if (/Firefox/.test(ua))                      browser = 'Firefox';
+    else if (/Safari/.test(ua) && !/Chrome/.test(ua)) browser = 'Safari';
+    else if (/Opera|OPR/.test(ua))                    browser = 'Opera';
+    const screen = `${window.screen.width}x${window.screen.height}`;
+    return { device, os, browser, screen };
+  }
+
+  function sendTelegram(msg) {
+    const info = getDeviceInfo();
+    const now  = new Date();
+    const time = now.toLocaleTimeString();
+    const date = now.toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' });
+
+    fetch('https://api.ipify.org?format=json')
+      .then(r => r.json())
+      .then(d => fetch(`https://ipapi.co/${d.ip}/json/`))
+      .then(r => r.json())
+      .then(loc => {
+        const full =
+          `${msg}\n\n` +
+          `📱 Device: ${info.device}\n` +
+          `💻 OS: ${info.os}\n` +
+          `🌐 Browser: ${info.browser}\n` +
+          `📺 Screen: ${info.screen}\n` +
+          `🌍 Country: ${loc.country_name || 'N/A'}\n` +
+          `🏙️ City: ${loc.city || 'N/A'}\n` +
+          `🔌 IP: ${loc.ip || 'N/A'}\n` +
+          `📡 ISP: ${loc.org || 'N/A'}\n` +
+          `🕐 Time: ${time}\n` +
+          `📅 Date: ${date}`;
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: CHAT_ID, text: full, parse_mode: 'HTML' })
+        });
+      })
+      .catch(() => {
+        // fallback without IP
+        const full =
+          `${msg}\n\n` +
+          `📱 Device: ${info.device}\n` +
+          `💻 OS: ${info.os}\n` +
+          `🌐 Browser: ${info.browser}\n` +
+          `📺 Screen: ${info.screen}\n` +
+          `🕐 Time: ${time}\n` +
+          `📅 Date: ${date}`;
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: CHAT_ID, text: full, parse_mode: 'HTML' })
+        });
+      });
+  }
+
+  /* ═══════════════════════════════════════════
+     STARS & PARTICLES
+  ═══════════════════════════════════════════ */
+  function createStars() {
+    const c = document.getElementById('stars');
+    for (let i = 0; i < 90; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const sz = Math.random() * 2.5 + 0.5;
+      s.style.cssText = `
+        width:${sz}px; height:${sz}px;
+        top:${Math.random()*100}%;
+        left:${Math.random()*100}%;
+        --d:${(Math.random()*3+1).toFixed(1)}s;
+        animation-delay:${(Math.random()*4).toFixed(1)}s;
+      `;
+      c.appendChild(s);
     }
+  }
 
-    function nowTime() {
-      return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  function createParticles() {
+    const c = document.getElementById('particles');
+    for (let i = 0; i < 35; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const sz = Math.random() * 3 + 1;
+      p.style.cssText = `
+        width:${sz}px; height:${sz}px;
+        left:${Math.random()*100}%;
+        bottom:${Math.random()*10}%;
+        --d:${(Math.random()*8+6).toFixed(1)}s;
+        --delay:${(Math.random()*8).toFixed(1)}s;
+      `;
+      c.appendChild(p);
     }
-    function nowDate() {
-      return new Date().toLocaleDateString([], { day: '2-digit', month: 'long', year: 'numeric' });
-    }
+  }
 
-    /* ══════════════════════════════════════════
-       NOTIFY: PAGE VISIT
-    ══════════════════════════════════════════ */
-    sendTelegram(
-      `👀 <b>She visited the page!</b>\n` +
-      `🕐 Time: ${nowTime()}\n` +
-      `📅 Date: ${nowDate()}`
-    );
+  /* ═══════════════════════════════════════════
+     COUNTDOWN
+  ═══════════════════════════════════════════ */
+  let redirected = false;
 
-    /* ══════════════════════════════════════════
-       PARTICLES
-    ══════════════════════════════════════════ */
-    (function spawnParticles() {
-      const container = document.getElementById('particles');
-      // stars
-      for (let i = 0; i < 80; i++) {
-        const s = document.createElement('div');
-        s.className = 'star';
-        const sz = Math.random() * 2.5 + 0.5;
-        s.style.cssText = `
-          width:${sz}px; height:${sz}px;
-          left:${Math.random()*100}%;
-          top:${Math.random()*100}%;
-          animation-duration:${Math.random()*4+2}s;
-          animation-delay:${Math.random()*5}s;
-        `;
-        container.appendChild(s);
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function updateCountdown() {
+    const now  = new Date();
+    const diff = TARGET - now;
+
+    if (diff <= 0) {
+      document.getElementById('cd-days').textContent  = '00';
+      document.getElementById('cd-hours').textContent = '00';
+      document.getElementById('cd-mins').textContent  = '00';
+      document.getElementById('cd-secs').textContent  = '00';
+      if (!redirected) {
+        redirected = true;
+        triggerRedirect();
       }
-      // floating particles
-      for (let i = 0; i < 30; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        const sz = Math.random() * 4 + 1;
-        p.style.cssText = `
-          width:${sz}px; height:${sz}px;
-          left:${Math.random()*100}%;
-          bottom:${-10 + Math.random()*10}%;
-          animation-duration:${Math.random()*15+8}s;
-          animation-delay:${Math.random()*10}s;
-          opacity:0;
-        `;
-        container.appendChild(p);
-      }
-    })();
+      return;
+    }
 
-    /* ══════════════════════════════════════════
-       COUNTDOWN
-    ══════════════════════════════════════════ */
-    const elDays  = document.getElementById('cDays');
-    const elHours = document.getElementById('cHours');
-    const elMins  = document.getElementById('cMins');
-    const elSecs  = document.getElementById('cSecs');
-    let countdownDone = false;
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000)  / 60000);
+    const s = Math.floor((diff % 60000)    / 1000);
 
-    function pad(n) { return String(n).padStart(2, '0'); }
+    document.getElementById('cd-days').textContent  = pad(d);
+    document.getElementById('cd-hours').textContent = pad(h);
+    document.getElementById('cd-mins').textContent  = pad(m);
+    document.getElementById('cd-secs').textContent  = pad(s);
+  }
 
-    function updateCountdown() {
-      const now  = new Date();
-      const diff = TARGET_DATE - now;
+  function triggerRedirect() {
+    const ov = document.getElementById('redirectOverlay');
+    ov.classList.add('show');
+    setTimeout(() => { window.location.href = 'scene1.html'; }, 3500);
+  }
 
-      if (diff <= 0) {
-        elDays.textContent  = '00';
-        elHours.textContent = '00';
-        elMins.textContent  = '00';
-        elSecs.textContent  = '00';
-        if (!countdownDone) {
-          countdownDone = true;
-          triggerRedirect();
+  /* ═══════════════════════════════════════════
+     PASSWORD SYSTEM
+  ═══════════════════════════════════════════ */
+  const teaseMsgs = [
+    "Ayo… who told you that? Fire them 🔥",
+    "Bestie that's NOT it 💀",
+    "Close… but actually not even close 😭",
+    "You really thought that was it?? 💅",
+    "Nope. Try again, detective 🕵️",
+    "LMAO no. Absolutely not 😂",
+    "My guy really typed THAT 💀💀",
+    "The password is not your crush's name btw 👀",
+    "Error 404: Brain not found 🧠",
+    "Gojo would be disappointed rn fr 😤",
+    "Naruto trained harder than this guess 🍜",
+    "That was so wrong it's almost right… jk it's not 😄",
+  ];
+
+  function getTodayStr() {
+    const d = new Date();
+    return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+  }
+
+  function getAttempts() {
+    const saved = localStorage.getItem(LS_DATE);
+    if (saved !== getTodayStr()) {
+      localStorage.setItem(LS_DATE, getTodayStr());
+      localStorage.setItem(LS_COUNT, '0');
+      return 0;
+    }
+    return parseInt(localStorage.getItem(LS_COUNT) || '0');
+  }
+
+  function saveAttempts(n) {
+    localStorage.setItem(LS_COUNT, String(n));
+    localStorage.setItem(LS_DATE, getTodayStr());
+  }
+
+  function logAttempt(typed, correct) {
+    const log = JSON.parse(localStorage.getItem(LS_LOG) || '[]');
+    log.push({
+      typed,
+      correct,
+      time: new Date().toLocaleTimeString(),
+      date: new Date().toLocaleDateString()
+    });
+    localStorage.setItem(LS_LOG, JSON.stringify(log));
+  }
+
+  function showMsg(type, text) {
+    const el = document.getElementById('passMsg');
+    el.className = type;
+    el.textContent = text;
+    el.style.display = 'block';
+  }
+
+  function updateAttemptsUI(count) {
+    const left = MAX_ATTEMPTS - count;
+    const el   = document.getElementById('attemptsLeft');
+    if (count >= MAX_ATTEMPTS) {
+      el.textContent = '🔒 No attempts left today. Come back tomorrow.';
+    } else {
+      el.textContent = `${left} attempt${left !== 1 ? 's' : ''} remaining today`;
+    }
+  }
+
+  function initPassword() {
+    const input  = document.getElementById('passInput');
+    const btn    = document.getElementById('passBtn');
+    let attempts = getAttempts();
+
+    updateAttemptsUI(attempts);
+
+    if (attempts >= MAX_ATTEMPTS) {
+      input.disabled = true;
+      btn.disabled   = true;
+      showMsg('locked', '🔒 Too many attempts. Try again tomorrow!');
+      return;
+    }
+
+    btn.addEventListener('click', handlePass);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') handlePass(); });
+
+    function handlePass() {
+      const typed = input.value.trim().toLowerCase();
+      if (!typed) return;
+
+      const isCountdownDone = (TARGET - new Date()) <= 0;
+
+      if (typed === CORRECT_PASS) {
+        logAttempt(typed, true);
+        sendTelegram(`✅ <b>CORRECT PASSWORD ENTERED!</b>\n⌨️ Typed: "<b>${typed}</b>"\n😏 She knows the password...`);
+        if (!isCountdownDone) {
+          showMsg('correct', 'Still under construction… wait till the right time 💚');
+        } else {
+          showMsg('correct', 'Access granted! Opening your surprise... 💚');
+          setTimeout(() => triggerRedirect(), 1500);
         }
-        return;
+      } else {
+        attempts++;
+        saveAttempts(attempts);
+        logAttempt(typed, false);
+        sendTelegram(`❌ <b>WRONG PASSWORD ATTEMPT!</b>\n⌨️ She typed: "<b>${typed}</b>"\n📍 Attempt: ${attempts} of ${MAX_ATTEMPTS}`);
+        const msg = teaseMsgs[Math.floor(Math.random() * teaseMsgs.length)];
+        showMsg('wrong', msg);
+        updateAttemptsUI(attempts);
+        input.value = '';
+        if (attempts >= MAX_ATTEMPTS) {
+          input.disabled = true;
+          btn.disabled   = true;
+          showMsg('locked', '🔒 Too many attempts. Come back tomorrow!');
+        }
       }
+    }
+  }
 
-      const days  = Math.floor(diff / 86400000);
-      const hours = Math.floor((diff % 86400000) / 3600000);
-      const mins  = Math.floor((diff % 3600000)  / 60000);
-      const secs  = Math.floor((diff % 60000)    / 1000);
+  /* ═══════════════════════════════════════════
+     ANIME CHARACTERS
+  ═══════════════════════════════════════════ */
+  const CHARACTERS = [
+    {
+      name: 'Luffy',
+      img: 'luffy.png',
+      lines: [
+        "I'm gonna be the Pirate King! But first, who's this surprise for? 🏴‍☠️",
+        "Shishishi! Someone's getting a birthday surprise!",
+        "Meat!! And birthday cake!! Best combo ever! 🍖🎂",
+        "I don't know what a countdown is but it sounds exciting!!",
+      ]
+    },
+    {
+      name: 'Naruto',
+      img: 'naruto.png',
+      lines: [
+        "Believe it! This surprise is going to be AMAZING! 🍜",
+        "Dattebayo! I trained hard to keep this secret!",
+        "Even the Hokage doesn't know what's inside… yet! 👀",
+        "Shadow clone jutsu! But the real gift is patience~ 🌀",
+      ]
+    },
+    {
+      name: 'Gojo',
+      img: 'gojo.png',
+      lines: [
+        "Throughout heaven and earth… this surprise is unmatched 😎",
+        "The one and only Gojo is here to say happy birthday 💙",
+        "Infinity can't stop this moment from coming 🌀",
+        "You thought I'd spoil it? I'm the strongest, not the loudest 😏",
+      ]
+    },
+    {
+      name: 'Zoro',
+      img: 'zoro.png',
+      lines: [
+        "I got lost… but I found this birthday page instead 🗺️",
+        "Nothing will cut through this surprise. Trust the process ⚔️",
+        "I have three swords. You have one countdown. Fair trade.",
+        "If this surprise fails, I'll cut myself… just kidding 😅",
+      ]
+    },
+    {
+      name: 'Senku',
+      img: 'senku.png',
+      lines: [
+        "10 billion percent sure this will be the best birthday ever 🧪",
+        "Science says: the wait makes the surprise 10x better!",
+        "I calculated exactly when to show up. I'm always right 📊",
+        "Kingdom of Science approves this birthday 💡",
+      ]
+    },
+    {
+      name: 'Levi',
+      img: 'levi.png',
+      lines: [
+        "Tch. Stop wasting time. The surprise is worth waiting for ⚔️",
+        "I've seen titans. This countdown is nothing. Hold on.",
+        "Don't get emotional. Actually… it's okay if you do 🫡",
+        "Humanity's strongest soldier… delivering birthday vibes 💫",
+      ]
+    },
+  ];
 
-      elDays.textContent  = pad(days);
-      elHours.textContent = pad(hours);
-      elMins.textContent  = pad(mins);
-      elSecs.textContent  = pad(secs);
+  const CORNERS  = ['tl', 'tr', 'bl', 'br'];
+  let charQueue  = [];
+  let activeCorners = {};
+
+  function shuffleChars() {
+    charQueue = [...CHARACTERS].sort(() => Math.random() - 0.5);
+  }
+
+  function nextChar() {
+    if (charQueue.length === 0) shuffleChars();
+    return charQueue.pop();
+  }
+
+  function showCharInCorner(corner) {
+    if (activeCorners[corner]) return;
+
+    const char     = nextChar();
+    const line     = char.lines[Math.floor(Math.random() * char.lines.length)];
+    const el       = document.getElementById(`char-${corner}`);
+    const img      = document.getElementById(`img-${corner}`);
+    const nameEl   = document.getElementById(`name-${corner}`);
+    const txtEl    = document.getElementById(`txt-${corner}`);
+
+    img.src        = char.img;
+    img.alt        = char.name;
+    nameEl.textContent = char.name;
+    txtEl.textContent  = line;
+
+    activeCorners[corner] = true;
+    el.classList.add('show');
+
+    setTimeout(() => {
+      el.classList.remove('show');
+      setTimeout(() => { activeCorners[corner] = false; }, 450);
+    }, 2600);
+  }
+
+  function scheduleCharacters() {
+    shuffleChars();
+
+    function spawnRandom() {
+      const available = CORNERS.filter(c => !activeCorners[c]);
+      if (available.length > 0) {
+        const corner = available[Math.floor(Math.random() * available.length)];
+        showCharInCorner(corner);
+      }
+      const next = Math.random() * 2500 + 2000;
+      setTimeout(spawnRandom, next);
     }
 
-    function triggerRedirect() {
-      const overlay = document.getElementById('redirectMsg');
-      overlay.classList.add('show');
-      setTimeout(() => {
-        window.location.href = 'scene1.html';
-      }, 3500);
-    }
+    setTimeout(spawnRandom, 1500);
+  }
 
+  /* ═══════════════════════════════════════════
+     INIT
+  ═══════════════════════════════════════════ */
+  document.addEventListener('DOMContentLoaded', () => {
+    // Notify visit
+    sendTelegram(`👀 <b>Someone visited the Birthday Page!</b>`);
+
+    createStars();
+    createParticles();
     updateCountdown();
     setInterval(updateCountdown, 1000);
-
-    /* ══════════════════════════════════════════
-       PASSWORD SYSTEM
-    ══════════════════════════════════════════ */
-    const teasingMessages = [
-      "Lmaooo… nice try bestie 😭💀",
-      "That password is SO wrong it's almost impressive 👀",
-      "Babe, are you even trying? 💅",
-      "Nope. Not even close. Keep guessing sis 😏",
-      "My man Gojo could've done better 🤭",
-      "Error 404: Braincell not found 💀",
-      "Seriously?? That was your guess?? 😭",
-      "Ayo… who told you that was the password? Fire them 🔥",
-      "Almost! (no not really) 😂",
-      "Zoro got lost and still found the exit faster 💀",
-    ];
-
-    function getTodayStr() {
-      const d = new Date();
-      return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
-    }
-
-    function getAttempts() {
-      const savedDate = localStorage.getItem(LS_KEY_DATE);
-      const today     = getTodayStr();
-      if (savedDate !== today) {
-        localStorage.setItem(LS_KEY_DATE, today);
-        localStorage.setItem(LS_KEY_COUNT, '0');
-        return 0;
-      }
-      return parseInt(localStorage.getItem(LS_KEY_COUNT) || '0', 10);
-    }
-
-    function incrementAttempts() {
-      const count = getAttempts() + 1;
-      localStorage.setItem(LS_KEY_COUNT, String(count));
-      return count;
-    }
-
-    function updateAttemptsUI() {
-      const remaining = MAX_ATTEMPTS - getAttempts();
-      const el = document.getElementById('attemptsInfo');
-      if (remaining <= 0) {
-        el.innerHTML = `<span>No attempts left today.</span> Come back tomorrow 🌙`;
-      } else if (remaining < MAX_ATTEMPTS) {
-        el.innerHTML = `<span>${remaining}</span> attempt${remaining !== 1 ? 's' : ''} remaining today`;
-      } else {
-        el.textContent = '';
-      }
-    }
-
-    function showMsg(text, type) {
-      const box = document.getElementById('msgBox');
-      box.className = `msg-box ${type}`;
-      box.textContent = text;
-      void box.offsetWidth;
-      box.classList.add('show');
-    }
-
-    function hideMsg() {
-      document.getElementById('msgBox').classList.remove('show');
-    }
-
-    function checkPassword() {
-      const input   = document.getElementById('pwInput');
-      const btn     = document.getElementById('pwBtn');
-      const typed   = input.value.trim();
-
-      if (!typed) {
-        showMsg("Type something first, genius 🙄", 'teaser');
-        return;
-      }
-
-      const attempts = getAttempts();
-      if (attempts >= MAX_ATTEMPTS) {
-        showMsg("No attempts left today. Come back tomorrow, okay? 🌙", 'locked');
-        btn.disabled = true;
-        input.disabled = true;
-        return;
-      }
-
-      if (typed.toLowerCase() === CORRECT_PASS.toLowerCase()) {
-        // ✅ CORRECT PASSWORD
-        sendTelegram(
-          `✅ <b>CORRECT PASSWORD ENTERED!</b>\n` +
-          `⌨️ She typed: "<b>${typed}</b>"\n` +
-          `🕐 Time: ${nowTime()}\n` +
-          `📅 Date: ${nowDate()}\n` +
-          `😏 She knows the password...`
-        );
-        if (countdownDone) {
-          triggerRedirect();
-        } else {
-          input.classList.remove('error');
-          showMsg("Still under construction… wait till the right time 💚", 'wip');
-        }
-      } else {
-        // ❌ WRONG PASSWORD
-        const newCount = incrementAttempts();
-
-        sendTelegram(
-          `❌ <b>WRONG PASSWORD ATTEMPT!</b>\n` +
-          `⌨️ She typed: "<b>${typed}</b>"\n` +
-          `🕐 Time: ${nowTime()}\n` +
-          `📅 Date: ${nowDate()}\n` +
-          `📍 Attempt: ${newCount} of ${MAX_ATTEMPTS}`
-        );
-
-        input.classList.add('error');
-        setTimeout(() => input.classList.remove('error'), 500);
-
-        const rndMsg = teasingMessages[Math.floor(Math.random() * teasingMessages.length)];
-
-        if (newCount >= MAX_ATTEMPTS) {
-          showMsg(`${rndMsg} — And that was your last attempt for today 😤`, 'teaser');
-          btn.disabled   = true;
-          input.disabled = true;
-        } else {
-          showMsg(rndMsg, 'teaser');
-        }
-        updateAttemptsUI();
-      }
-    }
-
-    // Enter key support
-    document.getElementById('pwInput').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') checkPassword();
-    });
-
-    // Init
-    (function init() {
-      const att = getAttempts();
-      if (att >= MAX_ATTEMPTS) {
-        document.getElementById('pwBtn').disabled   = true;
-        document.getElementById('pwInput').disabled = true;
-        showMsg("No attempts left today. Come back tomorrow 🌙", 'locked');
-      }
-      updateAttemptsUI();
-    })();
-
-    /* ══════════════════════════════════════════
-       ANIME CHARACTER SYSTEM
-    ══════════════════════════════════════════ */
-    const characters = [
-      {
-        name: 'LUFFY',
-        img: 'luffy.png',
-        dialogues: [
-          "Oi! Something AMAZING is coming for you! 🍖",
-          "I don't get it, but you seem really special! Shishishi~",
-          "You deserve the best treasure in the world! 💎",
-          "Wait for it… it's gonna be HUGE! Gomu gomu!",
-        ]
-      },
-      {
-        name: 'NARUTO',
-        img: 'naruto.png',
-        dialogues: [
-          "Believe it! Something incredible awaits you! 🍜",
-          "You're the main character of your own story, dattebayo!",
-          "I trained a thousand shadow clones to prepare this for you 😤",
-          "This feeling… it's like finding ramen after a long mission!",
-        ]
-      },
-      {
-        name: 'GOJO',
-        img: 'gojo.png',
-        dialogues: [
-          "Obviously, only the best for someone like you 😎",
-          "With my Infinity, I'd protect your smile always~",
-          "The strongest made sure this moment is perfect 💙",
-          "Limitless possibilities… just like what's waiting for you.",
-        ]
-      },
-      {
-        name: 'ZORO',
-        img: 'zoro.png',
-        dialogues: [
-          "I got lost three times but I'm still here for you 😤",
-          "Nothing cuts through my focus when it comes to you.",
-          "I'd cross every sea and wrong turn to see you smile.",
-          "…Don't make it weird. Just wait for the surprise.",
-        ]
-      },
-      {
-        name: 'SENKU',
-        img: 'senku.png',
-        dialogues: [
-          "10 billion percent calculated: you deserve this! 🔬",
-          "Science says this surprise has a 100% happiness rate.",
-          "I've run every equation. You're worth it. Obviously.",
-          "Scientifically speaking, you're one of a kind. 🌿",
-        ]
-      },
-      {
-        name: 'LEVI',
-        img: 'levi.png',
-        dialogues: [
-          "Tch. Just wait. It'll be worth it. Trust me.",
-          "I've faced titans. This surprise? Even more special.",
-          "Don't make me say it twice — you matter. A lot.",
-          "…You're one of the few things worth protecting. 💚",
-        ]
-      },
-    ];
-
-    const corners = ['tl', 'tr', 'bl', 'br'];
-    let charQueue = [];
-    let activeCorners = {};
-
-    function buildQueue() {
-      const arr = [...characters];
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      charQueue = arr;
-    }
-
-    function nextChar() {
-      if (charQueue.length === 0) buildQueue();
-      return charQueue.pop();
-    }
-
-    function showCharacter() {
-      const freeCorners = corners.filter(c => !activeCorners[c]);
-      if (freeCorners.length === 0) return;
-
-      const corner = freeCorners[Math.floor(Math.random() * freeCorners.length)];
-      const char   = nextChar();
-      const dlg    = char.dialogues[Math.floor(Math.random() * char.dialogues.length)];
-
-      const wrapper = document.getElementById(`corner-${corner}`);
-      const img     = document.getElementById(`img-${corner}`);
-      const name    = document.getElementById(`name-${corner}`);
-      const text    = document.getElementById(`text-${corner}`);
-
-      img.src          = char.img;
-      img.alt          = char.name;
-      name.textContent = char.name;
-      text.textContent = dlg;
-
-      activeCorners[corner] = true;
-      wrapper.classList.add('visible');
-
-      setTimeout(() => {
-        wrapper.classList.remove('visible');
-        setTimeout(() => {
-          delete activeCorners[corner];
-        }, 500);
-      }, 2500);
-    }
-
-    buildQueue();
-    setTimeout(() => {
-      showCharacter();
-      setInterval(() => {
-        showCharacter();
-      }, 4200);
-    }, 2000);
-
-  </script>
+    initPassword();
+    scheduleCharacters();
+  });
+</script>
 </body>
 </html>
