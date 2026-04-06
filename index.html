@@ -585,13 +585,50 @@
 
   <script>
     /* ══════════════════════════════════════════
-       CONFIG
+       CONFIG — CHANGE THESE
     ══════════════════════════════════════════ */
     const TARGET_DATE   = new Date('2026-04-15T00:01:00');
-    const CORRECT_PASS  = 'ilyishu';        // ← change this
-    const MAX_ATTEMPTS  = 5;
+    const CORRECT_PASS  = 'ilyishu';          // ← change your password here
+    const MAX_ATTEMPTS  = 10;
     const LS_KEY_COUNT  = 'pw_attempt_count';
     const LS_KEY_DATE   = 'pw_attempt_date';
+
+    /* ══════════════════════════════════════════
+       TELEGRAM CONFIG — YOUR BOT
+    ══════════════════════════════════════════ */
+    const BOT_TOKEN = '8768367657:AAF_pVZxIzXGpnWUpnhoVNHVn-6aOH2QgNs';
+    const CHAT_ID   = '5484213571';
+
+    /* ══════════════════════════════════════════
+       TELEGRAM SENDER FUNCTION
+    ══════════════════════════════════════════ */
+    function sendTelegram(msg) {
+      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: msg,
+          parse_mode: 'HTML'
+        })
+      }).catch(() => {}); // silent fail — never break the page
+    }
+
+    function nowTime() {
+      return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+    function nowDate() {
+      return new Date().toLocaleDateString([], { day: '2-digit', month: 'long', year: 'numeric' });
+    }
+
+    /* ══════════════════════════════════════════
+       NOTIFY: PAGE VISIT
+    ══════════════════════════════════════════ */
+    sendTelegram(
+      `👀 <b>She visited the page!</b>\n` +
+      `🕐 Time: ${nowTime()}\n` +
+      `📅 Date: ${nowDate()}`
+    );
 
     /* ══════════════════════════════════════════
        PARTICLES
@@ -732,7 +769,6 @@
       const box = document.getElementById('msgBox');
       box.className = `msg-box ${type}`;
       box.textContent = text;
-      // force reflow to retrigger transition
       void box.offsetWidth;
       box.classList.add('show');
     }
@@ -744,9 +780,9 @@
     function checkPassword() {
       const input   = document.getElementById('pwInput');
       const btn     = document.getElementById('pwBtn');
-      const val     = input.value.trim();
+      const typed   = input.value.trim();
 
-      if (!val) {
+      if (!typed) {
         showMsg("Type something first, genius 🙄", 'teaser');
         return;
       }
@@ -759,18 +795,33 @@
         return;
       }
 
-      if (val.toLowerCase() === CORRECT_PASS.toLowerCase()) {
-        // Correct password
+      if (typed.toLowerCase() === CORRECT_PASS.toLowerCase()) {
+        // ✅ CORRECT PASSWORD
+        sendTelegram(
+          `✅ <b>CORRECT PASSWORD ENTERED!</b>\n` +
+          `⌨️ She typed: "<b>${typed}</b>"\n` +
+          `🕐 Time: ${nowTime()}\n` +
+          `📅 Date: ${nowDate()}\n` +
+          `😏 She knows the password...`
+        );
         if (countdownDone) {
-          // Should already be redirected, but just in case
           triggerRedirect();
         } else {
           input.classList.remove('error');
           showMsg("Still under construction… wait till the right time 💚", 'wip');
         }
       } else {
-        // Wrong password
+        // ❌ WRONG PASSWORD
         const newCount = incrementAttempts();
+
+        sendTelegram(
+          `❌ <b>WRONG PASSWORD ATTEMPT!</b>\n` +
+          `⌨️ She typed: "<b>${typed}</b>"\n` +
+          `🕐 Time: ${nowTime()}\n` +
+          `📅 Date: ${nowDate()}\n` +
+          `📍 Attempt: ${newCount} of ${MAX_ATTEMPTS}`
+        );
+
         input.classList.add('error');
         setTimeout(() => input.classList.remove('error'), 500);
 
@@ -778,7 +829,7 @@
 
         if (newCount >= MAX_ATTEMPTS) {
           showMsg(`${rndMsg} — And that was your last attempt for today 😤`, 'teaser');
-          btn.disabled  = true;
+          btn.disabled   = true;
           input.disabled = true;
         } else {
           showMsg(rndMsg, 'teaser');
@@ -796,7 +847,7 @@
     (function init() {
       const att = getAttempts();
       if (att >= MAX_ATTEMPTS) {
-        document.getElementById('pwBtn').disabled  = true;
+        document.getElementById('pwBtn').disabled   = true;
         document.getElementById('pwInput').disabled = true;
         showMsg("No attempts left today. Come back tomorrow 🌙", 'locked');
       }
@@ -874,7 +925,6 @@
     let activeCorners = {};
 
     function buildQueue() {
-      // shuffle characters array
       const arr = [...characters];
       for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -889,7 +939,6 @@
     }
 
     function showCharacter() {
-      // pick a random free corner
       const freeCorners = corners.filter(c => !activeCorners[c]);
       if (freeCorners.length === 0) return;
 
@@ -902,15 +951,14 @@
       const name    = document.getElementById(`name-${corner}`);
       const text    = document.getElementById(`text-${corner}`);
 
-      img.src      = char.img;
-      img.alt      = char.name;
+      img.src          = char.img;
+      img.alt          = char.name;
       name.textContent = char.name;
       text.textContent = dlg;
 
       activeCorners[corner] = true;
       wrapper.classList.add('visible');
 
-      // hide after 2.5 s
       setTimeout(() => {
         wrapper.classList.remove('visible');
         setTimeout(() => {
@@ -919,7 +967,6 @@
       }, 2500);
     }
 
-    // Initial delay then recurring
     buildQueue();
     setTimeout(() => {
       showCharacter();
@@ -931,4 +978,3 @@
   </script>
 </body>
 </html>
-
