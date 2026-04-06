@@ -1,258 +1,934 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Something Special 💚</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Something Special Awaits... 💚</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito:wght@300;400;600;700&family=Sacramento&display=swap');
 
-<style>
-body {
-    margin: 0;
-    height: 100vh;
-    font-family: Arial, sans-serif;
-    color: white;
-    overflow: hidden;
-    text-align: center;
-    background: linear-gradient(-45deg, #000000, #021b12, #001a1a, #000000);
-    background-size: 400% 400%;
-    animation: bg 10s ease infinite;
-}
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-@keyframes bg {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
-}
+    :root {
+      --green: #00ff88;
+      --green-dim: #00cc6a;
+      --green-glow: rgba(0,255,136,0.35);
+      --dark: #050c12;
+      --card-bg: rgba(5, 20, 35, 0.82);
+      --border: rgba(0,255,136,0.25);
+    }
 
-.container {
-    margin-top: 80px;
-    z-index: 2;
-    position: relative;
-}
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+    }
 
-#timer {
-    font-size: 2rem;
-    margin: 15px 0;
-}
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--dark);
+      color: #e0ffe8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+    }
 
-input {
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-}
+    /* ── Animated gradient background ── */
+    .bg-gradient {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(135deg, #010a10, #021a12, #03120a, #01070f);
+      background-size: 400% 400%;
+      animation: bgShift 12s ease infinite;
+    }
+    @keyframes bgShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-button {
-    padding: 10px 20px;
-    border-radius: 15px;
-    border: none;
-    background: #00ff9f;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
-}
+    /* aurora layers */
+    .aurora {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .aurora::before, .aurora::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.18;
+      animation: auroraDrift 18s ease-in-out infinite alternate;
+    }
+    .aurora::before {
+      width: 70vw; height: 70vw;
+      background: radial-gradient(circle, #00ff88 0%, transparent 70%);
+      top: -20%; left: -20%;
+    }
+    .aurora::after {
+      width: 60vw; height: 60vw;
+      background: radial-gradient(circle, #00aaff 0%, transparent 70%);
+      bottom: -20%; right: -20%;
+      animation-duration: 22s;
+      animation-delay: -8s;
+    }
+    @keyframes auroraDrift {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(6vw, 4vh) scale(1.12); }
+    }
 
-#lockedMsg {
-    margin-top: 15px;
-    display: none;
-}
+    /* ── Particles ── */
+    #particles {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--green);
+      opacity: 0;
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) scale(1);   opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.2; }
+      100% { transform: translateY(-100vh) scale(0.4); opacity: 0; }
+    }
 
-/* CHARACTER */
-.charBox {
-    position: absolute;
-    width: 110px;
-    text-align: center;
-    opacity: 0;
-    transform: scale(0.5);
-    transition: all 0.5s ease;
-}
+    /* ── Stars ── */
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: #fff;
+      animation: twinkle ease-in-out infinite alternate;
+    }
+    @keyframes twinkle {
+      from { opacity: 0.1; transform: scale(0.8); }
+      to   { opacity: 0.9; transform: scale(1.2); }
+    }
 
-.show {
-    opacity: 1;
-    transform: scale(1);
-}
+    /* ── Main card ── */
+    .card {
+      position: relative;
+      z-index: 10;
+      width: min(520px, 92vw);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2.6rem 2.2rem 2.2rem;
+      backdrop-filter: blur(18px);
+      box-shadow:
+        0 0 0 1px rgba(0,255,136,0.08),
+        0 0 40px rgba(0,255,136,0.08),
+        0 20px 60px rgba(0,0,0,0.7);
+      animation: cardIn 1.2s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(40px) scale(0.95); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
 
-.charBox img {
-    width: 100%;
-}
+    /* inner glow border animation */
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 25px;
+      background: linear-gradient(135deg, rgba(0,255,136,0.35), transparent 50%, rgba(0,170,255,0.2));
+      z-index: -1;
+      opacity: 0.5;
+      animation: borderGlow 4s ease-in-out infinite alternate;
+    }
+    @keyframes borderGlow {
+      from { opacity: 0.3; }
+      to   { opacity: 0.7; }
+    }
 
-.bubble {
-    background: white;
-    color: black;
-    padding: 6px;
-    border-radius: 10px;
-    font-size: 0.7rem;
-    margin-bottom: 5px;
-}
+    /* ── Header ── */
+    .title-top {
+      font-family: 'Sacramento', cursive;
+      font-size: clamp(1.5rem, 5vw, 2.1rem);
+      color: var(--green);
+      text-align: center;
+      letter-spacing: 1px;
+      text-shadow: 0 0 20px var(--green-glow);
+      margin-bottom: 0.2rem;
+      animation: pulseText 3s ease-in-out infinite alternate;
+    }
+    @keyframes pulseText {
+      from { text-shadow: 0 0 12px var(--green-glow); }
+      to   { text-shadow: 0 0 30px var(--green-glow), 0 0 60px rgba(0,255,136,0.2); }
+    }
 
-/* positions */
-.top-left { top: 10px; left: 10px; }
-.top-right { top: 10px; right: 10px; }
-.bottom-left { bottom: 10px; left: 10px; }
-.bottom-right { bottom: 10px; right: 10px; }
+    .title-main {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.3rem, 4.5vw, 2rem);
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #00ff88, #00ffcc, #00aaff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.3rem;
+    }
 
-/* particles */
-.particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: #00ff9f;
-    border-radius: 50%;
-    opacity: 0.6;
-    animation: float 6s linear infinite;
-}
+    .title-sub {
+      text-align: center;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 1.8rem;
+    }
 
-@keyframes float {
-    from { transform: translateY(100vh); }
-    to { transform: translateY(-10vh); }
-}
-</style>
+    /* ── Divider ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      margin: 1.4rem 0;
+      opacity: 0.4;
+    }
+
+    /* ── Countdown ── */
+    .countdown-label {
+      text-align: center;
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 0.9rem;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: clamp(0.5rem, 2vw, 1.2rem);
+      margin-bottom: 0.5rem;
+    }
+
+    .time-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(0,255,136,0.05);
+      border: 1px solid rgba(0,255,136,0.18);
+      border-radius: 14px;
+      padding: 0.7rem 0.85rem;
+      min-width: 62px;
+      position: relative;
+      overflow: hidden;
+    }
+    .time-block::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,255,136,0.04) 0%, transparent 100%);
+    }
+
+    .time-num {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.5rem, 5vw, 2.1rem);
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+      text-shadow: 0 0 14px var(--green-glow);
+      transition: all 0.3s;
+    }
+
+    .time-unit {
+      font-size: 0.58rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-top: 0.35rem;
+    }
+
+    .colon {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      color: rgba(0,255,136,0.5);
+      align-self: center;
+      margin-top: -8px;
+      animation: colonBlink 1s step-end infinite;
+    }
+    @keyframes colonBlink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.2; }
+    }
+
+    /* ── Password section ── */
+    .pw-section {
+      margin-top: 1.5rem;
+    }
+
+    .pw-label {
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      margin-bottom: 0.9rem;
+    }
+
+    .pw-row {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .pw-input {
+      flex: 1;
+      background: rgba(0,255,136,0.04);
+      border: 1px solid rgba(0,255,136,0.22);
+      border-radius: 12px;
+      padding: 0.75rem 1.1rem;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      color: #e0ffe8;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      letter-spacing: 2px;
+    }
+    .pw-input::placeholder { color: rgba(255,255,255,0.2); letter-spacing: 1px; }
+    .pw-input:focus {
+      border-color: rgba(0,255,136,0.55);
+      box-shadow: 0 0 0 3px rgba(0,255,136,0.1);
+    }
+    .pw-input.error {
+      border-color: rgba(255,80,80,0.6);
+      box-shadow: 0 0 0 3px rgba(255,80,80,0.1);
+      animation: shake 0.4s ease;
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+
+    .pw-btn {
+      background: linear-gradient(135deg, #00cc6a, #00ff88);
+      border: none;
+      border-radius: 12px;
+      padding: 0.75rem 1.3rem;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #021a12;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+    .pw-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,255,136,0.35);
+    }
+    .pw-btn:active:not(:disabled) { transform: scale(0.97); }
+    .pw-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    /* ── Message box ── */
+    .msg-box {
+      margin-top: 1rem;
+      min-height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      border-radius: 10px;
+      padding: 0.6rem 1rem;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.4s, transform 0.4s;
+      pointer-events: none;
+    }
+    .msg-box.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .msg-box.teaser {
+      background: rgba(255,80,80,0.08);
+      border: 1px solid rgba(255,80,80,0.2);
+      color: #ff9999;
+    }
+    .msg-box.wip {
+      background: rgba(0,255,136,0.06);
+      border: 1px solid rgba(0,255,136,0.2);
+      color: var(--green);
+    }
+    .msg-box.locked {
+      background: rgba(255,150,0,0.07);
+      border: 1px solid rgba(255,150,0,0.2);
+      color: #ffcc77;
+    }
+
+    /* attempts counter */
+    .attempts-info {
+      text-align: center;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.25);
+      margin-top: 0.55rem;
+      letter-spacing: 1px;
+    }
+    .attempts-info span {
+      color: rgba(255,150,100,0.7);
+      font-weight: 700;
+    }
+
+    /* ── Anime character overlay ── */
+    .char-wrapper {
+      position: fixed;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .char-wrapper.top-left    { top: 0; left: 0; align-items: flex-start; }
+    .char-wrapper.top-right   { top: 0; right: 0; align-items: flex-end; }
+    .char-wrapper.bottom-left { bottom: 0; left: 0; align-items: flex-start; flex-direction: column-reverse; }
+    .char-wrapper.bottom-right{ bottom: 0; right: 0; align-items: flex-end; flex-direction: column-reverse; }
+
+    .char-wrapper.visible { opacity: 1; }
+
+    .char-bubble {
+      background: rgba(5,18,30,0.92);
+      border: 1px solid rgba(0,255,136,0.35);
+      border-radius: 14px;
+      padding: 0.55rem 0.85rem;
+      font-size: clamp(0.68rem, 2.2vw, 0.8rem);
+      color: #ccffdd;
+      max-width: clamp(130px, 28vw, 200px);
+      line-height: 1.45;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 12px rgba(0,255,136,0.1);
+      text-align: center;
+      position: relative;
+      margin: 0 6px;
+      backdrop-filter: blur(10px);
+    }
+    .char-bubble .char-name {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 0.25rem;
+    }
+
+    .char-img {
+      width: clamp(80px, 18vw, 130px);
+      height: clamp(80px, 18vw, 130px);
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(0,255,136,0.3));
+    }
+
+    /* corner-specific transforms for slide-in */
+    .char-wrapper.top-left    { transform: translate(-40px, -40px); }
+    .char-wrapper.top-right   { transform: translate(40px, -40px); }
+    .char-wrapper.bottom-left { transform: translate(-40px, 40px); }
+    .char-wrapper.bottom-right{ transform: translate(40px, 40px); }
+    .char-wrapper.visible     { transform: translate(0, 0); }
+
+    /* ── Footer line ── */
+    .footer-hint {
+      position: fixed;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* ── Countdown ended overlay ── */
+    #redirectMsg {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: #010a10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s;
+    }
+    #redirectMsg.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #redirectMsg .redir-text {
+      font-family: 'Sacramento', cursive;
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      color: var(--green);
+      text-shadow: 0 0 30px var(--green-glow);
+      text-align: center;
+      animation: pulseText 2s ease-in-out infinite alternate;
+    }
+    #redirectMsg .redir-sub {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    /* ── Responsive tweaks ── */
+    @media (max-width: 480px) {
+      .card { padding: 2rem 1.4rem 1.8rem; }
+      .time-block { min-width: 52px; padding: 0.6rem 0.65rem; }
+      .pw-btn { padding: 0.75rem 1rem; font-size: 0.8rem; }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
-    <h2>Something special is coming 💚</h2>
-    <div id="timer"></div>
+  <!-- Background layers -->
+  <div class="bg-gradient"></div>
+  <div class="aurora"></div>
+  <div id="particles"></div>
 
-    <input type="password" id="pass" placeholder="Enter secret code">
-    <br>
-    <button onclick="checkPass()">Try Unlock</button>
+  <!-- Redirect overlay -->
+  <div id="redirectMsg">
+    <div class="redir-text">The wait is over… 🌙</div>
+    <div class="redir-sub">Opening your surprise...</div>
+  </div>
 
-    <div id="lockedMsg">
-        Work in progress 🚧<br>
-        If you're too curious... contact creator 😉
+  <!-- Main card -->
+  <div class="card" id="mainCard">
+    <div class="title-top">for the girl who deserves the world</div>
+    <div class="title-main">Something Special</div>
+    <div class="title-sub">is being prepared just for you</div>
+
+    <div class="divider"></div>
+
+    <div class="countdown-label">✦ unlocks in ✦</div>
+    <div class="countdown" id="countdown">
+      <div class="time-block"><span class="time-num" id="cDays">00</span><span class="time-unit">Days</span></div>
+      <div class="colon">:</div>
+      <div class="time-block"><span class="time-num" id="cHours">00</span><span class="time-unit">Hours</span></div>
+      <div class="colon">:</div>
+      <div class="time-block"><span class="time-num" id="cMins">00</span><span class="time-unit">Mins</span></div>
+      <div class="colon">:</div>
+      <div class="time-block"><span class="time-num" id="cSecs">00</span><span class="time-unit">Secs</span></div>
     </div>
-</div>
 
-<script>
-// 🎂 DATE
-let targetDate = new Date("2026-04-15T00:01:00").getTime();
+    <div class="divider"></div>
 
-// PASSWORD
-let correctPass = "secret123";
+    <div class="pw-section">
+      <div class="pw-label">✦ have a secret key? ✦</div>
+      <div class="pw-row">
+        <input
+          type="password"
+          class="pw-input"
+          id="pwInput"
+          placeholder="enter password..."
+          maxlength="40"
+          autocomplete="off"
+        />
+        <button class="pw-btn" id="pwBtn" onclick="checkPassword()">Unlock</button>
+      </div>
+      <div class="msg-box" id="msgBox"></div>
+      <div class="attempts-info" id="attemptsInfo"></div>
+    </div>
+  </div>
 
-// attempts
-let today = new Date().toDateString();
-let stored = JSON.parse(localStorage.getItem("attemptData")) || {};
+  <!-- Anime character wrappers (all 4 corners) -->
+  <div class="char-wrapper top-left"     id="corner-tl">
+    <div class="char-bubble" id="bubble-tl"><div class="char-name" id="name-tl"></div><span id="text-tl"></span></div>
+    <img class="char-img" id="img-tl" src="" alt="" />
+  </div>
+  <div class="char-wrapper top-right"    id="corner-tr">
+    <div class="char-bubble" id="bubble-tr"><div class="char-name" id="name-tr"></div><span id="text-tr"></span></div>
+    <img class="char-img" id="img-tr" src="" alt="" />
+  </div>
+  <div class="char-wrapper bottom-left"  id="corner-bl">
+    <img class="char-img" id="img-bl" src="" alt="" />
+    <div class="char-bubble" id="bubble-bl"><div class="char-name" id="name-bl"></div><span id="text-bl"></span></div>
+  </div>
+  <div class="char-wrapper bottom-right" id="corner-br">
+    <img class="char-img" id="img-br" src="" alt="" />
+    <div class="char-bubble" id="bubble-br"><div class="char-name" id="name-br"></div><span id="text-br"></span></div>
+  </div>
 
-if (!stored.date || stored.date !== today) {
-    stored = { date: today, attempts: 0 };
-}
+  <div class="footer-hint">15 · 04 · 2026 · 00:01</div>
 
-// TIMER
-setInterval(() => {
-    let now = new Date().getTime();
-    let dist = targetDate - now;
+  <script>
+    /* ══════════════════════════════════════════
+       CONFIG
+    ══════════════════════════════════════════ */
+    const TARGET_DATE   = new Date('2026-04-15T00:01:00');
+    const CORRECT_PASS  = 'mystar';        // ← change this
+    const MAX_ATTEMPTS  = 5;
+    const LS_KEY_COUNT  = 'pw_attempt_count';
+    const LS_KEY_DATE   = 'pw_attempt_date';
 
-    if (dist <= 0) {
-        window.location.href = "scene1.html";
+    /* ══════════════════════════════════════════
+       PARTICLES
+    ══════════════════════════════════════════ */
+    (function spawnParticles() {
+      const container = document.getElementById('particles');
+      // stars
+      for (let i = 0; i < 80; i++) {
+        const s = document.createElement('div');
+        s.className = 'star';
+        const sz = Math.random() * 2.5 + 0.5;
+        s.style.cssText = `
+          width:${sz}px; height:${sz}px;
+          left:${Math.random()*100}%;
+          top:${Math.random()*100}%;
+          animation-duration:${Math.random()*4+2}s;
+          animation-delay:${Math.random()*5}s;
+        `;
+        container.appendChild(s);
+      }
+      // floating particles
+      for (let i = 0; i < 30; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const sz = Math.random() * 4 + 1;
+        p.style.cssText = `
+          width:${sz}px; height:${sz}px;
+          left:${Math.random()*100}%;
+          bottom:${-10 + Math.random()*10}%;
+          animation-duration:${Math.random()*15+8}s;
+          animation-delay:${Math.random()*10}s;
+          opacity:0;
+        `;
+        container.appendChild(p);
+      }
+    })();
+
+    /* ══════════════════════════════════════════
+       COUNTDOWN
+    ══════════════════════════════════════════ */
+    const elDays  = document.getElementById('cDays');
+    const elHours = document.getElementById('cHours');
+    const elMins  = document.getElementById('cMins');
+    const elSecs  = document.getElementById('cSecs');
+    let countdownDone = false;
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function updateCountdown() {
+      const now  = new Date();
+      const diff = TARGET_DATE - now;
+
+      if (diff <= 0) {
+        elDays.textContent  = '00';
+        elHours.textContent = '00';
+        elMins.textContent  = '00';
+        elSecs.textContent  = '00';
+        if (!countdownDone) {
+          countdownDone = true;
+          triggerRedirect();
+        }
         return;
+      }
+
+      const days  = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const mins  = Math.floor((diff % 3600000)  / 60000);
+      const secs  = Math.floor((diff % 60000)    / 1000);
+
+      elDays.textContent  = pad(days);
+      elHours.textContent = pad(hours);
+      elMins.textContent  = pad(mins);
+      elSecs.textContent  = pad(secs);
     }
 
-    let d = Math.floor(dist / (1000*60*60*24));
-    let h = Math.floor((dist % (1000*60*60*24))/(1000*60*60));
-    let m = Math.floor((dist % (1000*60*60))/(1000*60));
-    let s = Math.floor((dist % (1000*60))/1000);
+    function triggerRedirect() {
+      const overlay = document.getElementById('redirectMsg');
+      overlay.classList.add('show');
+      setTimeout(() => {
+        window.location.href = 'scene1.html';
+      }, 3500);
+    }
 
-    document.getElementById("timer").innerHTML =
-        d+"d "+h+"h "+m+"m "+s+"s";
-}, 1000);
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
 
-// PASSWORD
-function checkPass() {
+    /* ══════════════════════════════════════════
+       PASSWORD SYSTEM
+    ══════════════════════════════════════════ */
+    const teasingMessages = [
+      "Lmaooo… nice try bestie 😭💀",
+      "That password is SO wrong it's almost impressive 👀",
+      "Babe, are you even trying? 💅",
+      "Nope. Not even close. Keep guessing sis 😏",
+      "My man Gojo could've done better 🤭",
+      "Error 404: Braincell not found 💀",
+      "Seriously?? That was your guess?? 😭",
+      "Ayo… who told you that was the password? Fire them 🔥",
+      "Almost! (no not really) 😂",
+      "Zoro got lost and still found the exit faster 💀",
+    ];
 
-    document.getElementById("lockedMsg").style.display = "block";
+    function getTodayStr() {
+      const d = new Date();
+      return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    }
 
-    if (stored.attempts >= 5) {
-        document.getElementById("lockedMsg").innerHTML =
-        "⛔ Too many attempts today.<br>Try tomorrow 😉";
+    function getAttempts() {
+      const savedDate = localStorage.getItem(LS_KEY_DATE);
+      const today     = getTodayStr();
+      if (savedDate !== today) {
+        localStorage.setItem(LS_KEY_DATE, today);
+        localStorage.setItem(LS_KEY_COUNT, '0');
+        return 0;
+      }
+      return parseInt(localStorage.getItem(LS_KEY_COUNT) || '0', 10);
+    }
+
+    function incrementAttempts() {
+      const count = getAttempts() + 1;
+      localStorage.setItem(LS_KEY_COUNT, String(count));
+      return count;
+    }
+
+    function updateAttemptsUI() {
+      const remaining = MAX_ATTEMPTS - getAttempts();
+      const el = document.getElementById('attemptsInfo');
+      if (remaining <= 0) {
+        el.innerHTML = `<span>No attempts left today.</span> Come back tomorrow 🌙`;
+      } else if (remaining < MAX_ATTEMPTS) {
+        el.innerHTML = `<span>${remaining}</span> attempt${remaining !== 1 ? 's' : ''} remaining today`;
+      } else {
+        el.textContent = '';
+      }
+    }
+
+    function showMsg(text, type) {
+      const box = document.getElementById('msgBox');
+      box.className = `msg-box ${type}`;
+      box.textContent = text;
+      // force reflow to retrigger transition
+      void box.offsetWidth;
+      box.classList.add('show');
+    }
+
+    function hideMsg() {
+      document.getElementById('msgBox').classList.remove('show');
+    }
+
+    function checkPassword() {
+      const input   = document.getElementById('pwInput');
+      const btn     = document.getElementById('pwBtn');
+      const val     = input.value.trim();
+
+      if (!val) {
+        showMsg("Type something first, genius 🙄", 'teaser');
         return;
+      }
+
+      const attempts = getAttempts();
+      if (attempts >= MAX_ATTEMPTS) {
+        showMsg("No attempts left today. Come back tomorrow, okay? 🌙", 'locked');
+        btn.disabled = true;
+        input.disabled = true;
+        return;
+      }
+
+      if (val.toLowerCase() === CORRECT_PASS.toLowerCase()) {
+        // Correct password
+        if (countdownDone) {
+          // Should already be redirected, but just in case
+          triggerRedirect();
+        } else {
+          input.classList.remove('error');
+          showMsg("Still under construction… wait till the right time 💚", 'wip');
+        }
+      } else {
+        // Wrong password
+        const newCount = incrementAttempts();
+        input.classList.add('error');
+        setTimeout(() => input.classList.remove('error'), 500);
+
+        const rndMsg = teasingMessages[Math.floor(Math.random() * teasingMessages.length)];
+
+        if (newCount >= MAX_ATTEMPTS) {
+          showMsg(`${rndMsg} — And that was your last attempt for today 😤`, 'teaser');
+          btn.disabled  = true;
+          input.disabled = true;
+        } else {
+          showMsg(rndMsg, 'teaser');
+        }
+        updateAttemptsUI();
+      }
     }
 
-    let input = document.getElementById("pass").value;
+    // Enter key support
+    document.getElementById('pwInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') checkPassword();
+    });
 
-    stored.attempts++;
-    localStorage.setItem("attemptData", JSON.stringify(stored));
+    // Init
+    (function init() {
+      const att = getAttempts();
+      if (att >= MAX_ATTEMPTS) {
+        document.getElementById('pwBtn').disabled  = true;
+        document.getElementById('pwInput').disabled = true;
+        showMsg("No attempts left today. Come back tomorrow 🌙", 'locked');
+      }
+      updateAttemptsUI();
+    })();
 
-    if (input === correctPass) {
-        document.getElementById("lockedMsg").innerHTML =
-        "👀 You found the code...<br><br>Still under construction 🚧<br>Wait 💚";
-    } else {
+    /* ══════════════════════════════════════════
+       ANIME CHARACTER SYSTEM
+    ══════════════════════════════════════════ */
+    const characters = [
+      {
+        name: 'LUFFY',
+        img: 'luffy.png',
+        dialogues: [
+          "Oi! Something AMAZING is coming for you! 🍖",
+          "I don't get it, but you seem really special! Shishishi~",
+          "You deserve the best treasure in the world! 💎",
+          "Wait for it… it's gonna be HUGE! Gomu gomu!",
+        ]
+      },
+      {
+        name: 'NARUTO',
+        img: 'naruto.png',
+        dialogues: [
+          "Believe it! Something incredible awaits you! 🍜",
+          "You're the main character of your own story, dattebayo!",
+          "I trained a thousand shadow clones to prepare this for you 😤",
+          "This feeling… it's like finding ramen after a long mission!",
+        ]
+      },
+      {
+        name: 'GOJO',
+        img: 'gojo.png',
+        dialogues: [
+          "Obviously, only the best for someone like you 😎",
+          "With my Infinity, I'd protect your smile always~",
+          "The strongest made sure this moment is perfect 💙",
+          "Limitless possibilities… just like what's waiting for you.",
+        ]
+      },
+      {
+        name: 'ZORO',
+        img: 'zoro.png',
+        dialogues: [
+          "I got lost three times but I'm still here for you 😤",
+          "Nothing cuts through my focus when it comes to you.",
+          "I'd cross every sea and wrong turn to see you smile.",
+          "…Don't make it weird. Just wait for the surprise.",
+        ]
+      },
+      {
+        name: 'SENKU',
+        img: 'senku.png',
+        dialogues: [
+          "10 billion percent calculated: you deserve this! 🔬",
+          "Science says this surprise has a 100% happiness rate.",
+          "I've run every equation. You're worth it. Obviously.",
+          "Scientifically speaking, you're one of a kind. 🌿",
+        ]
+      },
+      {
+        name: 'LEVI',
+        img: 'levi.png',
+        dialogues: [
+          "Tch. Just wait. It'll be worth it. Trust me.",
+          "I've faced titans. This surprise? Even more special.",
+          "Don't make me say it twice — you matter. A lot.",
+          "…You're one of the few things worth protecting. 💚",
+        ]
+      },
+    ];
 
-        const wrongMsgs = [
-            "😏 not that easy...",
-            "👀 trying hard huh?",
-            "🙄 nope… try again",
-            "😜 almost… but not really",
-            "💀 bro thinks he guessed it",
-            "🥺 wrong again… cute try",
-            "😎 nah… do better"
-        ];
+    const corners = ['tl', 'tr', 'bl', 'br'];
+    let charQueue = [];
+    let activeCorners = {};
 
-        let msg = wrongMsgs[Math.floor(Math.random()*wrongMsgs.length)];
-
-        document.getElementById("lockedMsg").innerHTML =
-            msg + "<br>Attempts left: " + (5 - stored.attempts);
+    function buildQueue() {
+      // shuffle characters array
+      const arr = [...characters];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      charQueue = arr;
     }
-}
 
-// 🎭 CHARACTERS
-const scenes = [
-    {char:"luffy", text:"Hehe… I know you're curious 😏"},
-    {char:"naruto", text:"Oi! wait for it! 😄"},
-    {char:"zoro", text:"Tch… patience."},
-    {char:"gojo", text:"Relax… it's worth it 😉"},
-    {char:"senku", text:"10 billion percent special."},
-    {char:"levi", text:"Make it count."}
-];
+    function nextChar() {
+      if (charQueue.length === 0) buildQueue();
+      return charQueue.pop();
+    }
 
-const images = {
-    luffy:"luffy.png",
-    zoro:"zoro.png",
-    senku:"senku.png",
-    naruto:"naruto.png",
-    gojo:"gojo.png",
-    levi:"levi.png"
-};
+    function showCharacter() {
+      // pick a random free corner
+      const freeCorners = corners.filter(c => !activeCorners[c]);
+      if (freeCorners.length === 0) return;
 
-let i = 0;
+      const corner = freeCorners[Math.floor(Math.random() * freeCorners.length)];
+      const char   = nextChar();
+      const dlg    = char.dialogues[Math.floor(Math.random() * char.dialogues.length)];
 
-function showScene() {
-    let box = document.createElement("div");
-    box.className = "charBox show";
+      const wrapper = document.getElementById(`corner-${corner}`);
+      const img     = document.getElementById(`img-${corner}`);
+      const name    = document.getElementById(`name-${corner}`);
+      const text    = document.getElementById(`text-${corner}`);
 
-    let positions = ["top-left","top-right","bottom-left","bottom-right"];
-    let pos = positions[Math.floor(Math.random()*positions.length)];
-    box.classList.add(pos);
+      img.src      = char.img;
+      img.alt      = char.name;
+      name.textContent = char.name;
+      text.textContent = dlg;
 
-    let s = scenes[i];
+      activeCorners[corner] = true;
+      wrapper.classList.add('visible');
 
-    box.innerHTML = `
-        <div class="bubble">${s.text}</div>
-        <img src="${images[s.char]}">
-    `;
+      // hide after 2.5 s
+      setTimeout(() => {
+        wrapper.classList.remove('visible');
+        setTimeout(() => {
+          delete activeCorners[corner];
+        }, 500);
+      }, 2500);
+    }
 
-    document.body.appendChild(box);
-
+    // Initial delay then recurring
+    buildQueue();
     setTimeout(() => {
-        box.remove();
-    }, 2500);
+      showCharacter();
+      setInterval(() => {
+        showCharacter();
+      }, 4200);
+    }, 2000);
 
-    i = (i + 1) % scenes.length;
-}
-
-setInterval(showScene, 3000);
-
-// ✨ PARTICLES
-setInterval(() => {
-    let p = document.createElement("div");
-    p.className = "particle";
-    p.style.left = Math.random()*100 + "vw";
-    document.body.appendChild(p);
-
-    setTimeout(() => p.remove(), 6000);
-}, 200);
-</script>
-
+  </script>
 </body>
 </html>
+
