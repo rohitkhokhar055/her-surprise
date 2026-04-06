@@ -171,12 +171,19 @@ function checkPass() {
 
 // 🎭 CHARACTER SYSTEM
 const scenes = [
-    {char:"luffy", text:"Hehe… something fun is coming 😏"},
-    {char:"zoro", text:"Tch… hope it's worth it."},
-    {char:"senku", text:"10 billion percent interesting."},
-    {char:"naruto", text:"I bet it'll make you smile 😄"},
-    {char:"gojo", text:"Relax… it's gonna be special."},
-    {char:"levi", text:"Make it count."}
+    {char:"luffy", text:"Hehe… I know you're curious 😏"},
+    {char:"naruto", text:"Oi! Don’t rush it! 😄"},
+    {char:"zoro", text:"Tch… patience."},
+    {char:"gojo", text:"Relax… worth it 😉"},
+    {char:"senku", text:"10 billion percent special."},
+    {char:"levi", text:"Make it count."},
+
+    {char:"luffy", text:"It’s for someone important 💚"},
+    {char:"naruto", text:"You’ll smile for sure!"},
+    {char:"gojo", text:"Trust the process 😌"},
+    {char:"senku", text:"Calculated surprise."},
+    {char:"zoro", text:"Just wait."},
+    {char:"levi", text:"Timing matters."}
 ];
 
 const images = {
@@ -191,27 +198,28 @@ const images = {
 let i = 0;
 
 function showScene() {
-    let left = document.getElementById("leftChar");
-    let right = document.getElementById("rightChar");
+    function showScene() {
+    let box = document.createElement("div");
+    box.className = "charBox show";
 
-    left.classList.remove("show");
-    right.classList.remove("show");
+    let positions = ["top-left","top-right","bottom-left","bottom-right"];
+    let pos = positions[Math.floor(Math.random()*positions.length)];
+    box.classList.add(pos);
+
+    let s = scenes[i];
+
+    box.innerHTML = `
+        <div class="bubble">${s.text}</div>
+        <img src="${images[s.char]}">
+    `;
+
+    document.body.appendChild(box);
 
     setTimeout(() => {
-        let s = scenes[i];
+        box.remove();
+    }, 2500);
 
-        if (i % 2 === 0) {
-            document.getElementById("leftText").innerText = s.text;
-            document.getElementById("leftImg").src = images[s.char];
-            left.classList.add("show");
-        } else {
-            document.getElementById("rightText").innerText = s.text;
-            document.getElementById("rightImg").src = images[s.char];
-            right.classList.add("show");
-        }
-
-        i = (i + 1) % scenes.length;
-    }, 300);
+    i = (i + 1) % scenes.length;
 }
 
 setInterval(showScene, 3000);
