@@ -3,26 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Something is Coming...</title>
+<title>Something Special 💚</title>
 
 <style>
 body {
     margin: 0;
     height: 100vh;
-    background: radial-gradient(circle, #000, #021b12);
     font-family: Arial, sans-serif;
     color: white;
     overflow: hidden;
     text-align: center;
+    background: linear-gradient(-45deg, #000000, #021b12, #001a1a, #000000);
+    background-size: 400% 400%;
+    animation: bg 10s ease infinite;
+}
+
+@keyframes bg {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
 }
 
 .container {
     margin-top: 80px;
+    z-index: 2;
+    position: relative;
 }
 
 #timer {
     font-size: 2rem;
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 input {
@@ -46,24 +56,20 @@ button {
     display: none;
 }
 
-/* CHARACTER STYLE */
+/* CHARACTER */
 .charBox {
     position: absolute;
-    width: 120px;
+    width: 110px;
     text-align: center;
     opacity: 0;
     transform: scale(0.5);
     transition: all 0.5s ease;
 }
 
-.top-left { top: 10px; left: 10px; position:absolute; }
-.top-right { top: 10px; right: 10px; position:absolute; }
-.bottom-left { bottom: 10px; left: 10px; position:absolute; }
-.bottom-right { bottom: 10px; right: 10px; position:absolute; }
+.show {
+    opacity: 1;
+    transform: scale(1);
 }
-
-.left { left: 10px; }
-.right { right: 10px; }
 
 .charBox img {
     width: 100%;
@@ -74,13 +80,30 @@ button {
     color: black;
     padding: 6px;
     border-radius: 10px;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     margin-bottom: 5px;
 }
 
-.show {
-    opacity: 1;
-    transform: scale(1);
+/* positions */
+.top-left { top: 10px; left: 10px; }
+.top-right { top: 10px; right: 10px; }
+.bottom-left { bottom: 10px; left: 10px; }
+.bottom-right { bottom: 10px; right: 10px; }
+
+/* particles */
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #00ff9f;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: float 6s linear infinite;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-10vh); }
 }
 </style>
 </head>
@@ -97,20 +120,8 @@ button {
 
     <div id="lockedMsg">
         Work in progress 🚧<br>
-        If you're too curious... contact creator 😉<br><br>
-        📞 +91 9671534184 
+        If you're too curious... contact creator 😉
     </div>
-</div>
-
-<!-- CHARACTERS -->
-<div id="leftChar" class="charBox left">
-    <div class="bubble" id="leftText"></div>
-    <img id="leftImg">
-</div>
-
-<div id="rightChar" class="charBox right">
-    <div class="bubble" id="rightText"></div>
-    <img id="rightImg">
 </div>
 
 <script>
@@ -118,9 +129,9 @@ button {
 let targetDate = new Date("2026-04-15T00:01:00").getTime();
 
 // PASSWORD
-let correctPass = "ilyishu";
+let correctPass = "secret123";
 
-// attempt system
+// attempts
 let today = new Date().toDateString();
 let stored = JSON.parse(localStorage.getItem("attemptData")) || {};
 
@@ -128,7 +139,7 @@ if (!stored.date || stored.date !== today) {
     stored = { date: today, attempts: 0 };
 }
 
-// ⏳ TIMER
+// TIMER
 setInterval(() => {
     let now = new Date().getTime();
     let dist = targetDate - now;
@@ -147,14 +158,14 @@ setInterval(() => {
         d+"d "+h+"h "+m+"m "+s+"s";
 }, 1000);
 
-// 🔐 PASSWORD LOGIC
+// PASSWORD
 function checkPass() {
 
     document.getElementById("lockedMsg").style.display = "block";
 
     if (stored.attempts >= 5) {
         document.getElementById("lockedMsg").innerHTML =
-        "⛔ Too many attempts today.<br>Try again tomorrow 😉";
+        "⛔ Too many attempts today.<br>Try tomorrow 😉";
         return;
     }
 
@@ -165,40 +176,34 @@ function checkPass() {
 
     if (input === correctPass) {
         document.getElementById("lockedMsg").innerHTML =
-        "👀 You found the code...<br><br>" +
-        "But it's still under construction 🚧<br>" +
-        "Wait till the right time 💚";
+        "👀 You found the code...<br><br>Still under construction 🚧<br>Wait 💚";
     } else {
+
         const wrongMsgs = [
-    "😏 not that easy...",
-    "👀 trying hard huh?",
-    "🙄 nope… try again",
-    "😜 almost… but not really",
-    "💀 bro thinks he guessed it",
-    "🥺 wrong again… but cute try",
-    "😎 nah… do better"
-];
-     let msg = wrongMsgs[Math.floor(Math.random() * wrongMsgs.length)];
+            "😏 not that easy...",
+            "👀 trying hard huh?",
+            "🙄 nope… try again",
+            "😜 almost… but not really",
+            "💀 bro thinks he guessed it",
+            "🥺 wrong again… cute try",
+            "😎 nah… do better"
+        ];
 
-    document.getElementById("lockedMsg").innerHTML =
-        msg + "<br>Attempts left: " + (5 - stored.attempts);
+        let msg = wrongMsgs[Math.floor(Math.random()*wrongMsgs.length)];
+
+        document.getElementById("lockedMsg").innerHTML =
+            msg + "<br>Attempts left: " + (5 - stored.attempts);
     }
+}
 
-// 🎭 CHARACTER SYSTEM
+// 🎭 CHARACTERS
 const scenes = [
     {char:"luffy", text:"Hehe… I know you're curious 😏"},
-    {char:"naruto", text:"Oi! Don’t rush it! 😄"},
+    {char:"naruto", text:"Oi! wait for it! 😄"},
     {char:"zoro", text:"Tch… patience."},
-    {char:"gojo", text:"Relax… worth it 😉"},
+    {char:"gojo", text:"Relax… it's worth it 😉"},
     {char:"senku", text:"10 billion percent special."},
-    {char:"levi", text:"Make it count."},
-
-    {char:"luffy", text:"It’s for someone important 💚"},
-    {char:"naruto", text:"You’ll smile for sure!"},
-    {char:"gojo", text:"Trust the process 😌"},
-    {char:"senku", text:"Calculated surprise."},
-    {char:"zoro", text:"Just wait."},
-    {char:"levi", text:"Timing matters."}
+    {char:"levi", text:"Make it count."}
 ];
 
 const images = {
@@ -213,7 +218,6 @@ const images = {
 let i = 0;
 
 function showScene() {
-    function showScene() {
     let box = document.createElement("div");
     box.className = "charBox show";
 
@@ -238,7 +242,16 @@ function showScene() {
 }
 
 setInterval(showScene, 3000);
-showScene();
+
+// ✨ PARTICLES
+setInterval(() => {
+    let p = document.createElement("div");
+    p.className = "particle";
+    p.style.left = Math.random()*100 + "vw";
+    document.body.appendChild(p);
+
+    setTimeout(() => p.remove(), 6000);
+}, 200);
 </script>
 
 </body>
