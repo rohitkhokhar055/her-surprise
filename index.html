@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Something is Coming...</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle, #000, #021b12);
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    overflow: hidden;
+}
+
+/* overlay */
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+}
+
+/* center box */
+.container {
+    position: absolute;
+    top: 10%;
+    width: 100%;
+    text-align: center;
+    z-index: 2;
+}
+
+#timer {
+    font-size: 2rem;
+    margin-top: 10px;
+}
+
+input {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin-top: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 15px;
+    border: none;
+    background: #00ff9f;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#lockedMsg {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    opacity: 0.85;
+}
+
+/* characters */
+.charBox {
+    position: absolute;
+    bottom: 10px;
+    width: 120px;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.5s ease;
+}
+
+.left { left: 10px; }
+.right { right: 10px; }
+
+.charBox img {
+    width: 100%;
+}
+
+/* bubble */
+.bubble {
+    background: white;
+    color: black;
+    padding: 6px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    margin-bottom: 5px;
+}
+
+.show {
+    opacity: 1;
+    transform: scale(1);
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="container">
+    <h2>Something special is coming 💚</h2>
+    <div id="timer"></div>
+
+    <input type="password" id="pass" placeholder="Enter secret code">
+    <br>
+    <button onclick="checkPass()">Try Unlock</button>
+
+    <div id="lockedMsg">
+        Work in progress 🚧<br>
+        If you're too curious... contact creator 😉<br><br>
+        📞 +91 9671534184
+    </div>
+</div>
+
+<!-- characters -->
+<div id="leftChar" class="charBox left">
+    <div class="bubble" id="leftText"></div>
+    <img id="leftImg" src="">
+</div>
+
+<div id="rightChar" class="charBox right">
+    <div class="bubble" id="rightText"></div>
+    <img id="rightImg" src="">
+</div>
+
+<script>
+// 🎂 SET DATE
+let targetDate = new Date("2026-04-15T00:00:00").getTime();
+
+// 🔐 PASSWORD
+let correctPass = "ilyishu";
+
+// 📊 attempt system
+let today = new Date().toDateString();
+let stored = JSON.parse(localStorage.getItem("attemptData")) || {};
+
+if (!stored.date || stored.date !== today) {
+    stored = { date: today, attempts: 0 };
+}
+
+// ⏳ countdown
+let timer = setInterval(() => {
+    let now = new Date().getTime();
+    let dist = targetDate - now;
+
+    if (dist <= 0) {
+        clearInterval(timer);
+        window.location.href = "scene1.html";
+        return;
+    }
+
+    let d = Math.floor(dist / (1000*60*60*24));
+    let h = Math.floor((dist % (1000*60*60*24))/(1000*60*60));
+    let m = Math.floor((dist % (1000*60*60))/(1000*60));
+    let s = Math.floor((dist % (1000*60))/1000);
+
+    document.getElementById("timer").innerHTML =
+        d+"d "+h+"h "+m+"m "+s+"s";
+}, 1000);
+
+// 🔐 password logic
+function checkPass() {
+    if (stored.attempts >= 5) {
+        document.getElementById("lockedMsg").innerHTML =
+        "⛔ Too many attempts today.<br>Try again tomorrow 😉";
+        return;
+    }
+
+    let input = document.getElementById("pass").value;
+    stored.attempts++;
+    localStorage.setItem("attemptData", JSON.stringify(stored));
+
+    if (input === correctPass) {
+        document.getElementById("lockedMsg").innerHTML =
+        "👀 You found the code...<br><br>" +
+        "But it's still under construction 🚧<br>" +
+        "Wait till the right time 💚";
+    } else {
+        document.getElementById("lockedMsg").innerHTML =
+        "❌ Wrong code<br>Attempts left: " + (5 - stored.attempts);
+    }
+}
+
+// 🎭 characters system
+const scenes = [
+    {char:"luffy", text:"Hehe… something fun is coming 😏"},
+    {char:"zoro", text:"Tch… hope it's worth it."},
+    {char:"senku", text:"10 billion percent interesting."},
+    {char:"naruto", text:"I bet it'll make you smile 😄"},
+    {char:"gojo", text:"Relax… it's gonna be special."},
+    {char:"levi", text:"Make it count."}
+];
+
+const images = {
+    luffy:"images/luffy.png",
+    zoro:"images/zoro.png",
+    senku:"images/senku.png",
+    naruto:"images/naruto.png",
+    gojo:"images/gojo.png",
+    levi:"images/levi.png"
+};
+
+let i = 0;
+
+function showScene() {
+    let left = document.getElementById("leftChar");
+    let right = document.getElementById("rightChar");
+
+    left.classList.remove("show");
+    right.classList.remove("show");\
+
+    setTimeout(() => {
+        let s = scenes[i];
+
+        if (i % 2 === 0) {
+            document.getElementById("leftText").innerText = s.text;
+            document.getElementById("leftImg").src = images[s.char];
+            left.classList.add("show");
+        } else {
+            document.getElementById("rightText").innerText = s.text;
+            document.getElementById("rightImg").src = images[s.char];
+            right.classList.add("show");
+        }
+
+        i = (i + 1) % scenes.length;
+    }, 300);
+}
+
+setInterval(showScene, 3000);
+showScene();
+</script>
+
+</body>
+</html>
