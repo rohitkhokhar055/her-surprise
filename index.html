@@ -10,38 +10,25 @@ body {
     margin: 0;
     height: 100vh;
     background: radial-gradient(circle, #000, #021b12);
-    font-family: 'Segoe UI', sans-serif;
+    font-family: Arial, sans-serif;
     color: white;
     overflow: hidden;
-}
-
-/* overlay */
-.overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.7);
-}
-
-/* center box */
-.container {
-    position: absolute;
-    top: 10%;
-    width: 100%;
     text-align: center;
-    z-index: 2;
+}
+
+.container {
+    margin-top: 80px;
 }
 
 #timer {
     font-size: 2rem;
-    margin-top: 10px;
+    margin: 10px 0;
 }
 
 input {
     padding: 10px;
     border-radius: 10px;
     border: none;
-    margin-top: 10px;
 }
 
 button {
@@ -51,15 +38,15 @@ button {
     background: #00ff9f;
     font-weight: bold;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 #lockedMsg {
     margin-top: 15px;
-    font-size: 0.9rem;
-    opacity: 0.85;
+    display: none;
 }
 
-/* characters */
+/* CHARACTER STYLE */
 .charBox {
     position: absolute;
     bottom: 10px;
@@ -77,7 +64,6 @@ button {
     width: 100%;
 }
 
-/* bubble */
 .bubble {
     background: white;
     color: black;
@@ -96,8 +82,6 @@ button {
 
 <body>
 
-<div class="overlay"></div>
-
 <div class="container">
     <h2>Something special is coming 💚</h2>
     <div id="timer"></div>
@@ -109,29 +93,29 @@ button {
     <div id="lockedMsg">
         Work in progress 🚧<br>
         If you're too curious... contact creator 😉<br><br>
-        📞 +91 9671534184
+        📞 +91 9671534184 
     </div>
 </div>
 
-<!-- characters -->
+<!-- CHARACTERS -->
 <div id="leftChar" class="charBox left">
     <div class="bubble" id="leftText"></div>
-    <img id="leftImg" src="">
+    <img id="leftImg">
 </div>
 
 <div id="rightChar" class="charBox right">
     <div class="bubble" id="rightText"></div>
-    <img id="rightImg" src="">
+    <img id="rightImg">
 </div>
 
 <script>
-// 🎂 SET DATE
-let targetDate = new Date("2026-04-15T00:00:00").getTime();
+// 🎂 DATE
+let targetDate = new Date("2026-04-15T00:01:00").getTime();
 
-// 🔐 PASSWORD
+// PASSWORD
 let correctPass = "ilyishu";
 
-// 📊 attempt system
+// attempt system
 let today = new Date().toDateString();
 let stored = JSON.parse(localStorage.getItem("attemptData")) || {};
 
@@ -139,13 +123,12 @@ if (!stored.date || stored.date !== today) {
     stored = { date: today, attempts: 0 };
 }
 
-// ⏳ countdown
-let timer = setInterval(() => {
+// ⏳ TIMER
+setInterval(() => {
     let now = new Date().getTime();
     let dist = targetDate - now;
 
     if (dist <= 0) {
-        clearInterval(timer);
         window.location.href = "scene1.html";
         return;
     }
@@ -159,8 +142,11 @@ let timer = setInterval(() => {
         d+"d "+h+"h "+m+"m "+s+"s";
 }, 1000);
 
-// 🔐 password logic
+// 🔐 PASSWORD LOGIC
 function checkPass() {
+
+    document.getElementById("lockedMsg").style.display = "block";
+
     if (stored.attempts >= 5) {
         document.getElementById("lockedMsg").innerHTML =
         "⛔ Too many attempts today.<br>Try again tomorrow 😉";
@@ -168,6 +154,7 @@ function checkPass() {
     }
 
     let input = document.getElementById("pass").value;
+
     stored.attempts++;
     localStorage.setItem("attemptData", JSON.stringify(stored));
 
@@ -182,7 +169,7 @@ function checkPass() {
     }
 }
 
-// 🎭 characters system
+// 🎭 CHARACTER SYSTEM
 const scenes = [
     {char:"luffy", text:"Hehe… something fun is coming 😏"},
     {char:"zoro", text:"Tch… hope it's worth it."},
@@ -208,7 +195,7 @@ function showScene() {
     let right = document.getElementById("rightChar");
 
     left.classList.remove("show");
-    right.classList.remove("show");\
+    right.classList.remove("show");
 
     setTimeout(() => {
         let s = scenes[i];
