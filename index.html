@@ -25,6 +25,18 @@
       color: #fff;
     }
 
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(0,255,136,0.06), transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(0,120,255,0.05), transparent 35%);
+    }
+
+    /* ── BACKGROUND ── */
     #bg {
       position: fixed;
       inset: 0;
@@ -34,7 +46,7 @@
     }
 
     @keyframes bgShift {
-      0% { filter: hue-rotate(0deg) brightness(1); }
+      0%   { filter: hue-rotate(0deg) brightness(1); }
       100% { filter: hue-rotate(20deg) brightness(1.15); }
     }
 
@@ -68,11 +80,12 @@
     }
 
     @keyframes auroraMove {
-      0% { transform: translate(0,0) scale(1); }
+      0%   { transform: translate(0,0) scale(1); }
       100% { transform: translate(5%,5%) scale(1.1); }
     }
 
-    #stars, #particles {
+    /* ── STARS ── */
+    #stars {
       position: fixed;
       inset: 0;
       z-index: 0;
@@ -87,8 +100,16 @@
     }
 
     @keyframes twinkle {
-      0% { opacity: 0.1; transform: scale(0.8); }
+      0%   { opacity: 0.1; transform: scale(0.8); }
       100% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* ── PARTICLES ── */
+    #particles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
     }
 
     .particle {
@@ -100,12 +121,13 @@
     }
 
     @keyframes floatUp {
-      0% { opacity: 0; transform: translateY(0) scale(1); }
-      20% { opacity: 0.6; }
-      80% { opacity: 0.3; }
+      0%   { opacity: 0; transform: translateY(0) scale(1); }
+      20%  { opacity: 0.6; }
+      80%  { opacity: 0.3; }
       100% { opacity: 0; transform: translateY(-100vh) scale(0.3); }
     }
 
+    /* ── LAYOUT ── */
     #app {
       position: relative;
       z-index: 10;
@@ -117,6 +139,7 @@
       padding: 20px;
     }
 
+    /* ── CARD ── */
     .card {
       background: var(--card-bg);
       border: 1px solid rgba(0,255,136,0.25);
@@ -129,11 +152,16 @@
         0 0 40px rgba(0,255,136,0.08),
         0 0 80px rgba(0,255,136,0.04),
         inset 0 1px 0 rgba(255,255,255,0.05);
-      animation: cardGlow 3s ease-in-out infinite alternate;
+      animation: cardReveal 0.9s ease, cardGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes cardReveal {
+      from { opacity: 0; transform: translateY(24px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     @keyframes cardGlow {
-      0% {
+      0%   {
         box-shadow:
           0 0 40px rgba(0,255,136,0.08),
           0 0 80px rgba(0,255,136,0.04),
@@ -147,6 +175,7 @@
       }
     }
 
+    /* ── TITLE ── */
     .subtitle {
       font-family: 'Sacramento', cursive;
       font-size: clamp(1.4rem, 4vw, 2rem);
@@ -154,6 +183,7 @@
       text-align: center;
       margin-bottom: 4px;
       opacity: 0.85;
+      animation: fadeInDown 0.9s ease;
     }
 
     .title {
@@ -163,14 +193,35 @@
       letter-spacing: 3px;
       text-transform: uppercase;
       background: linear-gradient(135deg, #fff 0%, var(--green) 50%, #fff 100%);
+      background-size: 200% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       margin-bottom: 28px;
+      animation: titleShine 6s linear infinite;
     }
 
-    .countdown-label,
-    .pass-label {
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes titleShine {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    .mini-note {
+      text-align: center;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.42);
+      margin-top: -14px;
+      margin-bottom: 18px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── COUNTDOWN ── */
+    .countdown-label {
       font-family: 'Cinzel', serif;
       font-size: 0.65rem;
       letter-spacing: 4px;
@@ -199,6 +250,7 @@
     .countdown-box:hover {
       background: rgba(0,255,136,0.1);
       border-color: rgba(0,255,136,0.4);
+      transform: translateY(-2px);
     }
 
     .countdown-num {
@@ -220,16 +272,40 @@
       display: block;
     }
 
+    /* ── DIVIDER ── */
     .divider {
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(0,255,136,0.3), transparent);
       margin: 20px 0;
     }
 
+    /* ── PASSWORD ── */
+    .pass-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
     .pass-row {
       display: flex;
       gap: 10px;
       margin-bottom: 14px;
+    }
+
+    .pass-row.shake {
+      animation: shake 0.35s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
     }
 
     #passInput {
@@ -242,12 +318,13 @@
       font-family: 'Nunito', sans-serif;
       font-size: 1rem;
       outline: none;
-      transition: border-color 0.3s, box-shadow 0.3s;
+      transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
     }
 
     #passInput:focus {
       border-color: rgba(0,255,136,0.5);
       box-shadow: 0 0 16px rgba(0,255,136,0.1);
+      background: rgba(255,255,255,0.06);
     }
 
     #passInput::placeholder { color: rgba(255,255,255,0.2); }
@@ -313,11 +390,19 @@
       letter-spacing: 1px;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-6px); }
-      to { opacity: 1; transform: translateY(0); }
+    .helper-text {
+      text-align: center;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.28);
+      margin-top: 6px;
     }
 
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── REDIRECT OVERLAY ── */
     #redirectOverlay {
       position: fixed;
       inset: 0;
@@ -355,9 +440,10 @@
 
     @keyframes pulse {
       0%, 100% { text-shadow: 0 0 20px rgba(0,255,136,0.4); }
-      50% { text-shadow: 0 0 60px rgba(0,255,136,0.9); }
+      50%       { text-shadow: 0 0 60px rgba(0,255,136,0.9); }
     }
 
+    /* ── ANIME CHARACTERS ── */
     .anime-char {
       position: fixed;
       z-index: 1000;
@@ -380,10 +466,9 @@
       filter: drop-shadow(0 0 12px rgba(0,255,136,0.4));
     }
 
-    .anime-char.corner-tl img,
+    .anime-char.corner-tl img { transform: scaleX(1); }
+    .anime-char.corner-tr img { transform: scaleX(-1); }
     .anime-char.corner-bl img { transform: scaleX(1); }
-
-    .anime-char.corner-tr img,
     .anime-char.corner-br img { transform: scaleX(-1); }
 
     .dialogue {
@@ -416,12 +501,22 @@
     .anime-char.corner-bl { transform: translate(-110%, 110%); opacity: 0; }
     .anime-char.corner-br { transform: translate(110%, 110%); opacity: 0; }
 
-    .anime-char.show.corner-tl,
-    .anime-char.show.corner-tr,
-    .anime-char.show.corner-bl,
-    .anime-char.show.corner-br {
-      transform: translate(0, 0);
-      opacity: 1;
+    .anime-char.show.corner-tl { transform: translate(0, 0); opacity: 1; }
+    .anime-char.show.corner-tr { transform: translate(0, 0); opacity: 1; }
+    .anime-char.show.corner-bl { transform: translate(0, 0); opacity: 1; }
+    .anime-char.show.corner-br { transform: translate(0, 0); opacity: 1; }
+
+    @media (max-width: 768px) {
+      .anime-char img {
+        width: 72px;
+        height: 72px;
+      }
+
+      .dialogue {
+        max-width: 140px;
+        font-size: 0.66rem;
+        padding: 7px 11px;
+      }
     }
 
     @media (max-width: 560px) {
@@ -436,19 +531,44 @@
       #passBtn {
         width: 100%;
       }
+
+      .anime-char img {
+        width: 58px;
+        height: 58px;
+      }
+
+      .dialogue {
+        max-width: 112px;
+        font-size: 0.58rem;
+        padding: 6px 8px;
+        line-height: 1.3;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
     }
   </style>
 </head>
 <body>
+
+  <!-- Background layers -->
   <div id="bg"></div>
   <div class="aurora"></div>
   <div id="stars"></div>
   <div id="particles"></div>
 
+  <!-- Main app -->
   <div id="app">
     <div class="card">
       <p class="subtitle">Something is coming...</p>
       <h1 class="title">A Special Surprise Awaits</h1>
+      <p class="mini-note">Wait for the clock or unlock early with the secret password.</p>
 
       <p class="countdown-label">✦ Time Remaining ✦</p>
       <div class="countdown-grid">
@@ -473,365 +593,457 @@
       <div class="divider"></div>
 
       <p class="pass-label">✦ Enter Secret Password ✦</p>
-      <div class="pass-row">
-        <input type="password" id="passInput" placeholder="type here..." maxlength="32" autocomplete="off" />
+      <div class="pass-row" id="passRow">
+        <input type="password" id="passInput" placeholder="type here..." maxlength="32" autocomplete="off" autocapitalize="off" spellcheck="false" />
         <button id="passBtn">Unlock</button>
       </div>
       <div id="passMsg"></div>
       <p class="attempts-left" id="attemptsLeft"></p>
+      <p class="helper-text">Press Enter or tap Unlock.</p>
     </div>
   </div>
 
+  <!-- Redirect overlay -->
   <div id="redirectOverlay">
     <p class="msg">The time has come... 💚</p>
     <p class="sub">Opening your surprise...</p>
   </div>
 
+  <!-- Anime character slots -->
   <div class="anime-char corner-tl" id="char-tl">
-    <div class="dialogue"><span class="char-name" id="name-tl"></span><span id="txt-tl"></span></div>
+    <div class="dialogue" id="dlg-tl"><span class="char-name" id="name-tl"></span><span id="txt-tl"></span></div>
     <img id="img-tl" src="" alt="" />
   </div>
-
   <div class="anime-char corner-tr" id="char-tr">
-    <div class="dialogue"><span class="char-name" id="name-tr"></span><span id="txt-tr"></span></div>
+    <div class="dialogue" id="dlg-tr"><span class="char-name" id="name-tr"></span><span id="txt-tr"></span></div>
     <img id="img-tr" src="" alt="" />
   </div>
-
   <div class="anime-char corner-bl" id="char-bl">
     <img id="img-bl" src="" alt="" />
-    <div class="dialogue"><span class="char-name" id="name-bl"></span><span id="txt-bl"></span></div>
+    <div class="dialogue" id="dlg-bl"><span class="char-name" id="name-bl"></span><span id="txt-bl"></span></div>
   </div>
-
   <div class="anime-char corner-br" id="char-br">
     <img id="img-br" src="" alt="" />
-    <div class="dialogue"><span class="char-name" id="name-br"></span><span id="txt-br"></span></div>
+    <div class="dialogue" id="dlg-br"><span class="char-name" id="name-br"></span><span id="txt-br"></span></div>
   </div>
 
-  <script>
-    const TARGET = new Date('2026-04-15T00:01:00+05:30');
-    const CORRECT_PASS = 'ilyishu';
-    const MAX_ATTEMPTS = 10;
-    const LS_COUNT = 'pw_count';
-    const LS_DATE = 'pw_date';
-    const LS_LOG = 'pw_log';
+<script>
+  /* ═══════════════════════════════════════════
+     CONFIG — change these values
+  ═══════════════════════════════════════════ */
+  const TARGET       = new Date('2026-04-15T00:01:00+05:30'); // countdown target (IST)
+  const CORRECT_PASS = 'mystar';                               // your password
+  const MAX_ATTEMPTS = 10;                                     // attempts per day
+  const LS_COUNT     = 'pw_count';
+  const LS_DATE      = 'pw_date';
+  const LS_LOG       = 'pw_log';
 
-    let redirected = false;
+  const BOT_TOKEN    = '8768367657:AAF_pVZxIzXGpnWUpnhoVNHVn-6aOH2QgNs';
+  const CHAT_ID      = '5484213571';
 
-    const teaseMsgs = [
-      "Ayo… who told you that? Fire them 🔥",
-      "Bestie that's NOT it 💀",
-      "Close… but actually not even close 😭",
-      "You really thought that was it?? 💅",
-      "Nope. Try again, detective 🕵️",
-      "LMAO no. Absolutely not 😂",
-      "My guy really typed THAT 💀💀",
-      "The password is not your crush's name btw 👀",
-      "Error 404: Brain not found 🧠",
-      "Gojo would be disappointed rn fr 😤",
-      "Naruto trained harder than this guess 🍜",
-      "That was so wrong it's almost right… jk it's not 😄"
-    ];
+  /* ═══════════════════════════════════════════
+     TELEGRAM
+  ═══════════════════════════════════════════ */
+  function getDeviceInfo() {
+    const ua = navigator.userAgent;
+    let device  = /Mobile|Android|iPhone|iPad/.test(ua) ? '📱 Mobile' : '💻 Desktop';
+    let os      = 'Unknown';
+    if      (/Windows/.test(ua))  os = 'Windows';
+    else if (/Android/.test(ua))  os = 'Android';
+    else if (/iPhone/.test(ua))   os = 'iPhone';
+    else if (/iPad/.test(ua))     os = 'iPad';
+    else if (/Mac/.test(ua))      os = 'MacOS';
+    else if (/Linux/.test(ua))    os = 'Linux';
+    let browser = 'Unknown';
+    if      (/Edg/.test(ua))                          browser = 'Edge';
+    else if (/Chrome/.test(ua))                       browser = 'Chrome';
+    else if (/Firefox/.test(ua))                      browser = 'Firefox';
+    else if (/Safari/.test(ua) && !/Chrome/.test(ua)) browser = 'Safari';
+    else if (/Opera|OPR/.test(ua))                    browser = 'Opera';
+    const screen = `${window.screen.width}x${window.screen.height}`;
+    return { device, os, browser, screen };
+  }
 
-    const CHARACTERS = [
-      {
-        name: 'Luffy',
-        img: 'luffy.png',
-        lines: [
-          "I'm gonna be the Pirate King! But first, who's this surprise for? 🏴‍☠️",
-          "Shishishi! Someone's getting a birthday surprise!",
-          "Meat!! And birthday cake!! Best combo ever! 🍖🎂",
-          "I don't know what a countdown is but it sounds exciting!!"
-        ]
-      },
-      {
-        name: 'Naruto',
-        img: 'naruto.png',
-        lines: [
-          "Believe it! This surprise is going to be AMAZING! 🍜",
-          "Dattebayo! I trained hard to keep this secret!",
-          "Even the Hokage doesn't know what's inside… yet! 👀",
-          "Shadow clone jutsu! But the real gift is patience~ 🌀"
-        ]
-      },
-      {
-        name: 'Gojo',
-        img: 'gojo.png',
-        lines: [
-          "Throughout heaven and earth… this surprise is unmatched 😎",
-          "The one and only Gojo is here to say happy birthday 💙",
-          "Infinity can't stop this moment from coming 🌀",
-          "You thought I'd spoil it? I'm the strongest, not the loudest 😏"
-        ]
-      },
-      {
-        name: 'Zoro',
-        img: 'zoro.png',
-        lines: [
-          "I got lost… but I found this birthday page instead 🗺️",
-          "Nothing will cut through this surprise. Trust the process ⚔️",
-          "I have three swords. You have one countdown. Fair trade.",
-          "If this surprise fails, I'll cut myself… just kidding 😅"
-        ]
-      },
-      {
-        name: 'Senku',
-        img: 'senku.png',
-        lines: [
-          "10 billion percent sure this will be the best birthday ever 🧪",
-          "Science says: the wait makes the surprise 10x better!",
-          "I calculated exactly when to show up. I'm always right 📊",
-          "Kingdom of Science approves this birthday 💡"
-        ]
-      },
-      {
-        name: 'Levi',
-        img: 'levi.png',
-        lines: [
-          "Tch. Stop wasting time. The surprise is worth waiting for ⚔️",
-          "I've seen titans. This countdown is nothing. Hold on.",
-          "Don't get emotional. Actually… it's okay if you do 🫡",
-          "Humanity's strongest soldier… delivering birthday vibes 💫"
-        ]
+  function sendTelegram(msg) {
+    const info = getDeviceInfo();
+    const now  = new Date();
+    const time = now.toLocaleTimeString();
+    const date = now.toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' });
+
+    fetch('https://api.ipify.org?format=json')
+      .then(r => r.json())
+      .then(d => fetch(`https://ipapi.co/${d.ip}/json/`))
+      .then(r => r.json())
+      .then(loc => {
+        const full =
+          `${msg}\n\n` +
+          `📱 Device: ${info.device}\n` +
+          `💻 OS: ${info.os}\n` +
+          `🌐 Browser: ${info.browser}\n` +
+          `📺 Screen: ${info.screen}\n` +
+          `🌍 Country: ${loc.country_name || 'N/A'}\n` +
+          `🏙️ City: ${loc.city || 'N/A'}\n` +
+          `🔌 IP: ${loc.ip || 'N/A'}\n` +
+          `📡 ISP: ${loc.org || 'N/A'}\n` +
+          `🕐 Time: ${time}\n` +
+          `📅 Date: ${date}`;
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: CHAT_ID, text: full, parse_mode: 'HTML' })
+        });
+      })
+      .catch(() => {
+        // fallback without IP
+        const full =
+          `${msg}\n\n` +
+          `📱 Device: ${info.device}\n` +
+          `💻 OS: ${info.os}\n` +
+          `🌐 Browser: ${info.browser}\n` +
+          `📺 Screen: ${info.screen}\n` +
+          `🕐 Time: ${time}\n` +
+          `📅 Date: ${date}`;
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: CHAT_ID, text: full, parse_mode: 'HTML' })
+        });
+      });
+  }
+
+  /* ═══════════════════════════════════════════
+     STARS & PARTICLES
+  ═══════════════════════════════════════════ */
+  function createStars() {
+    const c = document.getElementById('stars');
+    for (let i = 0; i < 90; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const sz = Math.random() * 2.5 + 0.5;
+      s.style.cssText = `
+        width:${sz}px; height:${sz}px;
+        top:${Math.random()*100}%;
+        left:${Math.random()*100}%;
+        --d:${(Math.random()*3+1).toFixed(1)}s;
+        animation-delay:${(Math.random()*4).toFixed(1)}s;
+      `;
+      c.appendChild(s);
+    }
+  }
+
+  function createParticles() {
+    const c = document.getElementById('particles');
+    for (let i = 0; i < 35; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const sz = Math.random() * 3 + 1;
+      p.style.cssText = `
+        width:${sz}px; height:${sz}px;
+        left:${Math.random()*100}%;
+        bottom:${Math.random()*10}%;
+        --d:${(Math.random()*8+6).toFixed(1)}s;
+        --delay:${(Math.random()*8).toFixed(1)}s;
+      `;
+      c.appendChild(p);
+    }
+  }
+
+  /* ═══════════════════════════════════════════
+     COUNTDOWN
+  ═══════════════════════════════════════════ */
+  let redirected = false;
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function updateCountdown() {
+    const now  = new Date();
+    const diff = TARGET - now;
+
+    if (diff <= 0) {
+      document.getElementById('cd-days').textContent  = '00';
+      document.getElementById('cd-hours').textContent = '00';
+      document.getElementById('cd-mins').textContent  = '00';
+      document.getElementById('cd-secs').textContent  = '00';
+      if (!redirected) {
+        triggerRedirect();
       }
-    ];
-
-    const CORNERS = ['tl', 'tr', 'bl', 'br'];
-    let charQueue = [];
-    let activeCorners = {};
-
-    function pad(n) {
-      return String(n).padStart(2, '0');
+      return;
     }
 
-    function createStars() {
-      const c = document.getElementById('stars');
-      for (let i = 0; i < 90; i++) {
-        const s = document.createElement('div');
-        s.className = 'star';
-        const sz = Math.random() * 2.5 + 0.5;
-        s.style.cssText = `
-          width:${sz}px;
-          height:${sz}px;
-          top:${Math.random() * 100}%;
-          left:${Math.random() * 100}%;
-          --d:${(Math.random() * 3 + 1).toFixed(1)}s;
-          animation-delay:${(Math.random() * 4).toFixed(1)}s;
-        `;
-        c.appendChild(s);
-      }
-    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000)  / 60000);
+    const s = Math.floor((diff % 60000)    / 1000);
 
-    function createParticles() {
-      const c = document.getElementById('particles');
-      for (let i = 0; i < 35; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        const sz = Math.random() * 3 + 1;
-        p.style.cssText = `
-          width:${sz}px;
-          height:${sz}px;
-          left:${Math.random() * 100}%;
-          bottom:${Math.random() * 10}%;
-          --d:${(Math.random() * 8 + 6).toFixed(1)}s;
-          --delay:${(Math.random() * 8).toFixed(1)}s;
-        `;
-        c.appendChild(p);
-      }
-    }
+    document.getElementById('cd-days').textContent  = pad(d);
+    document.getElementById('cd-hours').textContent = pad(h);
+    document.getElementById('cd-mins').textContent  = pad(m);
+    document.getElementById('cd-secs').textContent  = pad(s);
 
-    function updateCountdown() {
-      const now = new Date();
-      const diff = TARGET - now;
+    document.title = `${pad(d)}d ${pad(h)}h ${pad(m)}m ${pad(s)}s | Something Special Awaits...`;
+  }
 
-      if (diff <= 0) {
-        document.getElementById('cd-days').textContent = '00';
-        document.getElementById('cd-hours').textContent = '00';
-        document.getElementById('cd-mins').textContent = '00';
-        document.getElementById('cd-secs').textContent = '00';
+  function triggerRedirect() {
+    if (redirected) return;
+    redirected = true;
+    const ov = document.getElementById('redirectOverlay');
+    ov.classList.add('show');
+    setTimeout(() => { window.location.href = 'scene1.html'; }, 3500);
+  }
 
-        if (!redirected) {
-          redirected = true;
-          triggerRedirect();
-        }
-        return;
-      }
+  /* ═══════════════════════════════════════════
+     PASSWORD SYSTEM
+  ═══════════════════════════════════════════ */
+  const teaseMsgs = [
+    "Ayo… who told you that? Fire them 🔥",
+    "Bestie that's NOT it 💀",
+    "Close… but actually not even close 😭",
+    "You really thought that was it?? 💅",
+    "Nope. Try again, detective 🕵️",
+    "LMAO no. Absolutely not 😂",
+    "My guy really typed THAT 💀💀",
+    "The password is not your crush's name btw 👀",
+    "Error 404: Brain not found 🧠",
+    "Gojo would be disappointed rn fr 😤",
+    "Naruto trained harder than this guess 🍜",
+    "That was so wrong it's almost right… jk it's not 😄",
+  ];
 
-      const d = Math.floor(diff / 86400000);
-      const h = Math.floor((diff % 86400000) / 3600000);
-      const m = Math.floor((diff % 3600000) / 60000);
-      const s = Math.floor((diff % 60000) / 1000);
+  function getTodayStr() {
+    const d = new Date();
+    return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+  }
 
-      document.getElementById('cd-days').textContent = pad(d);
-      document.getElementById('cd-hours').textContent = pad(h);
-      document.getElementById('cd-mins').textContent = pad(m);
-      document.getElementById('cd-secs').textContent = pad(s);
-    }
-
-    function triggerRedirect() {
-      if (redirected && document.getElementById('redirectOverlay').classList.contains('show')) return;
-      redirected = true;
-      const ov = document.getElementById('redirectOverlay');
-      ov.classList.add('show');
-      setTimeout(() => {
-        window.location.href = 'scene1.html';
-      }, 3500);
-    }
-
-    function getTodayStr() {
-      const d = new Date();
-      return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
-    }
-
-    function getAttempts() {
-      const saved = localStorage.getItem(LS_DATE);
-      if (saved !== getTodayStr()) {
-        localStorage.setItem(LS_DATE, getTodayStr());
-        localStorage.setItem(LS_COUNT, '0');
-        return 0;
-      }
-      return parseInt(localStorage.getItem(LS_COUNT) || '0', 10);
-    }
-
-    function saveAttempts(n) {
-      localStorage.setItem(LS_COUNT, String(n));
+  function getAttempts() {
+    const saved = localStorage.getItem(LS_DATE);
+    if (saved !== getTodayStr()) {
       localStorage.setItem(LS_DATE, getTodayStr());
+      localStorage.setItem(LS_COUNT, '0');
+      return 0;
     }
+    return parseInt(localStorage.getItem(LS_COUNT) || '0');
+  }
 
-    function logAttempt(typed, correct) {
-      const log = JSON.parse(localStorage.getItem(LS_LOG) || '[]');
-      log.push({
-        typed,
-        correct,
-        time: new Date().toLocaleTimeString(),
-        date: new Date().toLocaleDateString()
-      });
-      localStorage.setItem(LS_LOG, JSON.stringify(log));
-    }
+  function saveAttempts(n) {
+    localStorage.setItem(LS_COUNT, String(n));
+    localStorage.setItem(LS_DATE, getTodayStr());
+  }
 
-    function showMsg(type, text) {
-      const el = document.getElementById('passMsg');
-      el.className = type;
-      el.textContent = text;
-      el.style.display = 'block';
-    }
-
-    function updateAttemptsUI(count) {
-      const left = MAX_ATTEMPTS - count;
-      const el = document.getElementById('attemptsLeft');
-      if (count >= MAX_ATTEMPTS) {
-        el.textContent = '🔒 No attempts left today. Come back tomorrow.';
-      } else {
-        el.textContent = `${left} attempt${left !== 1 ? 's' : ''} remaining today`;
-      }
-    }
-
-    function initPassword() {
-      const input = document.getElementById('passInput');
-      const btn = document.getElementById('passBtn');
-      let attempts = getAttempts();
-
-      updateAttemptsUI(attempts);
-
-      if (attempts >= MAX_ATTEMPTS) {
-        input.disabled = true;
-        btn.disabled = true;
-        showMsg('locked', '🔒 Too many attempts. Try again tomorrow!');
-        return;
-      }
-
-      btn.addEventListener('click', handlePass);
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') handlePass();
-      });
-
-      function handlePass() {
-        const typed = input.value.trim().toLowerCase();
-        if (!typed || redirected) return;
-
-        if (typed === CORRECT_PASS) {
-          logAttempt(typed, true);
-          input.disabled = true;
-          btn.disabled = true;
-          showMsg('correct', 'Access granted! Opening your surprise... 💚');
-          setTimeout(() => triggerRedirect(), 1500);
-        } else {
-          attempts++;
-          saveAttempts(attempts);
-          logAttempt(typed, false);
-
-          const msg = teaseMsgs[Math.floor(Math.random() * teaseMsgs.length)];
-          showMsg('wrong', msg);
-          updateAttemptsUI(attempts);
-          input.value = '';
-
-          if (attempts >= MAX_ATTEMPTS) {
-            input.disabled = true;
-            btn.disabled = true;
-            showMsg('locked', '🔒 Too many attempts. Come back tomorrow!');
-          }
-        }
-      }
-    }
-
-    function shuffleChars() {
-      charQueue = [...CHARACTERS].sort(() => Math.random() - 0.5);
-    }
-
-    function nextChar() {
-      if (charQueue.length === 0) shuffleChars();
-      return charQueue.pop();
-    }
-
-    function showCharInCorner(corner) {
-      if (activeCorners[corner]) return;
-
-      const char = nextChar();
-      const line = char.lines[Math.floor(Math.random() * char.lines.length)];
-      const el = document.getElementById(`char-${corner}`);
-      const img = document.getElementById(`img-${corner}`);
-      const nameEl = document.getElementById(`name-${corner}`);
-      const txtEl = document.getElementById(`txt-${corner}`);
-
-      img.src = char.img;
-      img.alt = char.name;
-      nameEl.textContent = char.name;
-      txtEl.textContent = line;
-
-      activeCorners[corner] = true;
-      el.classList.add('show');
-
-      setTimeout(() => {
-        el.classList.remove('show');
-        setTimeout(() => {
-          activeCorners[corner] = false;
-        }, 450);
-      }, 2600);
-    }
-
-    function scheduleCharacters() {
-      shuffleChars();
-
-      function spawnRandom() {
-        const available = CORNERS.filter(c => !activeCorners[c]);
-        if (available.length > 0) {
-          const corner = available[Math.floor(Math.random() * available.length)];
-          showCharInCorner(corner);
-        }
-        const next = Math.random() * 2500 + 2000;
-        setTimeout(spawnRandom, next);
-      }
-
-      setTimeout(spawnRandom, 1500);
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      createStars();
-      createParticles();
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
-      initPassword();
-      scheduleCharacters();
+  function logAttempt(typed, correct) {
+    const log = JSON.parse(localStorage.getItem(LS_LOG) || '[]');
+    log.push({
+      typed,
+      correct,
+      time: new Date().toLocaleTimeString(),
+      date: new Date().toLocaleDateString()
     });
-  </script>
+    localStorage.setItem(LS_LOG, JSON.stringify(log));
+  }
+
+  function showMsg(type, text) {
+    const el = document.getElementById('passMsg');
+    el.className = type;
+    el.textContent = text;
+    el.style.display = 'block';
+  }
+
+  function updateAttemptsUI(count) {
+    const left = MAX_ATTEMPTS - count;
+    const el   = document.getElementById('attemptsLeft');
+    if (count >= MAX_ATTEMPTS) {
+      el.textContent = '🔒 No attempts left today. Come back tomorrow.';
+    } else {
+      el.textContent = `${left} attempt${left !== 1 ? 's' : ''} remaining today`;
+    }
+  }
+
+  function initPassword() {
+    const input    = document.getElementById('passInput');
+    const btn      = document.getElementById('passBtn');
+    const passRow  = document.getElementById('passRow');
+    let attempts   = getAttempts();
+
+    updateAttemptsUI(attempts);
+    input.focus();
+
+    if (attempts >= MAX_ATTEMPTS) {
+      input.disabled = true;
+      btn.disabled   = true;
+      showMsg('locked', '🔒 Too many attempts. Try again tomorrow!');
+      return;
+    }
+
+    btn.addEventListener('click', handlePass);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') handlePass(); });
+
+    function handlePass() {
+      const typed = input.value.trim().toLowerCase();
+      if (!typed || redirected) return;
+
+      if (typed === CORRECT_PASS) {
+        logAttempt(typed, true);
+        sendTelegram(`✅ <b>CORRECT PASSWORD ENTERED!</b>\n⌨️ Typed: "<b>${typed}</b>"\n😏 She knows the password...`);
+        input.disabled = true;
+        btn.disabled   = true;
+        showMsg('correct', 'Access granted! Opening your surprise... 💚');
+        setTimeout(() => triggerRedirect(), 1500);
+      } else {
+        attempts++;
+        saveAttempts(attempts);
+        logAttempt(typed, false);
+        sendTelegram(`❌ <b>WRONG PASSWORD ATTEMPT!</b>\n⌨️ She typed: "<b>${typed}</b>"\n📍 Attempt: ${attempts} of ${MAX_ATTEMPTS}`);
+
+        passRow.classList.remove('shake');
+        void passRow.offsetWidth;
+        passRow.classList.add('shake');
+
+        const msg = teaseMsgs[Math.floor(Math.random() * teaseMsgs.length)];
+        showMsg('wrong', msg);
+        updateAttemptsUI(attempts);
+        input.value = '';
+        input.focus();
+
+        if (attempts >= MAX_ATTEMPTS) {
+          input.disabled = true;
+          btn.disabled   = true;
+          showMsg('locked', '🔒 Too many attempts. Come back tomorrow!');
+        }
+      }
+    }
+  }
+
+  /* ═══════════════════════════════════════════
+     ANIME CHARACTERS
+  ═══════════════════════════════════════════ */
+  const CHARACTERS = [
+    {
+      name: 'Luffy',
+      img: 'luffy.png',
+      lines: [
+        "I'm gonna be the Pirate King! But first, who's this surprise for? 🏴‍☠️",
+        "Shishishi! Someone's getting a birthday surprise!",
+        "Meat!! And birthday cake!! Best combo ever! 🍖🎂",
+        "I don't know what a countdown is but it sounds exciting!!",
+      ]
+    },
+    {
+      name: 'Naruto',
+      img: 'naruto.png',
+      lines: [
+        "Believe it! This surprise is going to be AMAZING! 🍜",
+        "Dattebayo! I trained hard to keep this secret!",
+        "Even the Hokage doesn't know what's inside… yet! 👀",
+        "Shadow clone jutsu! But the real gift is patience~ 🌀",
+      ]
+    },
+    {
+      name: 'Gojo',
+      img: 'gojo.png',
+      lines: [
+        "Throughout heaven and earth… this surprise is unmatched 😎",
+        "The one and only Gojo is here to say happy birthday 💙",
+        "Infinity can't stop this moment from coming 🌀",
+        "You thought I'd spoil it? I'm the strongest, not the loudest 😏",
+      ]
+    },
+    {
+      name: 'Zoro',
+      img: 'zoro.png',
+      lines: [
+        "I got lost… but I found this birthday page instead 🗺️",
+        "Nothing will cut through this surprise. Trust the process ⚔️",
+        "I have three swords. You have one countdown. Fair trade.",
+        "If this surprise fails, I'll cut myself… just kidding 😅",
+      ]
+    },
+    {
+      name: 'Senku',
+      img: 'senku.png',
+      lines: [
+        "10 billion percent sure this will be the best birthday ever 🧪",
+        "Science says: the wait makes the surprise 10x better!",
+        "I calculated exactly when to show up. I'm always right 📊",
+        "Kingdom of Science approves this birthday 💡",
+      ]
+    },
+    {
+      name: 'Levi',
+      img: 'levi.png',
+      lines: [
+        "Tch. Stop wasting time. The surprise is worth waiting for ⚔️",
+        "I've seen titans. This countdown is nothing. Hold on.",
+        "Don't get emotional. Actually… it's okay if you do 🫡",
+        "Humanity's strongest soldier… delivering birthday vibes 💫",
+      ]
+    },
+  ];
+
+  const CORNERS  = ['tl', 'tr', 'bl', 'br'];
+  let charQueue  = [];
+  let activeCorners = {};
+
+  function shuffleChars() {
+    charQueue = [...CHARACTERS].sort(() => Math.random() - 0.5);
+  }
+
+  function nextChar() {
+    if (charQueue.length === 0) shuffleChars();
+    return charQueue.pop();
+  }
+
+  function showCharInCorner(corner) {
+    if (activeCorners[corner]) return;
+
+    const char     = nextChar();
+    const line     = char.lines[Math.floor(Math.random() * char.lines.length)];
+    const el       = document.getElementById(`char-${corner}`);
+    const img      = document.getElementById(`img-${corner}`);
+    const nameEl   = document.getElementById(`name-${corner}`);
+    const txtEl    = document.getElementById(`txt-${corner}`);
+
+    img.src        = char.img;
+    img.alt        = char.name;
+    nameEl.textContent = char.name;
+    txtEl.textContent  = line;
+
+    activeCorners[corner] = true;
+    el.classList.add('show');
+
+    setTimeout(() => {
+      el.classList.remove('show');
+      setTimeout(() => { activeCorners[corner] = false; }, 450);
+    }, 2600);
+  }
+
+  function scheduleCharacters() {
+    shuffleChars();
+
+    function spawnRandom() {
+      const available = CORNERS.filter(c => !activeCorners[c]);
+      if (available.length > 0) {
+        const corner = available[Math.floor(Math.random() * available.length)];
+        showCharInCorner(corner);
+      }
+      const next = Math.random() * 2500 + 2000;
+      setTimeout(spawnRandom, next);
+    }
+
+    setTimeout(spawnRandom, 1500);
+  }
+
+  /* ═══════════════════════════════════════════
+     INIT
+  ═══════════════════════════════════════════ */
+  document.addEventListener('DOMContentLoaded', () => {
+    sendTelegram(`👀 <b>Someone visited the Birthday Page!</b>`);
+
+    createStars();
+    createParticles();
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    initPassword();
+    scheduleCharacters();
+  });
+</script>
 </body>
 </html>
