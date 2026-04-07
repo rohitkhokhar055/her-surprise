@@ -252,28 +252,28 @@
     }
 
     .loid {
-      z-index: 4;
-      left: -34px;
-      top: 22px;
-      width: clamp(144px, 45vw, 210px);
-      animation-delay: 0.06s;
-    }
+  z-index: 7;
+  left: 4px;
+  top: 96px;
+  width: clamp(124px, 36vw, 176px);
+  animation-delay: 0.06s;
+}
 
-    .yor {
-      z-index: 4;
-      right: -36px;
-      top: 26px;
-      width: clamp(146px, 46vw, 214px);
-      animation-delay: 0.14s;
-    }
+.yor {
+  z-index: 7;
+  right: 4px;
+  top: 98px;
+  width: clamp(126px, 37vw, 180px);
+  animation-delay: 0.14s;
+}
 
-    .bond {
-      z-index: 12;
-      left: 50%;
-      bottom: 6px;
-      width: clamp(142px, 42vw, 198px);
-      animation: bondIn 0.8s ease 0.22s forwards;
-    }
+.bond {
+  z-index: 12;
+  left: 50%;
+  bottom: 58px;
+  width: clamp(132px, 38vw, 188px);
+  animation: bondIn 0.8s ease 0.22s forwards;
+}
 
     @keyframes charIn {
       from { opacity: 0; transform: translateY(18px) scale(0.98); }
@@ -675,17 +675,25 @@
       .scene {
         padding-left: 10px;
         padding-right: 10px;
-      }
+      }       
+  .loid {
+  left: 2px;
+  top: 104px;
+  width: 122px;
+}
 
-      .loid {
-        left: -42px;
-      }
+.yor {
+  right: 2px;
+  top: 106px;
+  width: 124px;
+}
 
-      .yor {
-        right: -44px;
-      }
+.bond {
+  bottom: 54px;
+  width: 132px;
+}
 
-      .letter-card.open .letter-paper {
+     .letter-card.open .letter-paper {
         min-height: 590px;
       }
 
