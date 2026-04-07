@@ -3,787 +3,345 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#08110d" />
-  <title>For Ishu 💚</title>
+  <meta name="theme-color" content="#07110c" />
+  <title>For Ishu</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Sacramento&family=Nunito:wght@300;400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Sacramento&family=Nunito:wght@300;400;500;600;700&display=swap');
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     :root {
+      --bg: #050816;
+      --bg-soft: #0b1611;
+      --surface: rgba(10, 16, 14, 0.72);
+      --surface-strong: rgba(10, 16, 14, 0.9);
+      --line: rgba(255, 255, 255, 0.08);
+      --line-soft: rgba(255, 255, 255, 0.05);
+      --text: rgba(255, 255, 255, 0.9);
+      --muted: rgba(255, 255, 255, 0.55);
       --green: #00ff88;
-      --green2: #00cc66;
-      --mint: #8fffd0;
-      --pink: #ff7ac8;
-      --blue: #88aaff;
-      --dark: #05070d;
-      --dark2: #0b1511;
-      --card: rgba(8, 16, 13, 0.72);
-      --card-2: rgba(255, 255, 255, 0.05);
-      --text: rgba(255,255,255,0.9);
-      --muted: rgba(255,255,255,0.55);
-      --border: rgba(0,255,136,0.18);
-      --shadow: 0 18px 60px rgba(0,0,0,0.38);
+      --green-2: #7effc1;
+      --glow: rgba(0, 255, 136, 0.22);
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+      --radius: 28px;
     }
 
     html, body {
       width: 100%;
       min-height: 100%;
-      background: var(--dark);
-      color: #fff;
+      background: var(--bg);
+      color: var(--text);
       overflow-x: hidden;
       font-family: 'Nunito', sans-serif;
     }
 
     body {
       position: relative;
-      min-height: 100vh;
     }
 
-    .bg {
+    .background {
       position: fixed;
       inset: 0;
       z-index: 0;
       overflow: hidden;
       background:
-        radial-gradient(circle at 15% 20%, rgba(0,255,136,0.10), transparent 28%),
-        radial-gradient(circle at 85% 15%, rgba(136,170,255,0.08), transparent 26%),
-        radial-gradient(circle at 50% 80%, rgba(255,122,200,0.08), transparent 24%),
-        linear-gradient(135deg, #04070d 0%, #08110d 35%, #0d1c14 70%, #04070d 100%);
+        radial-gradient(circle at 15% 20%, rgba(0,255,136,0.10), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(126,255,193,0.08), transparent 20%),
+        radial-gradient(circle at 50% 88%, rgba(255,255,255,0.03), transparent 30%),
+        linear-gradient(135deg, #04070f 0%, #07110c 42%, #0c1512 100%);
     }
 
-    .mesh {
+    .bloom {
       position: absolute;
       border-radius: 50%;
-      filter: blur(85px);
-      opacity: 0.22;
-      animation: drift 13s ease-in-out infinite alternate;
+      filter: blur(90px);
+      opacity: 0.18;
+      animation: bloomFloat 14s ease-in-out infinite alternate;
     }
 
-    .mesh-1 {
-      width: 520px;
-      height: 520px;
-      background: rgba(0,255,136,0.35);
-      left: -120px;
-      top: -120px;
-    }
-
-    .mesh-2 {
+    .bloom.one {
       width: 420px;
       height: 420px;
-      background: rgba(120,170,255,0.20);
-      right: -90px;
-      top: 18%;
+      background: rgba(0,255,136,0.45);
+      top: -120px;
+      left: -120px;
+    }
+
+    .bloom.two {
+      width: 360px;
+      height: 360px;
+      background: rgba(126,255,193,0.28);
+      right: -80px;
+      top: 22%;
       animation-delay: 2s;
     }
 
-    .mesh-3 {
-      width: 360px;
-      height: 360px;
-      background: rgba(255,122,200,0.18);
-      left: 35%;
+    .bloom.three {
+      width: 300px;
+      height: 300px;
+      background: rgba(255,255,255,0.10);
+      left: 34%;
       bottom: -100px;
       animation-delay: 4s;
     }
 
-    @keyframes drift {
+    @keyframes bloomFloat {
       0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(35px, 28px) scale(1.14); }
+      100% { transform: translate(28px, 22px) scale(1.12); }
     }
 
-    .vignette {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle, transparent 45%, rgba(0,0,0,0.45) 100%);
-      pointer-events: none;
-    }
-
-    .stars,
-    .petals,
-    .hearts {
+    .noise {
       position: absolute;
       inset: 0;
       pointer-events: none;
+      opacity: 0.18;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.18) 0.5px, transparent 0.6px),
+        radial-gradient(circle at 60% 80%, rgba(255,255,255,0.14) 0.5px, transparent 0.6px),
+        radial-gradient(circle at 90% 30%, rgba(255,255,255,0.12) 0.5px, transparent 0.6px);
+      background-size: 180px 180px;
+      mix-blend-mode: screen;
     }
 
-    .star {
+    .dust-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .dust {
       position: absolute;
       border-radius: 50%;
-      background: rgba(255,255,255,0.95);
-      box-shadow: 0 0 8px rgba(255,255,255,0.6);
-      animation: twinkle var(--duration) ease-in-out infinite alternate;
+      background: rgba(255,255,255,0.8);
+      box-shadow: 0 0 8px rgba(255,255,255,0.2);
+      animation: dustRise linear infinite;
     }
 
-    @keyframes twinkle {
-      0% { opacity: 0.12; transform: scale(0.8); }
-      100% { opacity: 1; transform: scale(1.25); }
+    @keyframes dustRise {
+      0% {
+        transform: translateY(0) translateX(0) scale(0.9);
+        opacity: 0;
+      }
+      12% {
+        opacity: 0.35;
+      }
+      88% {
+        opacity: 0.14;
+      }
+      100% {
+        transform: translateY(-110vh) translateX(20px) scale(1.1);
+        opacity: 0;
+      }
     }
 
-    .petal {
-      position: absolute;
-      top: -40px;
-      opacity: 0.34;
-      animation: petalFall linear infinite;
-      filter: drop-shadow(0 0 10px rgba(255,122,200,0.18));
-    }
-
-    @keyframes petalFall {
-      0% { transform: translateY(-40px) translateX(0) rotate(0deg); opacity: 0; }
-      10% { opacity: 0.45; }
-      100% { transform: translateY(110vh) translateX(60px) rotate(320deg); opacity: 0; }
-    }
-
-    .heart-float {
-      position: absolute;
-      bottom: -30px;
-      opacity: 0;
-      animation: heartRise linear infinite;
-      filter: drop-shadow(0 0 10px rgba(0,255,136,0.24));
-    }
-
-    @keyframes heartRise {
-      0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0; }
-      15% { opacity: 0.55; }
-      100% { transform: translateY(-115vh) scale(1.08) rotate(14deg); opacity: 0; }
-    }
-
-    .progress-bar {
+    .progress {
       position: fixed;
       top: 0;
       left: 0;
-      height: 3px;
       width: 0%;
-      z-index: 120;
-      background: linear-gradient(90deg, var(--green), var(--pink), var(--green2));
-      box-shadow: 0 0 16px rgba(0,255,136,0.7);
-      transition: width 0.25s ease;
+      height: 3px;
+      z-index: 50;
+      background: linear-gradient(90deg, var(--green), var(--green-2));
+      box-shadow: 0 0 14px rgba(0,255,136,0.65);
+      transition: width 0.2s ease;
     }
 
-    .control-stack {
+    .topbar {
       position: fixed;
-      top: 16px;
-      right: 16px;
-      z-index: 140;
+      top: 18px;
+      right: 18px;
+      z-index: 60;
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
       justify-content: flex-end;
-      width: min(92vw, 420px);
+      width: min(92vw, 320px);
     }
 
-    .control-btn {
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(8, 16, 13, 0.55);
-      color: #fff;
-      backdrop-filter: blur(14px);
+    .chip-btn {
+      border: 1px solid var(--line);
+      background: rgba(7, 15, 12, 0.65);
+      color: var(--text);
       border-radius: 999px;
       padding: 10px 14px;
-      cursor: pointer;
-      font-size: 0.84rem;
       font-family: 'Nunito', sans-serif;
-      transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-    }
-
-    .control-btn:hover {
-      transform: translateY(-2px);
-      background: rgba(10, 24, 18, 0.7);
-      border-color: rgba(0,255,136,0.26);
-    }
-
-    .control-btn.primary {
-      color: #08110d;
-      background: linear-gradient(135deg, var(--mint), var(--green));
-      border: none;
-      font-weight: 700;
-    }
-
-    .opening-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      display: grid;
-      place-items: center;
-      padding: 20px;
-      background: radial-gradient(circle at center, rgba(8,16,13,0.55), rgba(0,0,0,0.9));
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.45s ease;
-    }
-
-    .opening-overlay.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .opening-card {
-      width: min(92vw, 560px);
-      padding: 34px 28px;
-      border-radius: 28px;
-      background: rgba(8, 16, 13, 0.68);
-      border: 1px solid rgba(255,255,255,0.08);
-      backdrop-filter: blur(24px);
-      text-align: center;
-      box-shadow: var(--shadow);
-    }
-
-    .opening-card .eyebrow {
-      font-family: 'Cinzel', serif;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 14px;
-    }
-
-    .opening-card h1 {
-      font-family: 'Sacramento', cursive;
-      font-size: clamp(2.6rem, 7vw, 4.2rem);
-      color: var(--green);
-      margin-bottom: 10px;
-      text-shadow: 0 0 22px rgba(0,255,136,0.36);
-    }
-
-    .opening-card p {
-      color: rgba(255,255,255,0.82);
-      line-height: 1.7;
-      font-size: 1rem;
-      margin-bottom: 20px;
-    }
-
-    .opening-card button {
-      padding: 13px 28px;
-      border: none;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--green), var(--green2));
-      color: #04110a;
-      font-family: 'Cinzel', serif;
-      font-weight: 700;
-      letter-spacing: 1.5px;
+      font-size: 0.88rem;
       cursor: pointer;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      backdrop-filter: blur(16px);
+      transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease;
     }
 
-    .opening-card button:hover {
+    .chip-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 26px rgba(0,255,136,0.28);
+      border-color: rgba(0,255,136,0.22);
+      background: rgba(10, 18, 15, 0.82);
     }
 
-    .main {
+    .music-hint {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      z-index: 60;
+      border: 1px solid var(--line);
+      background: rgba(7, 15, 12, 0.75);
+      color: rgba(255,255,255,0.72);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 0.84rem;
+      backdrop-filter: blur(16px);
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+      transition: opacity 0.28s ease, transform 0.28s ease;
+    }
+
+    .music-hint.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .page {
       position: relative;
       z-index: 10;
       min-height: 100vh;
-      padding: 88px 20px 42px;
       display: flex;
-      flex-direction: column;
       align-items: center;
+      justify-content: center;
+      padding: 86px 20px 36px;
+    }
+
+    .stage {
+      width: min(100%, 860px);
     }
 
     .hero {
       text-align: center;
-      margin-bottom: 28px;
-      width: min(100%, 920px);
+      margin-bottom: 24px;
     }
 
-    .page-title {
+    .hero-kicker {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
       font-family: 'Sacramento', cursive;
-      font-size: clamp(2.9rem, 8vw, 5.6rem);
+      font-size: clamp(3rem, 8vw, 5.4rem);
+      line-height: 0.95;
       color: var(--green);
-      text-shadow: 0 0 28px rgba(0,255,136,0.35);
-      margin-bottom: 6px;
-      animation: fadeDown 1s ease both;
+      text-shadow: 0 0 28px rgba(0,255,136,0.28);
+      margin-bottom: 10px;
     }
 
-    .page-subtitle {
-      font-family: 'Cinzel', serif;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      font-size: clamp(0.68rem, 2vw, 0.92rem);
-      color: rgba(255,255,255,0.54);
-      margin-bottom: 18px;
-      animation: fadeDown 1s ease 0.15s both;
-    }
-
-    .whisper-pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 46px;
-      padding: 11px 18px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.82);
-      backdrop-filter: blur(14px);
-      animation: fadeDown 1s ease 0.3s both;
-    }
-
-    #whisperText {
-      transition: opacity 0.35s ease;
-    }
-
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-18px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .layout {
-      width: min(100%, 1120px);
-      display: grid;
-      grid-template-columns: 250px minmax(0, 1fr);
-      gap: 26px;
-      align-items: start;
-    }
-
-    .companion {
-      position: sticky;
-      top: 94px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .cat-bubble,
-    .mood-card {
-      width: 100%;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 18px;
-      padding: 14px 16px;
-      backdrop-filter: blur(16px);
-      box-shadow: var(--shadow);
-    }
-
-    .cat-bubble {
-      color: rgba(255,255,255,0.9);
-      line-height: 1.55;
-      font-size: 0.88rem;
-      text-align: center;
-      position: relative;
-      transition: opacity 0.35s ease;
-    }
-
-    .cat-bubble::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 28px;
-      border-width: 8px 8px 0 8px;
-      border-style: solid;
-      border-color: rgba(255,255,255,0.08) transparent transparent transparent;
-    }
-
-    .mood-label {
-      font-family: 'Cinzel', serif;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      font-size: 0.63rem;
-      color: rgba(255,255,255,0.42);
-      margin-bottom: 8px;
-    }
-
-    #moodText {
-      color: rgba(255,255,255,0.82);
-      line-height: 1.65;
-      font-size: 0.92rem;
-    }
-
-    .cat-shell {
-      width: 100%;
-      border-radius: 26px;
-      padding: 18px 10px 8px;
-      background: radial-gradient(circle at center, rgba(0,255,136,0.08), rgba(255,255,255,0.02));
-      border: 1px solid rgba(255,255,255,0.06);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--shadow);
-      display: grid;
-      place-items: center;
-    }
-
-    .cat-container {
-      position: relative;
-      width: 140px;
-      height: 165px;
-      animation: catBob 2.6s ease-in-out infinite;
-    }
-
-    @keyframes catBob {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    .cat-aura {
-      position: absolute;
-      width: 92px;
-      height: 92px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,255,136,0.22), transparent 70%);
-      left: 50%;
-      top: 18px;
-      transform: translateX(-50%);
-      filter: blur(8px);
-    }
-
-    .cat-body {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 88px;
-      height: 76px;
-      border-radius: 44px 44px 30px 30px;
-      background: linear-gradient(135deg, #27313e, #141927);
-      border: 2px solid rgba(255,255,255,0.10);
-    }
-
-    .cat-belly {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 50px;
-      height: 42px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .cat-head {
-      position: absolute;
-      top: 6px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 78px;
-      height: 72px;
-      border-radius: 50% 50% 45% 45%;
-      background: linear-gradient(135deg, #27313e, #141927);
-      border: 2px solid rgba(255,255,255,0.10);
-      z-index: 2;
-      transition: transform 0.35s ease;
-    }
-
-    .cat-ear {
-      position: absolute;
-      top: -18px;
-      width: 0;
-      height: 0;
-    }
-
-    .cat-ear.left {
-      left: 8px;
-      border-left: 13px solid transparent;
-      border-right: 13px solid transparent;
-      border-bottom: 24px solid #27313e;
-    }
-
-    .cat-ear.right {
-      right: 8px;
-      border-left: 13px solid transparent;
-      border-right: 13px solid transparent;
-      border-bottom: 24px solid #27313e;
-    }
-
-    .cat-ear.left::after,
-    .cat-ear.right::after {
-      content: '';
-      position: absolute;
-      top: 6px;
-      left: -6px;
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-bottom: 12px solid rgba(255,122,200,0.24);
-    }
-
-    .cat-eyes {
-      position: absolute;
-      top: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 16px;
-    }
-
-    .cat-eye {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 10px rgba(0,255,136,0.8);
-      position: relative;
-      animation: blink 4s ease-in-out infinite;
-      transition: all 0.35s ease;
-    }
-
-    .cat-eye::after {
-      content: '';
-      position: absolute;
-      top: 3px;
-      left: 3px;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: #04110a;
-    }
-
-    @keyframes blink {
-      0%, 90%, 100% { transform: scaleY(1); }
-      95% { transform: scaleY(0.1); }
-    }
-
-    .cat-nose {
-      position: absolute;
-      top: 41px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 7px solid rgba(255,122,200,0.58);
-    }
-
-    .cat-mouth {
-      position: absolute;
-      top: 48px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 20px;
-      height: 9px;
-      border-bottom: 2px solid rgba(255,255,255,0.34);
-      border-radius: 0 0 10px 10px;
-      transition: all 0.35s ease;
-    }
-
-    .cat-whiskers {
-      position: absolute;
-      top: 39px;
-      width: 100%;
-    }
-
-    .whisker {
-      position: absolute;
-      height: 1px;
-      background: rgba(255,255,255,0.22);
-    }
-
-    .whisker.l1 { width: 24px; left: 2px; transform: rotate(-10deg); }
-    .whisker.l2 { width: 24px; left: 2px; top: 6px; }
-    .whisker.l3 { width: 24px; left: 2px; top: 12px; transform: rotate(10deg); }
-    .whisker.r1 { width: 24px; right: 2px; transform: rotate(10deg); }
-    .whisker.r2 { width: 24px; right: 2px; top: 6px; }
-    .whisker.r3 { width: 24px; right: 2px; top: 12px; transform: rotate(-10deg); }
-
-    .cat-tail {
-      position: absolute;
-      bottom: 12px;
-      right: -18px;
-      width: 34px;
-      height: 12px;
-      border-bottom: 3px solid rgba(255,255,255,0.28);
-      border-right: 3px solid rgba(255,255,255,0.28);
-      border-radius: 0 0 20px 0;
-      animation: tailWag 1.6s ease-in-out infinite;
-      transform-origin: left center;
-    }
-
-    @keyframes tailWag {
-      0%, 100% { transform: rotate(-12deg); }
-      50% { transform: rotate(16deg); }
-    }
-
-    .cat-paws {
-      position: absolute;
-      bottom: 2px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 20px;
-    }
-
-    .paw {
-      width: 18px;
-      height: 12px;
-      border-radius: 50% 50% 40% 40%;
-      background: #27313e;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .tear {
-      position: absolute;
-      width: 5px;
-      height: 9px;
-      background: rgba(132,195,255,0.78);
-      border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-      animation: tearFall 1.05s ease-in infinite;
-      opacity: 0;
-      display: none;
-    }
-
-    .tear.left { top: 37px; left: 14px; }
-    .tear.right { top: 37px; right: 14px; }
-
-    @keyframes tearFall {
-      0% { opacity: 0.9; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(20px); }
-    }
-
-    .cat-sparkles {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      margin-top: 10px;
-      color: rgba(255,255,255,0.76);
+    .hero-subtitle {
+      max-width: 640px;
+      margin: 0 auto;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.8;
       font-size: 1rem;
     }
 
-    .cat-sparkles span {
-      animation: bounceSoft 1.4s ease-in-out infinite;
-    }
-
-    .cat-sparkles span:nth-child(2) { animation-delay: 0.2s; }
-    .cat-sparkles span:nth-child(3) { animation-delay: 0.4s; }
-
-    @keyframes bounceSoft {
-      0%, 100% { transform: translateY(0); opacity: 0.7; }
-      50% { transform: translateY(-5px); opacity: 1; }
-    }
-
-    .cat-head.soft .cat-eye {
-      background: var(--mint);
-      box-shadow: 0 0 10px rgba(143,255,208,0.9);
-    }
-
-    .cat-head.sad .cat-eye,
-    .cat-head.cry .cat-eye {
-      background: var(--blue);
-      box-shadow: 0 0 10px rgba(136,170,255,0.8);
-    }
-
-    .cat-head.sad .cat-mouth,
-    .cat-head.cry .cat-mouth {
-      border-bottom: none;
-      border-top: 2px solid rgba(136,170,255,0.45);
-      border-radius: 10px 10px 0 0;
-      top: 50px;
-    }
-
-    .cat-head.cry .tear {
-      display: block;
-    }
-
-    .cat-head.love .cat-eye {
-      background: var(--pink);
-      box-shadow: 0 0 10px rgba(255,122,200,0.9);
-    }
-
-    .cat-head.love .cat-mouth {
-      border-bottom-color: rgba(255,122,200,0.7);
-    }
-
-    .letter-card {
+    .letter-shell {
       position: relative;
-      background: rgba(8, 16, 13, 0.66);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 30px;
-      padding: clamp(20px, 3vw, 34px);
+      border-radius: var(--radius);
+      background: var(--surface);
+      border: 1px solid var(--line);
       backdrop-filter: blur(22px);
       box-shadow: var(--shadow);
       overflow: hidden;
     }
 
-    .letter-card::before {
+    .letter-shell::before {
       content: '';
       position: absolute;
-      inset: -1px;
-      border-radius: 30px;
-      padding: 1px;
-      background: linear-gradient(135deg, rgba(0,255,136,0.26), rgba(255,122,200,0.12), rgba(255,255,255,0.06));
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
+      inset: 0;
       pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.05), transparent 16%),
+        radial-gradient(circle at top right, rgba(0,255,136,0.08), transparent 28%);
     }
 
-    .letter-top {
+    .letter-inner {
+      position: relative;
+      z-index: 2;
+      padding: clamp(22px, 4vw, 36px);
+    }
+
+    .letter-head {
       display: flex;
-      align-items: center;
+      align-items: start;
       justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 16px;
+      gap: 16px;
+      margin-bottom: 18px;
     }
 
-    .date-chip {
+    .meta {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .meta-chip {
       display: inline-flex;
       align-items: center;
+      width: fit-content;
       gap: 8px;
-      padding: 7px 12px;
+      padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line-soft);
+      color: rgba(255,255,255,0.62);
       font-family: 'Cinzel', serif;
       font-size: 0.68rem;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 12px;
     }
 
-    .letter-title {
+    .letter-name {
       font-family: 'Sacramento', cursive;
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      color: var(--green);
-      text-shadow: 0 0 18px rgba(0,255,136,0.28);
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
       line-height: 1;
-    }
-
-    .remark-pill {
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.04);
       color: #fff;
-      border-radius: 999px;
-      padding: 10px 16px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-family: 'Nunito', sans-serif;
-      transition: transform 0.25s ease, background 0.25s ease;
-      white-space: nowrap;
-    }
-
-    .remark-pill:hover {
-      transform: translateY(-2px);
-      background: rgba(255,255,255,0.08);
     }
 
     .divider {
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent);
-      margin-bottom: 18px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      margin-bottom: 20px;
     }
 
-    .letter-body {
-      min-height: 410px;
-      max-height: min(62vh, 680px);
+    .letter-scroll {
+      min-height: 360px;
+      max-height: min(60vh, 720px);
       overflow-y: auto;
       padding-right: 6px;
       scrollbar-width: thin;
-      scrollbar-color: rgba(0,255,136,0.28) transparent;
+      scrollbar-color: rgba(255,255,255,0.16) transparent;
     }
 
-    .letter-body::-webkit-scrollbar {
+    .letter-scroll::-webkit-scrollbar {
       width: 8px;
     }
 
-    .letter-body::-webkit-scrollbar-thumb {
-      background: rgba(0,255,136,0.25);
+    .letter-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.14);
       border-radius: 999px;
     }
 
     #letterText {
       white-space: pre-wrap;
+      color: rgba(255,255,255,0.9);
       line-height: 1.95;
-      color: var(--text);
-      font-size: clamp(0.96rem, 2vw, 1.08rem);
+      font-size: clamp(0.98rem, 2vw, 1.08rem);
+      letter-spacing: 0.01em;
     }
 
     .cursor {
@@ -791,10 +349,10 @@
       width: 2px;
       height: 1.05em;
       background: var(--green);
-      vertical-align: text-bottom;
       margin-left: 2px;
-      box-shadow: 0 0 8px rgba(0,255,136,0.85);
-      animation: cursorBlink 0.7s ease-in-out infinite;
+      vertical-align: text-bottom;
+      box-shadow: 0 0 10px rgba(0,255,136,0.75);
+      animation: cursorBlink 0.75s ease-in-out infinite;
     }
 
     @keyframes cursorBlink {
@@ -802,235 +360,255 @@
       50% { opacity: 0; }
     }
 
-    .quote-strip {
-      margin-top: 20px;
-      padding: 14px 16px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.78);
-      line-height: 1.65;
-      font-size: 0.92rem;
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.86rem;
     }
 
-    .final-message {
-      margin-top: 26px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(255,255,255,0.08);
+    .status-row span:last-child {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 1px;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+    }
+
+    .final-panel {
+      margin-top: 24px;
+      padding: 18px 18px 4px;
+      border-top: 1px solid var(--line);
       opacity: 0;
       transform: translateY(12px);
-      pointer-events: none;
-      transition: opacity 0.8s ease, transform 0.8s ease;
       display: none;
+      transition: opacity 0.7s ease, transform 0.7s ease;
     }
 
-    .final-message.show {
+    .final-panel.show {
       display: block;
       opacity: 1;
       transform: translateY(0);
-      pointer-events: auto;
     }
 
-    .final-glow {
-      display: block;
+    .final-panel h3 {
       font-family: 'Sacramento', cursive;
-      font-size: clamp(2.5rem, 7vw, 4.8rem);
+      font-size: clamp(2.1rem, 5vw, 3.4rem);
       color: var(--green);
-      text-shadow:
-        0 0 20px rgba(0,255,136,0.9),
-        0 0 40px rgba(0,255,136,0.45),
-        0 0 70px rgba(0,255,136,0.2);
-      margin-bottom: 8px;
+      line-height: 1;
+      margin-bottom: 10px;
+      text-shadow: 0 0 24px rgba(0,255,136,0.25);
     }
 
-    .final-sub {
-      color: rgba(255,255,255,0.75);
+    .final-panel p {
+      color: rgba(255,255,255,0.74);
       line-height: 1.8;
-      max-width: 600px;
+      max-width: 620px;
     }
 
-    .final-actions {
+    .actions {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      margin-top: 22px;
+      margin-top: 24px;
     }
 
-    .pill-btn {
-      border: none;
+    .primary-btn,
+    .secondary-btn {
       border-radius: 999px;
-      padding: 13px 22px;
-      cursor: pointer;
+      padding: 13px 20px;
       font-family: 'Cinzel', serif;
+      font-size: 0.82rem;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      font-size: 0.82rem;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      cursor: pointer;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, background 0.24s ease;
     }
 
-    .pill-btn.next {
-      background: linear-gradient(135deg, var(--green), var(--green2));
+    .primary-btn {
+      border: none;
+      background: linear-gradient(135deg, var(--green), var(--green-2));
       color: #05110a;
-      box-shadow: 0 10px 26px rgba(0,255,136,0.22);
+      box-shadow: 0 14px 32px rgba(0,255,136,0.18);
     }
 
-    .pill-btn.ghost {
-      background: rgba(255,255,255,0.05);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.10);
+    .secondary-btn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
     }
 
-    .pill-btn:hover {
+    .secondary-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .primary-btn:hover,
+    .secondary-btn:hover:not(:disabled) {
       transform: translateY(-2px);
     }
 
-    .remark-modal {
+    .note-strip {
+      margin-top: 18px;
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line-soft);
+      color: rgba(255,255,255,0.68);
+      line-height: 1.7;
+      font-size: 0.92rem;
+    }
+
+    .reply-modal {
       position: fixed;
       inset: 0;
-      z-index: 220;
-      background: rgba(0,0,0,0.6);
+      z-index: 80;
       display: grid;
       place-items: center;
       padding: 20px;
+      background: rgba(0, 0, 0, 0.56);
+      backdrop-filter: blur(8px);
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
-      backdrop-filter: blur(6px);
+      transition: opacity 0.28s ease;
     }
 
-    .remark-modal.show {
+    .reply-modal.show {
       opacity: 1;
       pointer-events: auto;
     }
 
-    .remark-panel {
+    .reply-panel {
       width: min(92vw, 620px);
-      border-radius: 28px;
-      background: rgba(8, 16, 13, 0.9);
-      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 26px;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
       box-shadow: var(--shadow);
       padding: 24px;
       transform: translateY(12px);
-      transition: transform 0.3s ease;
+      transition: transform 0.28s ease;
     }
 
-    .remark-modal.show .remark-panel {
+    .reply-modal.show .reply-panel {
       transform: translateY(0);
     }
 
-    .remark-top {
+    .reply-head {
       display: flex;
       justify-content: space-between;
       gap: 12px;
       align-items: start;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
-    .remark-label {
+    .reply-kicker {
       font-family: 'Cinzel', serif;
-      text-transform: uppercase;
-      letter-spacing: 3px;
       font-size: 0.68rem;
-      color: rgba(255,255,255,0.46);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
       margin-bottom: 8px;
     }
 
-    .remark-title {
+    .reply-title {
       font-family: 'Sacramento', cursive;
       font-size: clamp(2rem, 5vw, 3rem);
-      color: var(--green);
       line-height: 1;
+      color: var(--green);
     }
 
     .close-btn {
       width: 38px;
       height: 38px;
       border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid var(--line);
       background: rgba(255,255,255,0.04);
       color: #fff;
       cursor: pointer;
       font-size: 1.15rem;
     }
 
-    .reaction-grid {
+    .reaction-row {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       margin: 16px 0 18px;
     }
 
-    .reaction-btn {
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.08);
+    .reaction-chip {
+      border: 1px solid var(--line);
       background: rgba(255,255,255,0.04);
-      color: rgba(255,255,255,0.88);
+      color: rgba(255,255,255,0.84);
+      border-radius: 999px;
+      padding: 10px 14px;
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: all 0.22s ease;
       font-size: 0.9rem;
     }
 
-    .reaction-btn.active {
-      background: linear-gradient(135deg, rgba(0,255,136,0.22), rgba(255,122,200,0.16));
-      border-color: rgba(0,255,136,0.32);
-      box-shadow: 0 10px 24px rgba(0,255,136,0.10);
+    .reaction-chip.active {
+      border-color: rgba(0,255,136,0.28);
+      background: rgba(0,255,136,0.10);
+      box-shadow: 0 10px 24px rgba(0,255,136,0.08);
     }
 
-    .remark-input {
+    .reply-input {
       width: 100%;
-      min-height: 150px;
-      resize: vertical;
+      min-height: 160px;
       border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid var(--line);
       background: rgba(255,255,255,0.04);
       color: #fff;
       padding: 16px;
-      outline: none;
       font-family: 'Nunito', sans-serif;
       font-size: 1rem;
-      line-height: 1.6;
-      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+      line-height: 1.65;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.22s ease, box-shadow 0.22s ease;
     }
 
-    .remark-input:focus {
-      border-color: rgba(0,255,136,0.26);
-      box-shadow: 0 0 0 3px rgba(0,255,136,0.08);
+    .reply-input:focus {
+      border-color: rgba(0,255,136,0.24);
+      box-shadow: 0 0 0 3px rgba(0,255,136,0.07);
     }
 
-    .remark-actions {
+    .reply-actions {
       display: flex;
       justify-content: flex-end;
       gap: 10px;
-      margin-top: 16px;
       flex-wrap: wrap;
+      margin-top: 16px;
     }
 
-    .remark-hint {
-      margin-top: 12px;
-      color: rgba(255,255,255,0.48);
+    .reply-hint {
+      color: var(--muted);
       font-size: 0.84rem;
       line-height: 1.6;
+      margin-top: 12px;
     }
 
     .toast {
       position: fixed;
       left: 50%;
       bottom: 22px;
-      transform: translateX(-50%) translateY(18px);
-      z-index: 260;
+      transform: translateX(-50%) translateY(16px);
+      z-index: 90;
       min-width: min(90vw, 320px);
       max-width: min(90vw, 520px);
-      padding: 12px 16px;
       border-radius: 999px;
-      background: rgba(8,16,13,0.88);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: #fff;
+      padding: 12px 16px;
+      background: rgba(8, 15, 13, 0.92);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
       text-align: center;
       opacity: 0;
       pointer-events: none;
-      transition: all 0.28s ease;
-      box-shadow: var(--shadow);
+      transition: all 0.24s ease;
     }
 
     .toast.show {
@@ -1038,56 +616,29 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    @media (max-width: 980px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
-
-      .companion {
-        position: relative;
-        top: 0;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 16px;
-        align-items: stretch;
-      }
-
-      .cat-shell {
-        min-height: 100%;
-      }
-
-      .letter-card {
-        margin-top: 4px;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .main {
+    @media (max-width: 720px) {
+      .page {
         padding-top: 104px;
       }
 
-      .control-stack {
-        width: calc(100vw - 24px);
-      }
-
-      .companion {
-        grid-template-columns: 1fr;
-      }
-
-      .letter-top {
+      .letter-head {
         flex-direction: column;
         align-items: flex-start;
       }
 
-      .final-actions,
-      .remark-actions {
+      .actions,
+      .reply-actions {
         flex-direction: column;
       }
 
-      .pill-btn,
-      .remark-pill,
-      .control-btn {
+      .primary-btn,
+      .secondary-btn,
+      .chip-btn {
         width: 100%;
+      }
+
+      .topbar {
+        width: calc(100vw - 24px);
       }
     }
 
@@ -1102,174 +653,112 @@
   </style>
 </head>
 <body>
-
   <audio id="bgMusic" loop preload="auto" playsinline>
     <source src="cherry.mp3" type="audio/mpeg" />
   </audio>
 
-  <div class="bg">
-    <div class="mesh mesh-1"></div>
-    <div class="mesh mesh-2"></div>
-    <div class="mesh mesh-3"></div>
-    <div class="stars" id="stars"></div>
-    <div class="petals" id="petals"></div>
-    <div class="hearts" id="hearts"></div>
-    <div class="vignette"></div>
+  <div class="background">
+    <div class="bloom one"></div>
+    <div class="bloom two"></div>
+    <div class="bloom three"></div>
+    <div class="noise"></div>
+    <div class="dust-layer" id="dustLayer"></div>
   </div>
 
-  <div class="progress-bar" id="progressBar"></div>
+  <div class="progress" id="progressBar"></div>
 
-  <div class="control-stack">
-    <button class="control-btn" id="musicBtn">🎵 Music On</button>
-    <button class="control-btn" id="pauseBtn">⏸ Pause</button>
-    <button class="control-btn" id="skipBtn">⏭ Skip Typing</button>
-    <button class="control-btn primary" id="remarkBtnTop">💚 Leave a Remark</button>
+  <div class="music-hint" id="musicHint">Tap once if the music does not start.</div>
+
+  <div class="topbar">
+    <button class="chip-btn" id="musicBtn">Music On</button>
+    <button class="chip-btn" id="skipBtn">Skip Animation</button>
   </div>
 
-  <div class="opening-overlay show" id="openingOverlay">
-    <div class="opening-card">
-      <p class="eyebrow">for ishu</p>
-      <h1>Open Your Letter</h1>
-      <p>
-        I added a softer scene, a better flow, music that tries to start on its own,
-        and a little button so a reply can reach me too.
-      </p>
-      <button id="openLetterBtn">Start The Moment</button>
-    </div>
-  </div>
+  <main class="page">
+    <div class="stage">
+      <header class="hero">
+        <p class="hero-kicker">Private Letter • 15 April</p>
+        <h1 class="hero-title">For Ishu</h1>
+        <p class="hero-subtitle">
+          A cleaner version of the scene. The page is centered on the letter, the motion is quieter,
+          and the UI stays out of the way unless it is needed.
+        </p>
+      </header>
 
-  <main class="main">
-    <header class="hero">
-      <h1 class="page-title">For Ishu</h1>
-      <p class="page-subtitle">a letter written from the gentlest part of the heart</p>
-      <div class="whisper-pill"><span id="whisperText">Some people turn ordinary moments into favorite memories.</span></div>
-    </header>
+      <section class="letter-shell">
+        <div class="letter-inner">
+          <div class="letter-head">
+            <div class="meta">
+              <div class="meta-chip">A Birthday Letter</div>
+              <h2 class="letter-name">Dear Ishu,</h2>
+            </div>
+            <button class="chip-btn" id="replyBtnTop">Leave a Reply</button>
+          </div>
 
-    <section class="layout">
-      <aside class="companion">
-        <div class="cat-bubble" id="catBubble">I'm listening closely, nyaa... this already feels special.</div>
+          <div class="divider"></div>
 
-        <div class="cat-shell">
-          <div class="cat-container">
-            <div class="cat-aura"></div>
+          <div class="letter-scroll" id="letterScroll">
+            <div id="letterText"></div>
+            <span class="cursor" id="cursor"></span>
 
-            <div class="cat-body">
-              <div class="cat-belly"></div>
-              <div class="cat-paws">
-                <div class="paw"></div>
-                <div class="paw"></div>
-              </div>
+            <div class="note-strip">
+              Some things are better when they arrive quietly. This page is meant to feel like that.
             </div>
 
-            <div class="cat-head" id="catHead">
-              <div class="cat-ear left"></div>
-              <div class="cat-ear right"></div>
-
-              <div class="cat-eyes">
-                <div class="cat-eye"></div>
-                <div class="cat-eye"></div>
-              </div>
-
-              <div class="cat-nose"></div>
-              <div class="cat-mouth"></div>
-
-              <div class="cat-whiskers">
-                <div class="whisker l1"></div>
-                <div class="whisker l2"></div>
-                <div class="whisker l3"></div>
-                <div class="whisker r1"></div>
-                <div class="whisker r2"></div>
-                <div class="whisker r3"></div>
-              </div>
-
-              <div class="tear left"></div>
-              <div class="tear right"></div>
+            <div class="final-panel" id="finalPanel">
+              <h3>Happy Birthday, Ishu</h3>
+              <p>
+                You deserve softness without uncertainty, warmth without effort, and love that feels calm,
+                clear, and certain. If this page does one thing well, it should leave that feeling behind.
+              </p>
             </div>
-
-            <div class="cat-tail"></div>
           </div>
 
-          <div class="cat-sparkles">
-            <span>✨</span>
-            <span>💚</span>
-            <span>✨</span>
-          </div>
-        </div>
-
-        <div class="mood-card">
-          <p class="mood-label">Tonight's mood</p>
-          <p id="moodText">soft, glowing, and just a little impossible to forget.</p>
-        </div>
-      </aside>
-
-      <section class="letter-card">
-        <div class="letter-top">
-          <div>
-            <div class="date-chip">15 April • Just For You</div>
-            <h2 class="letter-title">Dear Ishu,</h2>
-          </div>
-          <button class="remark-pill" id="remarkBtnInline">Leave a Remark</button>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="letter-body" id="letterBody">
-          <div id="letterText"></div>
-          <span class="cursor" id="cursor"></span>
-
-          <div class="quote-strip">
-            If a birthday page can hold one honest wish, let it be this:
-            may your life keep meeting you with warmth, gentleness, and the kind of love that feels like home.
+          <div class="status-row">
+            <span id="statusText">Writing softly...</span>
+            <span>Scene 1</span>
           </div>
 
-          <div class="final-message" id="finalMessage">
-            <span class="final-glow">Happy Birthday, Ishu 💚</span>
-            <p class="final-sub">
-              You deserve the softest joy, the safest love, and the kind of smile that stays
-              even after the music fades. If this page leaves anything behind, I hope it is warmth.
-            </p>
-
-            <div class="final-actions">
-              <button class="pill-btn next" id="continueBtn">Continue to Scene 2</button>
-              <button class="pill-btn ghost" id="remarkBtnBottom">Send a Remark</button>
-            </div>
+          <div class="actions">
+            <button class="primary-btn" id="replyBtnBottom">Leave a Reply</button>
+            <button class="secondary-btn" id="continueBtn" disabled>Continue to Scene 2</button>
           </div>
         </div>
       </section>
-    </section>
+    </div>
   </main>
 
-  <div class="remark-modal" id="remarkModal">
-    <div class="remark-panel">
-      <div class="remark-top">
+  <div class="reply-modal" id="replyModal">
+    <div class="reply-panel">
+      <div class="reply-head">
         <div>
-          <p class="remark-label">reply back</p>
-          <h3 class="remark-title">Leave a Little Note</h3>
+          <p class="reply-kicker">Reply</p>
+          <h3 class="reply-title">Leave a Note</h3>
         </div>
-        <button class="close-btn" id="closeRemarkBtn">×</button>
+        <button class="close-btn" id="closeReplyBtn">×</button>
       </div>
 
-      <div class="reaction-grid" id="reactionGrid">
-        <button class="reaction-btn active" data-reaction="It made me smile 💚">Made me smile 💚</button>
-        <button class="reaction-btn" data-reaction="It was so romantic 🌙">So romantic 🌙</button>
-        <button class="reaction-btn" data-reaction="I got emotional 🥹">I got emotional 🥹</button>
-        <button class="reaction-btn" data-reaction="The music + letter hit hard 🎵">Music hit hard 🎵</button>
-        <button class="reaction-btn" data-reaction="I want to read it again ✨">Read it again ✨</button>
+      <div class="reaction-row" id="reactionRow">
+        <button class="reaction-chip active" data-value="It felt beautiful.">Beautiful</button>
+        <button class="reaction-chip" data-value="It felt romantic.">Romantic</button>
+        <button class="reaction-chip" data-value="It felt personal.">Personal</button>
+        <button class="reaction-chip" data-value="It made me emotional.">Emotional</button>
+        <button class="reaction-chip" data-value="It made me smile.">Made me smile</button>
       </div>
 
       <textarea
-        id="remarkInput"
-        class="remark-input"
-        placeholder="Write anything you want here... a reaction, a memory, one line, or just how it made you feel."
+        id="replyInput"
+        class="reply-input"
+        placeholder="Write your reply here..."
       ></textarea>
 
-      <div class="remark-actions">
-        <button class="pill-btn ghost" id="closeRemarkBtn2">Close</button>
-        <button class="pill-btn next" id="sendRemarkBtn">Send to Creator</button>
+      <div class="reply-actions">
+        <button class="secondary-btn" id="closeReplyBtn2">Close</button>
+        <button class="primary-btn" id="sendReplyBtn">Send Reply</button>
       </div>
 
-      <p class="remark-hint">
-        This sends the selected reaction and message to Telegram. Keep the same bot token and chat ID you used in `index.html`.
+      <p class="reply-hint">
+        This sends the selected reaction and the written message to the creator using the same bot token and chat ID you already use.
       </p>
     </div>
   </div>
@@ -1277,385 +766,248 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    /* ═══════════════════════════════════════════
-       CONFIG
-    ═══════════════════════════════════════════ */
+    /* Replace only these 2 lines with the same values from index.html if needed */
     const BOT_TOKEN = '8768367657:AAF_pVZxIzXGpnWUpnhoVNHVn-6aOH2QgNs';
     const CHAT_ID = '5484213571';
 
-    const letterContent = `I wanted this page to feel like a soft light left on just for you.
+    const letterContent = `I wanted this page to feel simpler than the last version.
 
-Not loud. Not rushed. Not something thrown together and forgotten the next morning.
+Not louder.
+Not busier.
+Not full of things fighting for attention.
 
-Just something warm.
-Something that takes its time.
-Something that feels like sitting close to a heart that means every word.
+Just one honest moment, centered properly.
 
-You have this quiet way of staying with people, Ishu.
-Even after the conversation ends.
-Even after the day changes.
-Even after everything gets busy again.
+Some people make a strong impression because they arrive loudly.
+Some people do it because they stay.
+Because they leave warmth behind.
+Because after they are gone, the room still feels a little different.
 
-Some people are remembered because they were around.
-But some people are remembered because they made the air feel different.
+You feel like that to me.
 
-You are that kind of person.
+There is a softness in the way you exist.
+The kind that makes people feel safe without you even trying.
+The kind that turns ordinary conversations into something people quietly remember later.
 
-You make tenderness feel real.
-You make ordinary moments feel more golden than they should.
-And even when nothing dramatic is happening, your presence somehow makes everything softer.
+That is not common.
+And it is not small.
 
-That is rare.
-That is beautiful.
-That is you.
+If I could give you one thing today, it would be a kind of certainty.
 
-If I could give you one thing on your birthday, it would not just be a wish.
-It would be a feeling.
+The certainty that you are easy to care for.
+The certainty that your heart deserves gentleness.
+The certainty that the right kind of love will never ask you to become less bright, less honest, or less yourself.
 
-The feeling of being chosen gently.
-The feeling of being looked at with honesty.
-The feeling of being loved in a way that never asks you to become less of yourself.
+I hope this birthday feels calm.
+I hope it feels warm.
+I hope it gives you at least one moment where you stop and realize that being you is already enough.
 
-Because you deserve that.
-You deserve mornings that are kind to you.
-You deserve evenings that feel safe.
-You deserve people who hold your heart carefully and never make you wonder where you stand.
-
-And today, more than anything, I hope you smile.
-A real smile.
-The kind that reaches your eyes.
-The kind that stays for a while even after you try to hide it.
-
-I hope the music wraps around you.
-I hope these little words sit beside you quietly.
-I hope this birthday feels soft, sweet, and a little magical.
-
-And if there is one truth I want this page to keep for me, it is this:
-
-You are one of the loveliest feelings I know.
+And I hope when this page ends, it leaves behind the right feeling:
+something soft,
+something steady,
+something worth keeping.
 
 Happy birthday, Ishu.
-Take care of your heart.
-It is precious.
 
-                                              — always, from me.`;
+You deserve beautiful things that stay.
 
-    const whisperLines = [
-      'Some people turn ordinary moments into favorite memories.',
-      'This page was made to feel like a long, warm exhale.',
-      'A soft song, a slower heartbeat, a letter just for you.',
-      'If tenderness had a page, it would probably glow like this.'
+- always, from me.`;
+
+    const statusStages = [
+      { at: 0.00, text: 'Writing softly...' },
+      { at: 0.25, text: 'Holding the feeling...' },
+      { at: 0.55, text: 'Almost at the heart of it...' },
+      { at: 0.85, text: 'Bringing it home...' }
     ];
 
-    const sceneStates = [
-      {
-        at: 0,
-        cls: '',
-        bubble: "I'm listening closely, nyaa... this already feels special.",
-        mood: 'soft, glowing, and just a little impossible to forget.'
-      },
-      {
-        at: 0.18,
-        cls: 'soft',
-        bubble: "Okay... this is gentle in the best way.",
-        mood: 'the room just got warmer.'
-      },
-      {
-        at: 0.42,
-        cls: 'sad',
-        bubble: "That line hurt a little... but in a beautiful way.",
-        mood: 'sweet ache, soft chest, steady heartbeat.'
-      },
-      {
-        at: 0.70,
-        cls: 'cry',
-        bubble: "I'm literally crying and I am still trying to look cute.",
-        mood: 'teary-eyed, smiling, and very much in it.'
-      },
-      {
-        at: 0.90,
-        cls: 'love',
-        bubble: "This is the kind of letter people remember forever.",
-        mood: 'completely wrapped in love and light.'
-      }
-    ];
-
+    const dustLayer = document.getElementById('dustLayer');
     const bgMusic = document.getElementById('bgMusic');
-    const openingOverlay = document.getElementById('openingOverlay');
-    const openLetterBtn = document.getElementById('openLetterBtn');
+    const progressBar = document.getElementById('progressBar');
     const musicBtn = document.getElementById('musicBtn');
-    const pauseBtn = document.getElementById('pauseBtn');
     const skipBtn = document.getElementById('skipBtn');
     const continueBtn = document.getElementById('continueBtn');
-    const remarkBtns = [
-      document.getElementById('remarkBtnTop'),
-      document.getElementById('remarkBtnInline'),
-      document.getElementById('remarkBtnBottom')
-    ];
+    const musicHint = document.getElementById('musicHint');
+
+    const letterScroll = document.getElementById('letterScroll');
     const letterText = document.getElementById('letterText');
-    const letterBody = document.getElementById('letterBody');
     const cursor = document.getElementById('cursor');
-    const progressBar = document.getElementById('progressBar');
-    const catHead = document.getElementById('catHead');
-    const catBubble = document.getElementById('catBubble');
-    const moodText = document.getElementById('moodText');
-    const finalMessage = document.getElementById('finalMessage');
-    const whisperText = document.getElementById('whisperText');
+    const statusText = document.getElementById('statusText');
+    const finalPanel = document.getElementById('finalPanel');
+
+    const replyModal = document.getElementById('replyModal');
+    const replyBtns = [
+      document.getElementById('replyBtnTop'),
+      document.getElementById('replyBtnBottom')
+    ];
+    const closeReplyBtn = document.getElementById('closeReplyBtn');
+    const closeReplyBtn2 = document.getElementById('closeReplyBtn2');
+    const sendReplyBtn = document.getElementById('sendReplyBtn');
+    const replyInput = document.getElementById('replyInput');
+    const reactionRow = document.getElementById('reactionRow');
     const toast = document.getElementById('toast');
-    const remarkModal = document.getElementById('remarkModal');
-    const closeRemarkBtn = document.getElementById('closeRemarkBtn');
-    const closeRemarkBtn2 = document.getElementById('closeRemarkBtn2');
-    const sendRemarkBtn = document.getElementById('sendRemarkBtn');
-    const remarkInput = document.getElementById('remarkInput');
-    const reactionGrid = document.getElementById('reactionGrid');
 
-    bgMusic.volume = 0.28;
-
-    let experienceStarted = false;
-    let typingStarted = false;
+    let charIndex = 0;
+    let typingTimer = null;
     let typingDone = false;
     let musicPlaying = false;
-    let isPaused = false;
-    let typingTimer = null;
-    let charIndex = 0;
-    let activeSceneState = 0;
-    let activeReaction = 'It made me smile 💚';
+    let activeReaction = 'It felt beautiful.';
 
     const totalChars = letterContent.length;
+
+    function createDust() {
+      for (let i = 0; i < 28; i++) {
+        const dot = document.createElement('div');
+        const size = (Math.random() * 2 + 0.8).toFixed(2);
+        dot.className = 'dust';
+        dot.style.width = `${size}px`;
+        dot.style.height = `${size}px`;
+        dot.style.left = `${Math.random() * 100}%`;
+        dot.style.bottom = `${Math.random() * 18}%`;
+        dot.style.animationDuration = `${(Math.random() * 12 + 14).toFixed(2)}s`;
+        dot.style.animationDelay = `${(Math.random() * 10).toFixed(2)}s`;
+        dustLayer.appendChild(dot);
+      }
+    }
 
     function showToast(message) {
       toast.textContent = message;
       toast.classList.add('show');
-      clearTimeout(showToast.timeout);
-      showToast.timeout = setTimeout(() => {
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
         toast.classList.remove('show');
       }, 2400);
     }
 
-    function createStars() {
-      const starsEl = document.getElementById('stars');
-      for (let i = 0; i < 90; i++) {
-        const star = document.createElement('div');
-        const size = (Math.random() * 2.4 + 0.6).toFixed(2);
-        star.className = 'star';
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.top = `${Math.random() * 100}%`;
-        star.style.setProperty('--duration', `${(Math.random() * 3 + 1.6).toFixed(2)}s`);
-        star.style.animationDelay = `${(Math.random() * 3).toFixed(2)}s`;
-        starsEl.appendChild(star);
-      }
+    function updateMusicLabel() {
+      musicBtn.textContent = musicPlaying ? 'Music On' : 'Music Off';
     }
 
-    function createPetals() {
-      const petalsEl = document.getElementById('petals');
-      const petals = ['❀', '✿', '❁'];
-      for (let i = 0; i < 18; i++) {
-        const petal = document.createElement('div');
-        petal.className = 'petal';
-        petal.textContent = petals[Math.floor(Math.random() * petals.length)];
-        petal.style.left = `${Math.random() * 100}%`;
-        petal.style.fontSize = `${(Math.random() * 0.9 + 0.7).toFixed(2)}rem`;
-        petal.style.animationDuration = `${(Math.random() * 11 + 10).toFixed(2)}s`;
-        petal.style.animationDelay = `${(Math.random() * 8).toFixed(2)}s`;
-        petalsEl.appendChild(petal);
-      }
-    }
-
-    function createHearts() {
-      const heartsEl = document.getElementById('hearts');
-      const items = ['💚', '✨', '🤍', '🌙'];
-      for (let i = 0; i < 15; i++) {
-        const heart = document.createElement('div');
-        heart.className = 'heart-float';
-        heart.textContent = items[Math.floor(Math.random() * items.length)];
-        heart.style.left = `${Math.random() * 100}%`;
-        heart.style.fontSize = `${(Math.random() * 0.6 + 0.7).toFixed(2)}rem`;
-        heart.style.animationDuration = `${(Math.random() * 10 + 10).toFixed(2)}s`;
-        heart.style.animationDelay = `${(Math.random() * 10).toFixed(2)}s`;
-        heartsEl.appendChild(heart);
-      }
-    }
-
-    function rotateWhispers() {
-      let index = 0;
-      setInterval(() => {
-        index = (index + 1) % whisperLines.length;
-        whisperText.style.opacity = '0';
-        setTimeout(() => {
-          whisperText.textContent = whisperLines[index];
-          whisperText.style.opacity = '1';
-        }, 180);
-      }, 3800);
-    }
-
-    function updateMusicButton() {
-      musicBtn.textContent = musicPlaying ? '🎵 Music On' : '🎵 Music Off';
-    }
-
-    async function playMusic() {
+    async function tryPlayMusic() {
       try {
         await bgMusic.play();
         musicPlaying = true;
-        updateMusicButton();
-        return true;
+        musicHint.classList.remove('show');
       } catch (error) {
         musicPlaying = false;
-        updateMusicButton();
-        return false;
+        musicHint.classList.add('show');
       }
-    }
-
-    async function startExperience(force = false) {
-      if (experienceStarted) return;
-
-      const played = await playMusic();
-
-      if (!played && !force) {
-        openingOverlay.classList.add('show');
-        return;
-      }
-
-      experienceStarted = true;
-      openingOverlay.classList.remove('show');
-
-      if (!typingStarted) {
-        typingStarted = true;
-        setTimeout(typeNext, 650);
-      }
-    }
-
-    function updateSceneState(progress) {
-      for (let i = sceneStates.length - 1; i >= 0; i--) {
-        if (progress >= sceneStates[i].at) {
-          if (activeSceneState !== i) {
-            activeSceneState = i;
-            catHead.className = `cat-head ${sceneStates[i].cls}`.trim();
-            catBubble.style.opacity = '0';
-            setTimeout(() => {
-              catBubble.textContent = sceneStates[i].bubble;
-              moodText.textContent = sceneStates[i].mood;
-              catBubble.style.opacity = '1';
-            }, 180);
-          }
-          break;
-        }
-      }
-    }
-
-    function getDelay(char, nextChar) {
-      if (char === '.') return 320;
-      if (char === '!') return 260;
-      if (char === '?') return 260;
-      if (char === ',') return 150;
-      if (char === '\n') return 220;
-      if (char === ' ' && nextChar === '\n') return 100;
-      return 24;
-    }
-
-    function typeNext() {
-      if (isPaused || typingDone) return;
-
-      if (charIndex >= totalChars) {
-        typingDone = true;
-        cursor.style.display = 'none';
-        showFinal();
-        return;
-      }
-
-      const char = letterContent[charIndex];
-      const nextChar = letterContent[charIndex + 1] || '';
-      charIndex += 1;
-      letterText.textContent = letterContent.slice(0, charIndex);
-
-      const progress = charIndex / totalChars;
-      progressBar.style.width = `${(progress * 100).toFixed(2)}%`;
-      updateSceneState(progress);
-
-      letterBody.scrollTo({
-        top: letterBody.scrollHeight,
-        behavior: 'smooth'
-      });
-
-      typingTimer = setTimeout(typeNext, getDelay(char, nextChar));
-    }
-
-    function showFinal() {
-      progressBar.style.width = '100%';
-      catHead.className = 'cat-head love';
-      catBubble.textContent = 'Happy birthday, Ishu... this one was full of love.';
-      moodText.textContent = 'softly glowing, very in love, and impossible not to remember.';
-      finalMessage.style.display = 'block';
-      requestAnimationFrame(() => {
-        finalMessage.classList.add('show');
-      });
-    }
-
-    function skipTyping() {
-      if (!typingStarted) return;
-      clearTimeout(typingTimer);
-      charIndex = totalChars;
-      letterText.textContent = letterContent;
-      typingDone = true;
-      cursor.style.display = 'none';
-      progressBar.style.width = '100%';
-      showFinal();
-      letterBody.scrollTo({ top: letterBody.scrollHeight, behavior: 'smooth' });
-    }
-
-    function togglePause() {
-      if (!typingStarted || typingDone) return;
-      isPaused = !isPaused;
-      pauseBtn.textContent = isPaused ? '▶ Resume' : '⏸ Pause';
-      if (!isPaused) typeNext();
+      updateMusicLabel();
     }
 
     async function toggleMusic() {
       if (musicPlaying) {
         bgMusic.pause();
         musicPlaying = false;
-        updateMusicButton();
-      } else {
-        const played = await playMusic();
-        if (!played) {
-          showToast('Tap once on the page to allow the music.');
+        updateMusicLabel();
+        return;
+      }
+      await tryPlayMusic();
+    }
+
+    function getDelay(char, nextChar) {
+      if (char === '.') return 300;
+      if (char === ',') return 130;
+      if (char === '!' || char === '?') return 220;
+      if (char === '\n') return 190;
+      if (char === ' ' && nextChar === '\n') return 90;
+      return 24;
+    }
+
+    function updateStatus(progress) {
+      for (let i = statusStages.length - 1; i >= 0; i--) {
+        if (progress >= statusStages[i].at) {
+          statusText.textContent = statusStages[i].text;
+          break;
         }
       }
     }
 
-    function goNext() {
-      document.body.style.transition = 'opacity 0.9s ease';
-      document.body.style.opacity = '0';
-      setTimeout(() => {
-        window.location.href = 'scene2.html';
-      }, 900);
+    function finishLetter() {
+      typingDone = true;
+      cursor.style.display = 'none';
+      progressBar.style.width = '100%';
+      statusText.textContent = 'Letter complete.';
+      finalPanel.style.display = 'block';
+      requestAnimationFrame(() => {
+        finalPanel.classList.add('show');
+      });
+      continueBtn.disabled = false;
     }
 
-    function openRemarkModal() {
-      remarkModal.classList.add('show');
-      setTimeout(() => remarkInput.focus(), 100);
-    }
+    function typeNext() {
+      if (typingDone) return;
 
-    function closeRemarkModal() {
-      remarkModal.classList.remove('show');
-    }
-
-    async function sendRemark() {
-      if (!BOT_TOKEN || !CHAT_ID || BOT_TOKEN.includes('PASTE_') || CHAT_ID.includes('PASTE_')) {
-        showToast('Add the same BOT_TOKEN and CHAT_ID from index.html first.');
+      if (charIndex >= totalChars) {
+        finishLetter();
         return;
       }
 
-      const note = remarkInput.value.trim();
-      const message =
-        `New Scene 1 Remark 💚\n\n` +
-        `Reaction: ${activeReaction}\n` +
-        `Note: ${note || 'No extra note written.'}\n` +
-        `Time: ${new Date().toLocaleString()}`;
+      const char = letterContent[charIndex];
+      const nextChar = letterContent[charIndex + 1] || '';
+      charIndex += 1;
 
-      sendRemarkBtn.disabled = true;
-      sendRemarkBtn.textContent = 'Sending...';
+      letterText.textContent = letterContent.slice(0, charIndex);
+
+      const progress = charIndex / totalChars;
+      progressBar.style.width = `${(progress * 100).toFixed(2)}%`;
+      updateStatus(progress);
+
+      letterScroll.scrollTo({
+        top: letterScroll.scrollHeight,
+        behavior: 'smooth'
+      });
+
+      typingTimer = setTimeout(typeNext, getDelay(char, nextChar));
+    }
+
+    function skipTyping() {
+      clearTimeout(typingTimer);
+      letterText.textContent = letterContent;
+      charIndex = totalChars;
+      finishLetter();
+      letterScroll.scrollTo({
+        top: letterScroll.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+
+    function openReplyModal() {
+      replyModal.classList.add('show');
+      setTimeout(() => replyInput.focus(), 80);
+    }
+
+    function closeReplyModal() {
+      replyModal.classList.remove('show');
+    }
+
+    async function sendReply() {
+      const note = replyInput.value.trim();
+
+      if (!note && !activeReaction) {
+        showToast('Write a reply or choose a reaction.');
+        return;
+      }
+
+      if (
+        !BOT_TOKEN ||
+        !CHAT_ID ||
+        BOT_TOKEN.includes('PASTE_') ||
+        CHAT_ID.includes('PASTE_')
+      ) {
+        showToast('Add BOT_TOKEN and CHAT_ID in the config section.');
+        return;
+      }
+
+      const message = [
+        'Scene 1 Reply',
+        '',
+        `Reaction: ${activeReaction || 'None'}`,
+        `Message: ${note || 'No message written.'}`,
+        `Time: ${new Date().toLocaleString()}`
+      ].join('\n');
+
+      sendReplyBtn.disabled = true;
+      sendReplyBtn.textContent = 'Sending...';
 
       try {
         const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -1668,63 +1020,68 @@ It is precious.
         });
 
         if (!response.ok) {
-          throw new Error('Telegram request failed');
+          throw new Error('send failed');
         }
 
-        remarkInput.value = '';
-        showToast('Remark sent💚');
-        closeRemarkModal();
+        replyInput.value = '';
+        showToast('Reply sent.');
+        closeReplyModal();
       } catch (error) {
-        showToast('Could not send the remark. Check BOT_TOKEN / CHAT_ID.');
+        showToast('Could not send the reply.');
       } finally {
-        sendRemarkBtn.disabled = false;
-        sendRemarkBtn.textContent = 'Send to Telegram';
+        sendReplyBtn.disabled = false;
+        sendReplyBtn.textContent = 'Send Reply';
       }
     }
 
-    function bindReactionButtons() {
-      reactionGrid.querySelectorAll('.reaction-btn').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          reactionGrid.querySelectorAll('.reaction-btn').forEach((item) => item.classList.remove('active'));
-          btn.classList.add('active');
-          activeReaction = btn.dataset.reaction;
+    function bindReactionChips() {
+      reactionRow.querySelectorAll('.reaction-chip').forEach((chip) => {
+        chip.addEventListener('click', () => {
+          reactionRow.querySelectorAll('.reaction-chip').forEach((item) => {
+            item.classList.remove('active');
+          });
+          chip.classList.add('active');
+          activeReaction = chip.dataset.value;
         });
       });
     }
 
-    openLetterBtn.addEventListener('click', () => startExperience(true));
+    function goNext() {
+      document.body.style.transition = 'opacity 0.8s ease';
+      document.body.style.opacity = '0';
+      setTimeout(() => {
+        window.location.href = 'scene2.html';
+      }, 800);
+    }
+
     musicBtn.addEventListener('click', toggleMusic);
-    pauseBtn.addEventListener('click', togglePause);
     skipBtn.addEventListener('click', skipTyping);
     continueBtn.addEventListener('click', goNext);
-    remarkBtns.forEach((btn) => btn.addEventListener('click', openRemarkModal));
-    closeRemarkBtn.addEventListener('click', closeRemarkModal);
-    closeRemarkBtn2.addEventListener('click', closeRemarkModal);
-    sendRemarkBtn.addEventListener('click', sendRemark);
 
-    remarkModal.addEventListener('click', (event) => {
-      if (event.target === remarkModal) closeRemarkModal();
+    replyBtns.forEach((btn) => btn.addEventListener('click', openReplyModal));
+    closeReplyBtn.addEventListener('click', closeReplyModal);
+    closeReplyBtn2.addEventListener('click', closeReplyModal);
+    sendReplyBtn.addEventListener('click', sendReply);
+
+    replyModal.addEventListener('click', (event) => {
+      if (event.target === replyModal) closeReplyModal();
     });
 
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeRemarkModal();
+      if (event.key === 'Escape') closeReplyModal();
     });
 
     document.addEventListener('pointerdown', async () => {
-      if (!experienceStarted) {
-        await startExperience(true);
-      } else if (!musicPlaying) {
-        await playMusic();
+      if (!musicPlaying) {
+        await tryPlayMusic();
       }
     }, { once: true });
 
     window.addEventListener('load', async () => {
-      createStars();
-      createPetals();
-      createHearts();
-      rotateWhispers();
-      bindReactionButtons();
-      await startExperience(false);
+      createDust();
+      bindReactionChips();
+      await tryPlayMusic();
+      setTimeout(typeNext, 700);
     });
   </script>
 </body>
