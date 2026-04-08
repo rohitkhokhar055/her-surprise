@@ -581,6 +581,41 @@
       gap: 10px;
     }
 
+    .scene-next {
+      display: none;
+      margin-top: 18px;
+      border-radius: 24px;
+      padding: 18px;
+      background: rgba(21, 11, 36, 0.86);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      text-align: center;
+    }
+
+    .scene-next.show {
+      display: block;
+      animation: fadeInUp 0.28s ease forwards;
+    }
+
+    .scene-next .small {
+      color: var(--gold);
+      font-size: 0.66rem;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .scene-next h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      line-height: 0.95;
+      letter-spacing: 0.5px;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
     .primary-btn,
     .secondary-btn {
       width: 100%;
@@ -744,6 +779,11 @@
         width: auto;
         min-width: 180px;
       }
+
+      .scene-next .primary-btn {
+        width: auto;
+        min-width: 220px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -826,6 +866,12 @@
         <button class="secondary-btn" id="resetBtn" type="button">Choose Again</button>
       </div>
     </section>
+
+    <section class="scene-next" id="sceneNext">
+      <p class="small">Next Voyage</p>
+      <h3>Ready For The Next Scene?</h3>
+      <button class="primary-btn" id="nextBtn" type="button">Sail to Scene 3</button>
+    </section>
   </main>
 
   <div class="toast" id="toast"></div>
@@ -899,6 +945,8 @@
     const panelMeaning = document.getElementById('panelMeaning');
     const panelQuote = document.getElementById('panelQuote');
     const resetBtn = document.getElementById('resetBtn');
+    const sceneNext = document.getElementById('sceneNext');
+    const nextBtn = document.getElementById('nextBtn');
     const toast = document.getElementById('toast');
     const energy = document.getElementById('energy');
     const timeOverlay = document.getElementById('timeOverlay');
@@ -1021,13 +1069,12 @@
         timeStopAudio.currentTime = 0;
         await timeStopAudio.play();
       } catch (error) {
-        // visual effect still runs even if autoplay is blocked
+        // visual still works if audio is blocked
       }
     }
 
     async function triggerTimeStop(options = {}) {
       if (timeStopRunning) return;
-      timeStopRunning = true;
 
       const {
         duration = 1800,
@@ -1036,6 +1083,8 @@
         text = 'Stand selection incoming.',
         onComplete = null
       } = options;
+
+      timeStopRunning = true;
 
       const oldVolume = bgMusic.volume;
       bgMusic.volume = 0.06;
@@ -1048,13 +1097,20 @@
 
       await playTimeStopAudio();
 
-      setTimeout(() => {
-        timeOverlay.classList.remove('show');
-        document.body.classList.remove('time-stop-active');
-        bgMusic.volume = oldVolume;
-        timeStopRunning = false;
-        if (typeof onComplete === 'function') onComplete();
-      }, duration);
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          timeOverlay.classList.remove('show');
+          document.body.classList.remove('time-stop-active');
+          bgMusic.volume = oldVolume;
+          timeStopRunning = false;
+
+          if (typeof onComplete === 'function') {
+            onComplete();
+          }
+
+          resolve();
+        }, duration);
+      });
     }
 
     function revealSelection(index) {
@@ -1071,6 +1127,7 @@
       panelMeaning.textContent = stand.meaning;
       panelQuote.textContent = `"${stand.quote}"`;
       selectionPanel.classList.add('show');
+      sceneNext.classList.add('show');
 
       selectionPanel.scrollIntoView({
         behavior: 'smooth',
@@ -1078,7 +1135,7 @@
       });
     }
 
-    function handleCardSelect(index) {
+    async function handleCardSelect(index) {
       if (!sceneReady) {
         showToast('Wait a second...');
         return;
@@ -1089,14 +1146,12 @@
       const stand = STANDS[index];
 
       if (stand.name === 'The World') {
-        triggerTimeStop({
+        await triggerTimeStop({
           duration: 1200,
           small: 'Stand Ability',
           title: 'THE WORLD',
-          text: 'Time freezes around your choice.',
-          onComplete: () => revealSelection(index)
+          text: 'Time freezes around your choice.'
         });
-        return;
       }
 
       revealSelection(index);
@@ -1104,11 +1159,14 @@
 
     function resetSelection() {
       selectedIndex = null;
+
       const cards = cardsGrid.querySelectorAll('.stand-card');
       cards.forEach((card) => {
         card.classList.remove('is-flipped', 'is-dimmed');
       });
+
       selectionPanel.classList.remove('show');
+      sceneNext.classList.remove('show');
       showToast('Pick another stand.');
     }
 
@@ -1132,6 +1190,15 @@
     musicBtn.addEventListener('click', toggleMusic);
     infoToggle.addEventListener('click', toggleInfo);
     resetBtn.addEventListener('click', resetSelection);
+
+    nextBtn.addEventListener('click', () => {
+      document.body.style.transition = 'opacity 0.7s ease';
+      document.body.style.opacity = '0';
+
+      setTimeout(() => {
+        window.location.href = 'scene3.html';
+      }, 700);
+    });
 
     document.addEventListener('pointerdown', () => {
       if (!musicPlaying) playBgMusic();
