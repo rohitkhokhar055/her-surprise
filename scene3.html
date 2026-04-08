@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4a657" />
+  <title>If We Sailed Together...</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&family=Cormorant+Garamond:wght@600;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --sky-top: #ffcc95;
+      --sky-mid: #f3a36d;
+      --sky-deep: #de7d59;
+      --sea: #12486f;
+      --sea-deep: #0b2f49;
+      --gold: #ffd27f;
+      --cream: #fff4df;
+      --ink: #3a1d0f;
+      --muted: rgba(58, 29, 15, 0.72);
+      --panel: rgba(255, 245, 223, 0.78);
+      --panel-strong: rgba(255, 245, 223, 0.9);
+      --line: rgba(58, 29, 15, 0.12);
+      --shadow: 0 20px 60px rgba(57, 31, 20, 0.24);
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      background: var(--sky-mid);
+      color: var(--ink);
+      font-family: 'Nunito', sans-serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      position: relative;
+      min-height: 100vh;
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.20), transparent 18%),
+        radial-gradient(circle at 18% 14%, rgba(255,255,255,0.55), transparent 22%),
+        radial-gradient(circle at 82% 18%, rgba(255,245,220,0.35), transparent 24%),
+        linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 42%, var(--sky-deep) 72%, var(--sea) 100%);
+    }
+
+    .bg-photo {
+      position: absolute;
+      inset: 0;
+      background-position: center;
+      background-size: cover;
+      opacity: 0.26;
+      filter: saturate(1.08) contrast(1.05);
+      transform: scale(1.03);
+    }
+
+    .sun-glow {
+      position: absolute;
+      top: 9%;
+      right: -60px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,232,183,0.95) 0%, rgba(255,195,112,0.34) 55%, transparent 76%);
+      filter: blur(4px);
+      opacity: 0.9;
+    }
+
+    .cloud {
+      position: absolute;
+      width: 230px;
+      height: 72px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.38);
+      filter: blur(1px);
+      animation: cloudMove linear infinite;
+    }
+
+    .cloud::before,
+    .cloud::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: inherit;
+    }
+
+    .cloud::before {
+      width: 86px;
+      height: 86px;
+      left: 26px;
+      top: -34px;
+    }
+
+    .cloud::after {
+      width: 116px;
+      height: 116px;
+      right: 24px;
+      top: -56px;
+    }
+
+    .cloud.one {
+      top: 11%;
+      left: -220px;
+      opacity: 0.45;
+      animation-duration: 38s;
+    }
+
+    .cloud.two {
+      top: 29%;
+      right: -240px;
+      opacity: 0.28;
+      transform: scale(0.8);
+      animation-name: cloudMoveBack;
+      animation-duration: 46s;
+    }
+
+    @keyframes cloudMove {
+      from { transform: translateX(0); }
+      to { transform: translateX(calc(100vw + 460px)); }
+    }
+
+    @keyframes cloudMoveBack {
+      from { transform: translateX(0) scale(0.8); }
+      to { transform: translateX(calc(-100vw - 460px)) scale(0.8); }
+    }
+
+    .sea-shine {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 21%;
+      height: 120px;
+      background: linear-gradient(180deg, rgba(255, 220, 144, 0), rgba(255, 220, 144, 0.22));
+      filter: blur(18px);
+      opacity: 0.85;
+    }
+
+    .waves {
+      position: absolute;
+      left: -10%;
+      right: -10%;
+      bottom: 0;
+      height: 32%;
+      background:
+        radial-gradient(ellipse at top, rgba(255,255,255,0.10), transparent 46%),
+        linear-gradient(180deg, rgba(16,74,112,0.0) 0%, rgba(10,57,88,0.25) 18%, var(--sea) 100%);
+    }
+
+    .wave-line {
+      position: absolute;
+      left: -10%;
+      width: 120%;
+      height: 54px;
+      border-radius: 50%;
+      border-top: 2px solid rgba(255,255,255,0.10);
+      animation: waveDrift 9s ease-in-out infinite;
+    }
+
+    .wave-line.one {
+      bottom: 84px;
+      opacity: 0.42;
+    }
+
+    .wave-line.two {
+      bottom: 44px;
+      opacity: 0.28;
+      animation-delay: 1.2s;
+    }
+
+    @keyframes waveDrift {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(-16px);
+      }
+    }
+
+    .sparkles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .sparkle {
+      position: absolute;
+      color: rgba(255,245,220,0.72);
+      font-size: 0.8rem;
+      text-shadow: 0 0 12px rgba(255,255,255,0.42);
+      animation: sparkleFloat linear infinite;
+    }
+
+    @keyframes sparkleFloat {
+      0% { opacity: 0; transform: translateY(0); }
+      15% { opacity: 0.85; }
+      88% { opacity: 0.4; }
+      100% { opacity: 0; transform: translateY(-100vh); }
+    }
+
+    .music-btn {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 80;
+      border: 1px solid rgba(255,255,255,0.66);
+      background: rgba(255, 247, 228, 0.48);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 28px rgba(57,31,20,0.16);
+    }
+
+    .audio-hint {
+      position: fixed;
+      top: 52px;
+      right: 12px;
+      z-index: 80;
+      max-width: 200px;
+      border-radius: 14px;
+      padding: 8px 11px;
+      background: rgba(255, 247, 228, 0.66);
+      color: rgba(58, 29, 15, 0.72);
+      font-size: 0.74rem;
+      line-height: 1.35;
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    .audio-hint.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .page {
+      position: relative;
+      z-index: 10;
+      width: min(100%, 520px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 64px 14px 28px;
+    }
+
+    .hero {
+      position: relative;
+      text-align: center;
+      margin-bottom: 16px;
+      z-index: 10;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255, 247, 228, 0.55);
+      border: 1px solid rgba(255,255,255,0.74);
+      color: #8f511f;
+      font-size: 0.66rem;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 8px;
+      box-shadow: 0 10px 24px rgba(57,31,20,0.12);
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 13vw, 4.6rem);
+      line-height: 0.94;
+      color: #fffaf2;
+      text-shadow: 0 3px 16px rgba(103, 51, 20, 0.16);
+    }
+
+    .hero p {
+      margin-top: 10px;
+      color: rgba(58, 29, 15, 0.72);
+      font-size: 0.95rem;
+      font-weight: 900;
+    }
+
+    .decor {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      z-index: 4;
+      filter: drop-shadow(0 16px 24px rgba(52, 27, 17, 0.18));
+    }
+
+    .decor.strawhat {
+      top: 88px;
+      left: 8px;
+      width: 82px;
+      transform: rotate(-14deg);
+      z-index: 12;
+    }
+
+    .decor.luffy {
+      bottom: 138px;
+      left: -18px;
+      width: clamp(122px, 34vw, 164px);
+      z-index: 5;
+    }
+
+    .decor.ship {
+      bottom: 76px;
+      right: 2px;
+      width: clamp(142px, 42vw, 208px);
+      z-index: 5;
+    }
+
+    .story-board {
+      position: relative;
+      z-index: 10;
+      margin-top: 8px;
+    }
+
+    .board-panel {
+      border-radius: 26px;
+      padding: 18px;
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.72);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      margin-bottom: 14px;
+    }
+
+    .board-panel .small {
+      color: #8f511f;
+      font-size: 0.66rem;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .board-panel h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      line-height: 0.96;
+      letter-spacing: 0.5px;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .board-panel p {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.94rem;
+      font-weight: 800;
+    }
+
+    .choices-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .story-card {
+      border: none;
+      border-radius: 24px;
+      padding: 16px 14px;
+      min-height: 148px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.20), transparent 30%),
+        linear-gradient(135deg, rgba(255,251,243,0.92), rgba(255,233,202,0.82));
+      border: 1px solid rgba(255,255,255,0.78);
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 16px 34px rgba(57,31,20,0.14);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.2s ease;
+    }
+
+    .story-card.is-active {
+      box-shadow: 0 18px 42px rgba(57,31,20,0.2);
+      transform: translateY(-3px);
+      outline: 2px solid rgba(217, 168, 91, 0.3);
+    }
+
+    .story-card.is-dimmed {
+      opacity: 0.45;
+    }
+
+    .story-card .tag {
+      display: inline-flex;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(217,168,91,0.18);
+      color: #8f511f;
+      font-size: 0.64rem;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .story-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      line-height: 0.95;
+      margin-bottom: 10px;
+      color: var(--ink);
+    }
+
+    .story-card p {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.48;
+      font-weight: 800;
+    }
+
+    .reveal-panel {
+      display: none;
+      margin-top: 16px;
+      border-radius: 28px;
+      padding: 20px 18px;
+      background: var(--panel-strong);
+      border: 1px solid rgba(255,255,255,0.78);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .reveal-panel.show {
+      display: block;
+      animation: fadeInUp 0.28s ease forwards;
+    }
+
+    .reveal-panel .small {
+      color: #8f511f;
+      font-size: 0.66rem;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .reveal-panel h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      line-height: 0.92;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .reveal-panel .story {
+      color: rgba(58, 29, 15, 0.82);
+      font-size: 0.97rem;
+      line-height: 1.72;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .reveal-panel .quote {
+      color: #7a3f1c;
+      font-size: 1rem;
+      line-height: 1.7;
+      font-style: italic;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .panel-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .scene-next {
+      display: none;
+      margin-top: 18px;
+      border-radius: 26px;
+      padding: 18px;
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.72);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      text-align: center;
+    }
+
+    .scene-next.show {
+      display: block;
+      animation: fadeInUp 0.28s ease forwards;
+    }
+
+    .scene-next .small {
+      color: #8f511f;
+      font-size: 0.66rem;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .scene-next h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      line-height: 0.95;
+      letter-spacing: 0.5px;
+      color: var(--ink);
+      margin-bottom: 14px;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      width: 100%;
+      border-radius: 999px;
+      padding: 13px 16px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.18s ease;
+    }
+
+    .primary-btn {
+      border: none;
+      color: var(--ink);
+      background: linear-gradient(135deg, #fff3bc, #ffcb84);
+      box-shadow: 0 14px 28px rgba(57,31,20,0.16);
+    }
+
+    .secondary-btn {
+      border: 1px solid rgba(58,29,15,0.12);
+      color: var(--ink);
+      background: rgba(255,255,255,0.52);
+    }
+
+    .primary-btn:active,
+    .secondary-btn:active,
+    .music-btn:active,
+    .story-card:active {
+      transform: scale(0.985);
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      z-index: 90;
+      width: min(92vw, 360px);
+      border-radius: 999px;
+      padding: 11px 14px;
+      text-align: center;
+      background: rgba(255, 247, 228, 0.86);
+      color: var(--ink);
+      font-weight: 900;
+      box-shadow: 0 14px 34px rgba(57,31,20,0.14);
+      opacity: 0;
+      transform: translateX(-50%) translateY(14px);
+      pointer-events: none;
+      transition: all 0.22s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (min-width: 560px) {
+      .page {
+        width: min(100%, 860px);
+      }
+
+      .choices-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .decor.luffy {
+        left: 22px;
+        width: 190px;
+      }
+
+      .decor.ship {
+        right: 22px;
+        width: 238px;
+      }
+
+      .decor.strawhat {
+        top: 86px;
+        left: 24px;
+      }
+
+      .panel-actions {
+        flex-direction: row;
+      }
+
+      .panel-actions .primary-btn,
+      .panel-actions .secondary-btn {
+        width: auto;
+        min-width: 180px;
+      }
+
+      .scene-next .primary-btn {
+        width: auto;
+        min-width: 220px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .decor.luffy {
+        width: 116px;
+        left: -24px;
+      }
+
+      .decor.ship {
+        width: 146px;
+        right: -10px;
+      }
+
+      .decor.strawhat {
+        width: 70px;
+      }
+
+      .story-card {
+        min-height: 140px;
+      }
+
+      .reveal-panel h3 {
+        font-size: 2.2rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <audio id="bgMusic" loop preload="auto" playsinline>
+    <source src="onepiece-theme.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="bg">
+    <div class="bg-photo" id="bgPhoto"></div>
+    <div class="sun-glow"></div>
+    <div class="cloud one"></div>
+    <div class="cloud two"></div>
+    <div class="sea-shine"></div>
+    <div class="sparkles" id="sparkles"></div>
+    <div class="waves">
+      <div class="wave-line one"></div>
+      <div class="wave-line two"></div>
+    </div>
+  </div>
+
+  <button class="music-btn" id="musicBtn" type="button">Music On</button>
+  <div class="audio-hint" id="audioHint">Tap once if music does not start.</div>
+
+  <main class="page">
+    <header class="hero">
+      <div class="hero-tag">Voyage Log</div>
+      <h1>If We Sailed Together...</h1>
+      <p>Every sea tells a different story. Choose the one you want to open.</p>
+    </header>
+
+    <img class="decor strawhat" src="strawhat.png" alt="Straw Hat" />
+    <img class="decor luffy" src="luffy.png" alt="Luffy" />
+    <img class="decor ship" src="ship.png" alt="Ship" />
+
+    <section class="story-board">
+      <div class="board-panel">
+        <p class="small">Choose A Story</p>
+        <h2>Which Sea Would You Sail Through?</h2>
+        <p>
+          Pick one route. I’ll tell you how I think it would feel if you were beside me through it.
+        </p>
+      </div>
+
+      <section class="choices-grid" id="choicesGrid"></section>
+
+      <section class="reveal-panel" id="revealPanel">
+        <p class="small">Opened Story</p>
+        <h3 id="revealTitle"></h3>
+        <p class="story" id="revealStory"></p>
+        <p class="quote" id="revealQuote"></p>
+
+        <div class="panel-actions">
+          <button class="secondary-btn" id="resetBtn" type="button">Choose Another Route</button>
+        </div>
+      </section>
+
+      <section class="scene-next" id="sceneNext">
+        <p class="small">Nightfall Ahead</p>
+        <h3>Ready For The Next Scene?</h3>
+        <button class="primary-btn" id="nextBtn" type="button">Drift to Scene 4</button>
+      </section>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const STORIES = [
+      {
+        title: 'At Sunrise',
+        tag: 'New Horizon',
+        preview: 'The sea is golden, quiet, and full of promise.',
+        story: 'If we sailed at sunrise, I think the first thing I would look at would not be the horizon. It would be you, lit by that soft orange light, standing there while the whole sea slowly woke up around us. Some mornings would still feel ordinary, but with you there, even the beginning of the day would feel like discovering something worth keeping.',
+        quote: 'If the sea opened in front of us, I think your smile would still look like the brighter horizon.'
+      },
+      {
+        title: 'In A Storm',
+        tag: 'Wild Sea',
+        preview: 'The waves rise high, but the ship keeps moving.',
+        story: 'If we sailed through a storm, I do not think I would be afraid of the water as much as I would be careful about you. I would want to keep you steady, keep you warm, and make sure that once the sky cleared, you were still smiling at how ridiculous the whole journey had been. Some storms only prove who you would hold onto first.',
+        quote: 'Even when the sea gets rough, some hearts still feel like the safest place on the ship.'
+      },
+      {
+        title: 'Under The Stars',
+        tag: 'Quiet Deck',
+        preview: 'Late-night waves, soft wind, and no reason to rush.',
+        story: 'If we sailed under the stars, I think that would be the hour when everything became honest. The sea would quiet down, the world would stop asking for anything, and all that would be left would be the sound of the water and whatever I had been trying not to say. Some nights make people brave enough to tell the truth. I think you would be mine.',
+        quote: 'There are some things the heart only admits when the world goes quiet enough to hear it.'
+      },
+      {
+        title: 'At The End Of The Sea',
+        tag: 'Final Island',
+        preview: 'The last stop, the last map, the real treasure.',
+        story: 'If we reached the end of the sea together, I do not think the treasure would be what mattered most. I think the real thing I would remember would be every step before it, every laugh on deck, every soft moment between storms, and the fact that through all of it, you were still there. Some journeys are only valuable because of the person beside you while crossing them.',
+        quote: 'If I reached the end of the world and still found you there, I would call that the real treasure.'
+      }
+    ];
+
+    const bgMusic = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicBtn');
+    const audioHint = document.getElementById('audioHint');
+    const bgPhoto = document.getElementById('bgPhoto');
+    const sparkles = document.getElementById('sparkles');
+    const choicesGrid = document.getElementById('choicesGrid');
+    const revealPanel = document.getElementById('revealPanel');
+    const revealTitle = document.getElementById('revealTitle');
+    const revealStory = document.getElementById('revealStory');
+    const revealQuote = document.getElementById('revealQuote');
+    const resetBtn = document.getElementById('resetBtn');
+    const sceneNext = document.getElementById('sceneNext');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let musicPlaying = false;
+    let selectedIndex = null;
+
+    bgMusic.volume = 0.3;
+    bgPhoto.style.backgroundImage = 'url("onepiece-bg.jpg")';
+
+    function makeSparkles() {
+      const marks = ['✦', '✧', '⋆'];
+      for (let i = 0; i < 14; i++) {
+        const el = document.createElement('span');
+        el.className = 'sparkle';
+        el.textContent = marks[Math.floor(Math.random() * marks.length)];
+        el.style.left = `${Math.random() * 100}%`;
+        el.style.bottom = `${Math.random() * 22}%`;
+        el.style.animationDuration = `${(Math.random() * 8 + 10).toFixed(1)}s`;
+        el.style.animationDelay = `${(Math.random() * 7).toFixed(1)}s`;
+        sparkles.appendChild(el);
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
+    function updateMusicButton() {
+      musicBtn.textContent = musicPlaying ? 'Music On' : 'Music Off';
+    }
+
+    async function playMusic() {
+      try {
+        await bgMusic.play();
+        musicPlaying = true;
+        audioHint.classList.remove('show');
+      } catch (error) {
+        musicPlaying = false;
+        audioHint.classList.add('show');
+      }
+      updateMusicButton();
+    }
+
+    async function toggleMusic() {
+      if (musicPlaying) {
+        bgMusic.pause();
+        musicPlaying = false;
+        updateMusicButton();
+        return;
+      }
+      await playMusic();
+    }
+
+    function createStoryCards() {
+      STORIES.forEach((story, index) => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'story-card';
+        card.dataset.index = index;
+
+        card.innerHTML = `
+          <span class="tag">${story.tag}</span>
+          <h3>${story.title}</h3>
+          <p>${story.preview}</p>
+        `;
+
+        card.addEventListener('click', () => selectStory(index));
+        choicesGrid.appendChild(card);
+      });
+    }
+
+    function selectStory(index) {
+      selectedIndex = index;
+
+      const cards = choicesGrid.querySelectorAll('.story-card');
+      cards.forEach((card, cardIndex) => {
+        card.classList.toggle('is-active', cardIndex === index);
+        card.classList.toggle('is-dimmed', cardIndex !== index);
+      });
+
+      const story = STORIES[index];
+      revealTitle.textContent = story.title;
+      revealStory.textContent = story.story;
+      revealQuote.textContent = `"${story.quote}"`;
+
+      revealPanel.classList.add('show');
+      sceneNext.classList.add('show');
+
+      revealPanel.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+
+    function resetStory() {
+      selectedIndex = null;
+
+      const cards = choicesGrid.querySelectorAll('.story-card');
+      cards.forEach((card) => {
+        card.classList.remove('is-active', 'is-dimmed');
+      });
+
+      revealPanel.classList.remove('show');
+      sceneNext.classList.remove('show');
+      showToast('Choose another route.');
+    }
+
+    musicBtn.addEventListener('click', toggleMusic);
+    resetBtn.addEventListener('click', resetStory);
+
+    nextBtn.addEventListener('click', () => {
+      document.body.style.transition = 'opacity 0.7s ease';
+      document.body.style.opacity = '0';
+
+      setTimeout(() => {
+        window.location.href = 'scene4.html';
+      }, 700);
+    });
+
+    document.addEventListener('pointerdown', () => {
+      if (!musicPlaying) playMusic();
+    }, { once: true });
+
+    window.addEventListener('load', async () => {
+      makeSparkles();
+      createStoryCards();
+      await playMusic();
+      showToast('Choose a sea to open.');
+    });
+  </script>
+</body>
+</html>
