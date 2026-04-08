@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#f4a657" />
+  <meta name="theme-color" content="#f09a4a" />
   <title>If We Sailed Together...</title>
 
   <style>
@@ -16,17 +16,18 @@
     }
 
     :root {
-      --sky-top: #ffcc95;
-      --sky-mid: #f3a36d;
-      --sky-deep: #de7d59;
-      --sea: #12486f;
-      --sea-deep: #0b2f49;
+      --sky-top: #ffd7a0;
+      --sky-mid: #f3a168;
+      --sky-deep: #de7a57;
+      --sea: #11486f;
+      --sea-deep: #0a2d44;
       --gold: #ffd27f;
+      --gold-2: #ffecb8;
       --cream: #fff4df;
       --ink: #3a1d0f;
       --muted: rgba(58, 29, 15, 0.72);
-      --panel: rgba(255, 245, 223, 0.78);
-      --panel-strong: rgba(255, 245, 223, 0.9);
+      --panel: rgba(255, 244, 223, 0.82);
+      --panel-strong: rgba(255, 244, 223, 0.92);
       --line: rgba(58, 29, 15, 0.12);
       --shadow: 0 20px 60px rgba(57, 31, 20, 0.24);
     }
@@ -52,10 +53,8 @@
       z-index: 0;
       overflow: hidden;
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.20), transparent 18%),
-        radial-gradient(circle at 18% 14%, rgba(255,255,255,0.55), transparent 22%),
-        radial-gradient(circle at 82% 18%, rgba(255,245,220,0.35), transparent 24%),
-        linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 42%, var(--sky-deep) 72%, var(--sea) 100%);
+        linear-gradient(180deg, rgba(255,255,255,0.18), transparent 18%),
+        linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 40%, var(--sky-deep) 70%, var(--sea) 100%);
     }
 
     .bg-photo {
@@ -63,21 +62,23 @@
       inset: 0;
       background-position: center;
       background-size: cover;
-      opacity: 0.26;
-      filter: saturate(1.08) contrast(1.05);
+      opacity: 0.22;
+      filter: saturate(1.08) contrast(1.04);
       transform: scale(1.03);
     }
 
     .sun-glow {
       position: absolute;
-      top: 9%;
-      right: -60px;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,232,183,0.95) 0%, rgba(255,195,112,0.34) 55%, transparent 76%);
-      filter: blur(4px);
+      top: 2%;
+      right: -10%;
+      width: min(66vw, 320px);
+      aspect-ratio: 1 / 1;
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
       opacity: 0.9;
+      pointer-events: none;
+      filter: drop-shadow(0 0 30px rgba(255, 211, 127, 0.28));
     }
 
     .cloud {
@@ -85,7 +86,7 @@
       width: 230px;
       height: 72px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.38);
+      background: rgba(255,255,255,0.36);
       filter: blur(1px);
       animation: cloudMove linear infinite;
     }
@@ -113,14 +114,14 @@
     }
 
     .cloud.one {
-      top: 11%;
+      top: 10%;
       left: -220px;
-      opacity: 0.45;
+      opacity: 0.4;
       animation-duration: 38s;
     }
 
     .cloud.two {
-      top: 29%;
+      top: 27%;
       right: -240px;
       opacity: 0.28;
       transform: scale(0.8);
@@ -138,56 +139,18 @@
       to { transform: translateX(calc(-100vw - 460px)) scale(0.8); }
     }
 
-    .sea-shine {
+    .waves-overlay {
       position: absolute;
       left: 0;
       right: 0;
-      bottom: 21%;
-      height: 120px;
-      background: linear-gradient(180deg, rgba(255, 220, 144, 0), rgba(255, 220, 144, 0.22));
-      filter: blur(18px);
-      opacity: 0.85;
-    }
-
-    .waves {
-      position: absolute;
-      left: -10%;
-      right: -10%;
       bottom: 0;
-      height: 32%;
-      background:
-        radial-gradient(ellipse at top, rgba(255,255,255,0.10), transparent 46%),
-        linear-gradient(180deg, rgba(16,74,112,0.0) 0%, rgba(10,57,88,0.25) 18%, var(--sea) 100%);
-    }
-
-    .wave-line {
-      position: absolute;
-      left: -10%;
-      width: 120%;
-      height: 54px;
-      border-radius: 50%;
-      border-top: 2px solid rgba(255,255,255,0.10);
-      animation: waveDrift 9s ease-in-out infinite;
-    }
-
-    .wave-line.one {
-      bottom: 84px;
-      opacity: 0.42;
-    }
-
-    .wave-line.two {
-      bottom: 44px;
-      opacity: 0.28;
-      animation-delay: 1.2s;
-    }
-
-    @keyframes waveDrift {
-      0%, 100% {
-        transform: translateX(0);
-      }
-      50% {
-        transform: translateX(-16px);
-      }
+      height: 34%;
+      background-position: bottom center;
+      background-repeat: repeat-x;
+      background-size: cover;
+      opacity: 0.45;
+      pointer-events: none;
+      filter: saturate(1.08);
     }
 
     .sparkles {
@@ -217,7 +180,7 @@
       right: 12px;
       z-index: 80;
       border: 1px solid rgba(255,255,255,0.66);
-      background: rgba(255, 247, 228, 0.48);
+      background: rgba(255, 247, 228, 0.5);
       color: var(--ink);
       border-radius: 999px;
       padding: 9px 13px;
@@ -236,7 +199,7 @@
       max-width: 200px;
       border-radius: 14px;
       padding: 8px 11px;
-      background: rgba(255, 247, 228, 0.66);
+      background: rgba(255,247,228,0.66);
       color: rgba(58, 29, 15, 0.72);
       font-size: 0.74rem;
       line-height: 1.35;
@@ -264,8 +227,8 @@
     .hero {
       position: relative;
       text-align: center;
-      margin-bottom: 16px;
-      z-index: 10;
+      margin-bottom: 18px;
+      z-index: 14;
     }
 
     .hero-tag {
@@ -274,8 +237,8 @@
       justify-content: center;
       padding: 7px 12px;
       border-radius: 999px;
-      background: rgba(255, 247, 228, 0.55);
-      border: 1px solid rgba(255,255,255,0.74);
+      background: rgba(255, 247, 228, 0.58);
+      border: 1px solid rgba(255,255,255,0.76);
       color: #8f511f;
       font-size: 0.66rem;
       letter-spacing: 1.6px;
@@ -287,7 +250,7 @@
 
     .hero h1 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 13vw, 4.6rem);
+      font-size: clamp(2.9rem, 13vw, 4.8rem);
       line-height: 0.94;
       color: #fffaf2;
       text-shadow: 0 3px 16px rgba(103, 51, 20, 0.16);
@@ -295,7 +258,7 @@
 
     .hero p {
       margin-top: 10px;
-      color: rgba(58, 29, 15, 0.72);
+      color: rgba(58, 29, 15, 0.74);
       font-size: 0.95rem;
       font-weight: 900;
     }
@@ -304,45 +267,84 @@
       position: absolute;
       pointer-events: none;
       user-select: none;
-      z-index: 4;
       filter: drop-shadow(0 16px 24px rgba(52, 27, 17, 0.18));
     }
 
-    .decor.strawhat {
-      top: 88px;
-      left: 8px;
+    .strawhat {
+      top: 86px;
+      left: 6px;
       width: 82px;
       transform: rotate(-14deg);
-      z-index: 12;
+      z-index: 16;
     }
 
-    .decor.luffy {
-      bottom: 138px;
+    .jolly-roger {
+      top: 84px;
+      right: 2px;
+      width: 76px;
+      opacity: 0.82;
+      z-index: 12;
+      transform: rotate(12deg);
+    }
+
+    .luffy {
+      bottom: 162px;
       left: -18px;
       width: clamp(122px, 34vw, 164px);
-      z-index: 5;
+      z-index: 6;
     }
 
-    .decor.ship {
-      bottom: 76px;
-      right: 2px;
-      width: clamp(142px, 42vw, 208px);
-      z-index: 5;
+    .ship {
+      bottom: 104px;
+      right: 0;
+      width: clamp(146px, 42vw, 210px);
+      z-index: 6;
     }
 
     .story-board {
       position: relative;
-      z-index: 10;
-      margin-top: 8px;
+      z-index: 12;
+      margin-top: 10px;
+    }
+
+    .board-shell {
+      position: relative;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.72);
+      background: var(--panel);
+      backdrop-filter: blur(16px);
+    }
+
+    .map-layer {
+      position: absolute;
+      inset: 0;
+      background-position: center;
+      background-size: cover;
+      opacity: 0.12;
+      filter: sepia(0.7) saturate(0.9);
+      pointer-events: none;
+    }
+
+    .compass-decor {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 76px;
+      opacity: 0.62;
+      pointer-events: none;
+      filter: drop-shadow(0 10px 18px rgba(57,31,20,0.12));
+      z-index: 4;
+    }
+
+    .board-inner {
+      position: relative;
+      z-index: 6;
+      padding: 18px;
     }
 
     .board-panel {
-      border-radius: 26px;
-      padding: 18px;
-      background: var(--panel);
-      border: 1px solid rgba(255,255,255,0.72);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
       margin-bottom: 14px;
     }
 
@@ -362,6 +364,7 @@
       letter-spacing: 0.5px;
       color: var(--ink);
       margin-bottom: 8px;
+      padding-right: 64px;
     }
 
     .board-panel p {
@@ -381,11 +384,11 @@
       border: none;
       border-radius: 24px;
       padding: 16px 14px;
-      min-height: 148px;
+      min-height: 150px;
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.20), transparent 30%),
-        linear-gradient(135deg, rgba(255,251,243,0.92), rgba(255,233,202,0.82));
-      border: 1px solid rgba(255,255,255,0.78);
+        linear-gradient(180deg, rgba(255,255,255,0.22), transparent 30%),
+        linear-gradient(135deg, rgba(255,251,243,0.95), rgba(255,233,202,0.84));
+      border: 1px solid rgba(255,255,255,0.8);
       color: var(--ink);
       text-align: left;
       cursor: pointer;
@@ -438,9 +441,8 @@
       border-radius: 28px;
       padding: 20px 18px;
       background: var(--panel-strong);
-      border: 1px solid rgba(255,255,255,0.78);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: 0 16px 38px rgba(57,31,20,0.14);
     }
 
     .reveal-panel.show {
@@ -459,7 +461,7 @@
 
     .reveal-panel h3 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 2.4rem;
+      font-size: 2.45rem;
       line-height: 0.92;
       color: var(--ink);
       margin-bottom: 10px;
@@ -496,7 +498,6 @@
       background: var(--panel);
       border: 1px solid rgba(255,255,255,0.72);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
       text-align: center;
     }
 
@@ -566,7 +567,7 @@
       border-radius: 999px;
       padding: 11px 14px;
       text-align: center;
-      background: rgba(255, 247, 228, 0.86);
+      background: rgba(255, 247, 228, 0.88);
       color: var(--ink);
       font-weight: 900;
       box-shadow: 0 14px 34px rgba(57,31,20,0.14);
@@ -601,19 +602,24 @@
         grid-template-columns: repeat(4, minmax(0, 1fr));
       }
 
-      .decor.luffy {
+      .luffy {
         left: 22px;
         width: 190px;
       }
 
-      .decor.ship {
+      .ship {
         right: 22px;
         width: 238px;
       }
 
-      .decor.strawhat {
+      .strawhat {
         top: 86px;
         left: 24px;
+      }
+
+      .jolly-roger {
+        top: 84px;
+        right: 24px;
       }
 
       .panel-actions {
@@ -633,18 +639,22 @@
     }
 
     @media (max-width: 380px) {
-      .decor.luffy {
+      .luffy {
         width: 116px;
         left: -24px;
       }
 
-      .decor.ship {
+      .ship {
         width: 146px;
         right: -10px;
       }
 
-      .decor.strawhat {
+      .strawhat {
         width: 70px;
+      }
+
+      .jolly-roger {
+        width: 64px;
       }
 
       .story-card {
@@ -675,15 +685,11 @@
 
   <div class="bg">
     <div class="bg-photo" id="bgPhoto"></div>
-    <div class="sun-glow"></div>
+    <div class="sun-glow" id="sunGlow"></div>
     <div class="cloud one"></div>
     <div class="cloud two"></div>
-    <div class="sea-shine"></div>
     <div class="sparkles" id="sparkles"></div>
-    <div class="waves">
-      <div class="wave-line one"></div>
-      <div class="wave-line two"></div>
-    </div>
+    <div class="waves-overlay" id="wavesOverlay"></div>
   </div>
 
   <button class="music-btn" id="musicBtn" type="button">Music On</button>
@@ -697,30 +703,38 @@
     </header>
 
     <img class="decor strawhat" src="strawhat.png" alt="Straw Hat" />
+    <img class="decor jolly-roger" src="jolly-roger.png" alt="Jolly Roger" />
     <img class="decor luffy" src="luffy.png" alt="Luffy" />
     <img class="decor ship" src="ship.png" alt="Ship" />
 
     <section class="story-board">
-      <div class="board-panel">
-        <p class="small">Choose A Story</p>
-        <h2>Which Sea Would You Sail Through?</h2>
-        <p>
-          Pick one route. I’ll tell you how I think it would feel if you were beside me through it.
-        </p>
-      </div>
+      <div class="board-shell">
+        <div class="map-layer" id="mapLayer"></div>
+        <img class="compass-decor" src="compass.png" alt="Compass" />
 
-      <section class="choices-grid" id="choicesGrid"></section>
+        <div class="board-inner">
+          <div class="board-panel">
+            <p class="small">Choose A Story</p>
+            <h2>Which Sea Would You Sail Through?</h2>
+            <p>
+              Pick one route. I’ll tell you how I think it would feel if you were beside me through it.
+            </p>
+          </div>
 
-      <section class="reveal-panel" id="revealPanel">
-        <p class="small">Opened Story</p>
-        <h3 id="revealTitle"></h3>
-        <p class="story" id="revealStory"></p>
-        <p class="quote" id="revealQuote"></p>
+          <section class="choices-grid" id="choicesGrid"></section>
 
-        <div class="panel-actions">
-          <button class="secondary-btn" id="resetBtn" type="button">Choose Another Route</button>
+          <section class="reveal-panel" id="revealPanel">
+            <p class="small">Opened Story</p>
+            <h3 id="revealTitle"></h3>
+            <p class="story" id="revealStory"></p>
+            <p class="quote" id="revealQuote"></p>
+
+            <div class="panel-actions">
+              <button class="secondary-btn" id="resetBtn" type="button">Choose Another Route</button>
+            </div>
+          </section>
         </div>
-      </section>
+      </div>
 
       <section class="scene-next" id="sceneNext">
         <p class="small">Nightfall Ahead</p>
@@ -768,6 +782,9 @@
     const musicBtn = document.getElementById('musicBtn');
     const audioHint = document.getElementById('audioHint');
     const bgPhoto = document.getElementById('bgPhoto');
+    const sunGlow = document.getElementById('sunGlow');
+    const wavesOverlay = document.getElementById('wavesOverlay');
+    const mapLayer = document.getElementById('mapLayer');
     const sparkles = document.getElementById('sparkles');
     const choicesGrid = document.getElementById('choicesGrid');
     const revealPanel = document.getElementById('revealPanel');
@@ -777,12 +794,16 @@
     const resetBtn = document.getElementById('resetBtn');
     const sceneNext = document.getElementById('sceneNext');
     const nextBtn = document.getElementById('nextBtn');
+    const toast = document.getElementById('toast');
 
     let musicPlaying = false;
     let selectedIndex = null;
 
     bgMusic.volume = 0.3;
     bgPhoto.style.backgroundImage = 'url("onepiece-bg.jpg")';
+    sunGlow.style.backgroundImage = 'url("sunset-glow.png")';
+    wavesOverlay.style.backgroundImage = 'url("ocean-wave.png")';
+    mapLayer.style.backgroundImage = 'url("map.png")';
 
     function makeSparkles() {
       const marks = ['✦', '✧', '⋆'];
@@ -799,7 +820,6 @@
     }
 
     function showToast(message) {
-      const toast = document.getElementById('toast');
       toast.textContent = message;
       toast.classList.add('show');
       clearTimeout(showToast.timer);
