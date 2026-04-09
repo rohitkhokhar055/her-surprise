@@ -46,74 +46,24 @@
       z-index: 0;
       overflow: hidden;
       background:
-        radial-gradient(circle at 22% 14%, rgba(216,168,102,0.12), transparent 24%),
-        radial-gradient(circle at 80% 18%, rgba(255,248,239,0.06), transparent 22%),
-        linear-gradient(180deg, rgba(7, 5, 4, 0.28), rgba(7, 5, 4, 0.82)),
+        linear-gradient(180deg, rgba(7, 5, 4, 0.3), rgba(7, 5, 4, 0.84)),
         #120d0b;
     }
 
-    .bg-photo,
-    .dust {
+    .bg-photo {
       position: absolute;
       inset: 0;
-      pointer-events: none;
-    }
-
-    .bg-photo {
       background: url("finalchapter-bg.jpg") center/cover no-repeat;
       opacity: 0.24;
-      filter: saturate(0.84) contrast(1.05) brightness(0.68);
+      filter: saturate(0.84) contrast(1.05) brightness(0.66);
       transform: scale(1.03);
-    }
-
-    .dust {
-      background: url("dust.png") center/cover no-repeat;
-      opacity: 0.08;
-      animation: dustShift 18s ease-in-out infinite alternate;
-    }
-
-    .dust.two {
-      opacity: 0.05;
-      transform: scale(1.08);
-      animation-delay: 2s;
-      animation-duration: 24s;
-    }
-
-    @keyframes dustShift {
-      0% {
-        transform: translateX(0) translateY(0) scale(1.02);
-      }
-      100% {
-        transform: translateX(-10px) translateY(8px) scale(1.08);
-      }
-    }
-
-    .lamp {
-      position: absolute;
-      top: 2%;
-      right: 2%;
-      width: min(28vw, 120px);
-      opacity: 0.84;
-      filter: drop-shadow(0 0 26px rgba(242,212,163,0.16));
-      pointer-events: none;
-    }
-
-    .lamp-glow {
-      position: absolute;
-      top: 2%;
-      right: -4%;
-      width: min(46vw, 220px);
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(242,212,163,0.34), rgba(242,212,163,0.08) 48%, transparent 72%);
-      filter: blur(12px);
       pointer-events: none;
     }
 
     .vignette {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle, transparent 44%, rgba(0,0,0,0.46) 100%);
+      background: radial-gradient(circle, transparent 42%, rgba(0,0,0,0.5) 100%);
       pointer-events: none;
     }
 
@@ -165,13 +115,11 @@
       min-height: 100vh;
       margin: 0 auto;
       padding: 68px 14px 28px;
-      display: flex;
-      flex-direction: column;
     }
 
     .hero {
       text-align: center;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .hero .small {
@@ -205,107 +153,26 @@
       font-weight: 800;
     }
 
-    .stage {
-      position: relative;
-      flex: 1;
-      min-height: 560px;
-      padding-top: 12px;
-    }
-
-    .book-trigger {
-      position: relative;
-      z-index: 10;
-      display: block;
-      width: min(92vw, 360px);
-      margin: 26px auto 0;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      color: inherit;
-      font-family: inherit;
-      text-align: left;
-      transition: opacity 0.48s ease, transform 0.48s ease;
-    }
-
-    .book-trigger.hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-18px);
-    }
-
-    .book-art {
-      display: block;
-      width: 100%;
-      height: auto;
-      filter: drop-shadow(0 24px 40px rgba(0,0,0,0.32));
-    }
-
-    .book-copy {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 24px;
-      text-align: center;
-      z-index: 4;
-    }
-
-    .book-copy .mini {
-      color: rgba(255,248,239,0.66);
-      font-size: 0.66rem;
-      letter-spacing: 1.6px;
-      text-transform: uppercase;
-      font-weight: 900;
-      margin-bottom: 8px;
-    }
-
-    .book-copy h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.1rem, 10vw, 3rem);
-      line-height: 0.95;
-      color: #fff8ef;
-      margin-bottom: 20px;
-    }
-
-    .book-copy .tap {
-      color: rgba(255,248,239,0.9);
-      font-size: 0.9rem;
-      font-weight: 900;
+    .final-note,
+    .remark-box,
+    .scene-end {
+      width: min(92vw, 390px);
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
     }
 
     .final-note {
-      display: none;
       position: relative;
-      z-index: 12;
-      width: min(92vw, 390px);
-      margin: 6px auto 0;
-      border-radius: 30px;
+      margin-top: 8px;
       padding: 22px 18px 18px;
       background:
         linear-gradient(180deg, rgba(255,255,255,0.22), transparent 18%),
         linear-gradient(135deg, var(--paper) 0%, #fff7ea 40%, var(--paper-2) 100%);
       border: 1px solid rgba(255,255,255,0.82);
-      box-shadow: var(--shadow);
       color: var(--ink);
       overflow: hidden;
-    }
-
-    .final-note.show {
-      display: block;
-      animation: noteReveal 0.58s ease forwards;
-    }
-
-    @keyframes noteReveal {
-      from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.98);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
     }
 
     .final-note::before {
@@ -371,28 +238,16 @@
       line-height: 1.65;
     }
 
-    .note-end-trigger {
-      height: 1px;
-      margin-top: 4px;
-    }
-
-    .remark-box {
-      display: none;
-      width: min(92vw, 390px);
-      margin: 18px auto 0;
-      border-radius: 24px;
+    .remark-box,
+    .scene-end {
+      margin-top: 18px;
       padding: 18px;
       background: rgba(20, 14, 12, 0.84);
       border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: var(--shadow);
     }
 
-    .remark-box.show {
-      display: block;
-      animation: noteReveal 0.48s ease forwards;
-    }
-
-    .remark-box .small {
+    .remark-box .small,
+    .scene-end .small {
       color: rgba(244,212,160,0.84);
       font-size: 0.66rem;
       letter-spacing: 1.6px;
@@ -401,7 +256,8 @@
       margin-bottom: 6px;
     }
 
-    .remark-box h3 {
+    .remark-box h3,
+    .scene-end h3 {
       font-family: 'Cormorant Garamond', serif;
       font-size: 2rem;
       line-height: 0.95;
@@ -436,40 +292,6 @@
 
     .remark-input::placeholder {
       color: rgba(255,248,239,0.52);
-    }
-
-    .scene-end {
-      display: none;
-      width: min(92vw, 390px);
-      margin: 18px auto 0;
-      border-radius: 24px;
-      padding: 18px;
-      background: rgba(20, 14, 12, 0.84);
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: var(--shadow);
-      text-align: center;
-    }
-
-    .scene-end.show {
-      display: block;
-      animation: noteReveal 0.48s ease forwards;
-    }
-
-    .scene-end .small {
-      color: rgba(244,212,160,0.84);
-      font-size: 0.66rem;
-      letter-spacing: 1.6px;
-      text-transform: uppercase;
-      font-weight: 900;
-      margin-bottom: 6px;
-    }
-
-    .scene-end h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem;
-      line-height: 0.95;
-      color: #fff8ef;
-      margin-bottom: 14px;
     }
 
     .primary-btn {
@@ -588,10 +410,6 @@
         width: min(100%, 720px);
       }
 
-      .book-trigger {
-        width: 420px;
-      }
-
       .final-note,
       .remark-box,
       .scene-end {
@@ -623,10 +441,6 @@
 
   <div class="bg">
     <div class="bg-photo"></div>
-    <div class="dust one"></div>
-    <div class="dust two"></div>
-    <div class="lamp-glow"></div>
-    <img class="lamp" src="lamp.png" alt="Lamp" />
     <div class="vignette"></div>
   </div>
 
@@ -640,64 +454,52 @@
       <p>There is only one page left now.</p>
     </header>
 
-    <section class="stage">
-      <button class="book-trigger" id="bookTrigger" type="button" aria-label="Open the last page">
-        <img class="book-art" src="book.png" alt="Book" />
-        <div class="book-copy">
-          <span class="mini">Final Chapter</span>
+    <article class="final-note">
+      <div class="note-inner">
+        <div class="note-head">
+          <p class="small">Last Page</p>
           <h2>The Last Page</h2>
-          <span class="tap">Open The Last Page</span>
         </div>
-      </button>
 
-      <article class="final-note" id="finalNote">
-        <div class="note-inner">
-          <div class="note-head">
-            <p class="small">Last Page</p>
-            <h2>The Last Page</h2>
-          </div>
+        <div class="divider"></div>
 
-          <div class="divider"></div>
-
-          <div class="note-body">
-            <p>This page should end softly.</p>
-            <p>Not with another question. Not with another attempt to hold onto something that has already moved on.</p>
-            <p>So let me say the things I should have said more clearly a long time ago.</p>
-            <p>Forgive me for the past. For the things I handled badly, for the ways I held on too long, and for every moment where my feelings became more of a burden than they should have been.</p>
-            <p>I did love you. Really. Maybe not always perfectly, maybe not always in the right way, but what I felt was real.</p>
-            <p>And because it was real, I think the right thing to do now is to leave with honesty instead of noise.</p>
-            <p>I know you are not where you once were with me. I know your life has moved forward, and I can feel that I no longer belong in the place I kept trying to return to.</p>
-            <p>So this is me accepting it properly.</p>
-            <p>Be happy with whoever is beside you now. Be loved well. Be understood gently. Be chosen in the way you always deserved to be.</p>
-            <p>Enjoy your day. Enjoy your life. I mean that sincerely.</p>
-            <p>And I will try not to text you again or disturb your peace. Not because I never cared, but because I did, and I think caring should also know when to step back.</p>
-            <p>You will always remain someone important in a part of me. But I do not want to keep turning memory into interruption.</p>
-            <p>So this is where I leave it.</p>
-            <p>Take care of yourself, Ishu.</p>
-            <p class="closing-line">I loved you truly. Now I just hope life is kind to you, even if it is no longer with me.</p>
-          </div>
-
-          <div class="note-end-trigger" id="noteEndTrigger" aria-hidden="true"></div>
+        <div class="note-body">
+          <p>This page should end softly.</p>
+          <p>Not with another question. Not with another attempt to hold onto something that has already moved on.</p>
+          <p>So let me say the things I should have said more clearly a long time ago.</p>
+          <p>Forgive me for the past. For the things I handled badly, for the ways I held on too long, and for every moment where my feelings became more of a burden than they should have been.</p>
+          <p>I did love you. Really. Maybe not always perfectly, maybe not always in the right way, but what I felt was real.</p>
+          <p>And because it was real, I think the right thing to do now is to leave with honesty instead of noise.</p>
+          <p>I know you are not where you once were with me. I know your life has moved forward, and I can feel that I no longer belong in the place I kept trying to return to.</p>
+          <p>And I know, deep down, that you probably did not come back after that first day. I can see the visitors, so I know some of the comfort I gave myself was just false hope in a nicer form. I know you are busy, I know life has its own pace, and maybe even now you would say you had already made things clear. Still, I felt this, and I wanted to leave it here honestly once before I stopped.</p>
+          <p>So this is me accepting it properly.</p>
+          <p>Be happy with whoever is beside you now. Be loved well. Be understood gently. Be chosen in the way you always deserved to be.</p>
+          <p>Enjoy your day. Enjoy your life. I mean that sincerely.</p>
+          <p>And I will try not to text you again or disturb your peace. Not because I never cared, but because I did, and I think caring should also know when to step back.</p>
+          <p>You will always remain someone important in a part of me. But I do not want to keep turning memory into interruption.</p>
+          <p>So this is where I leave it.</p>
+          <p>Take care of yourself, Ishu.</p>
+          <p class="closing-line">I loved you truly. Now I just hope life is kind to you, even if it is no longer with me.</p>
         </div>
-      </article>
+      </div>
+    </article>
 
-      <section class="remark-box" id="remarkBox">
-        <p class="small">One Last Remark</p>
-        <h3>If anything came to your mind, you can write here.</h3>
-        <p class="remark-help">Optional. Sending this note delivers it to the creator of this page.</p>
-        <textarea
-          id="remarkInput"
-          class="remark-input"
-          placeholder="Otherwise nvm, as you always say hehe. Enjoy bday, ARTICUNO."
-        ></textarea>
-        <button class="primary-btn" id="sendRemarkBtn" type="button">Send Final Note</button>
-      </section>
+    <section class="remark-box">
+      <p class="small">One Last Remark</p>
+      <h3>If anything came to your mind, you can write here.</h3>
+      <p class="remark-help">Optional. Sending this note delivers it to the creator of this page.</p>
+      <textarea
+        id="remarkInput"
+        class="remark-input"
+        placeholder="Otherwise nvm, as you always say hehe. Enjoy bday, ARTICUNO."
+      ></textarea>
+      <button class="primary-btn" id="sendRemarkBtn" type="button">Send Final Note</button>
+    </section>
 
-      <section class="scene-end" id="sceneEnd">
-        <p class="small">The End</p>
-        <h3>Close The Book</h3>
-        <button class="primary-btn" id="closeBookBtn" type="button">Close The Book</button>
-      </section>
+    <section class="scene-end">
+      <p class="small">The End</p>
+      <h3>Close The Book</h3>
+      <button class="primary-btn" id="closeBookBtn" type="button">Close The Book</button>
     </section>
   </main>
 
@@ -719,21 +521,13 @@
     const bgMusic = document.getElementById('bgMusic');
     const musicBtn = document.getElementById('musicBtn');
     const audioHint = document.getElementById('audioHint');
-    const bookTrigger = document.getElementById('bookTrigger');
-    const finalNote = document.getElementById('finalNote');
-    const noteEndTrigger = document.getElementById('noteEndTrigger');
-    const remarkBox = document.getElementById('remarkBox');
     const remarkInput = document.getElementById('remarkInput');
     const sendRemarkBtn = document.getElementById('sendRemarkBtn');
-    const sceneEnd = document.getElementById('sceneEnd');
     const closeBookBtn = document.getElementById('closeBookBtn');
     const endOverlay = document.getElementById('endOverlay');
     const toast = document.getElementById('toast');
 
     let musicPlaying = false;
-    let opened = false;
-    let endingRevealed = false;
-    let endObserver = null;
 
     bgMusic.volume = 0.22;
 
@@ -770,57 +564,6 @@
         return;
       }
       await playMusic();
-    }
-
-    function revealEndingSections() {
-      if (endingRevealed) return;
-      endingRevealed = true;
-
-      remarkBox.classList.add('show');
-      sceneEnd.classList.add('show');
-
-      if (endObserver) {
-        endObserver.disconnect();
-        endObserver = null;
-      }
-    }
-
-    function watchLetterEnd() {
-      if ('IntersectionObserver' in window) {
-        endObserver = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              revealEndingSections();
-            }
-          });
-        }, {
-          threshold: 0.9
-        });
-
-        endObserver.observe(noteEndTrigger);
-      } else {
-        revealEndingSections();
-      }
-    }
-
-    async function openBook() {
-      if (opened) return;
-
-      opened = true;
-      bookTrigger.classList.add('hidden');
-      await playMusic();
-
-      setTimeout(() => {
-        finalNote.classList.add('show');
-        watchLetterEnd();
-      }, 180);
-
-      setTimeout(() => {
-        finalNote.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }, 260);
     }
 
     async function sendRemark() {
@@ -865,7 +608,6 @@
     }
 
     musicBtn.addEventListener('click', toggleMusic);
-    bookTrigger.addEventListener('click', openBook);
     sendRemarkBtn.addEventListener('click', sendRemark);
     closeBookBtn.addEventListener('click', closeBook);
 
@@ -875,7 +617,7 @@
 
     window.addEventListener('load', async () => {
       await playMusic();
-      showToast('Open the last page.');
+      showToast('Read the last page.');
     });
   </script>
 </body>
