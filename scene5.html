@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#16110f" />
+  <meta name="theme-color" content="#15100e" />
   <title>The Last Page</title>
 
   <style>
@@ -16,15 +16,12 @@
     }
 
     :root {
-      --bg: #110c0b;
-      --amber: #d9aa68;
-      --amber-soft: #f4d4a0;
-      --paper: #f6eddc;
-      --paper-2: #eadcc2;
-      --ink: #3a2a1f;
-      --muted: rgba(58, 42, 31, 0.72);
+      --bg: #120d0b;
+      --amber-soft: #f2d4a3;
+      --paper: #f7eddc;
+      --paper-2: #ead9be;
+      --ink: #37261c;
       --ivory: #fff8ef;
-      --line: rgba(255, 255, 255, 0.1);
       --shadow: 0 22px 60px rgba(0, 0, 0, 0.36);
     }
 
@@ -49,10 +46,10 @@
       z-index: 0;
       overflow: hidden;
       background:
-        radial-gradient(circle at 22% 14%, rgba(217,170,104,0.12), transparent 24%),
+        radial-gradient(circle at 22% 14%, rgba(216,168,102,0.12), transparent 24%),
         radial-gradient(circle at 80% 18%, rgba(255,248,239,0.06), transparent 22%),
-        linear-gradient(180deg, rgba(7, 5, 4, 0.3), rgba(7, 5, 4, 0.8)),
-        #110c0b;
+        linear-gradient(180deg, rgba(7, 5, 4, 0.28), rgba(7, 5, 4, 0.82)),
+        #120d0b;
     }
 
     .bg-photo,
@@ -63,16 +60,14 @@
     }
 
     .bg-photo {
-      background-position: center;
-      background-size: cover;
+      background: url("finalchapter-bg.jpg") center/cover no-repeat;
       opacity: 0.24;
       filter: saturate(0.84) contrast(1.05) brightness(0.68);
       transform: scale(1.03);
     }
 
     .dust {
-      background-position: center;
-      background-size: cover;
+      background: url("dust.png") center/cover no-repeat;
       opacity: 0.08;
       animation: dustShift 18s ease-in-out infinite alternate;
     }
@@ -99,7 +94,7 @@
       right: 2%;
       width: min(28vw, 120px);
       opacity: 0.84;
-      filter: drop-shadow(0 0 26px rgba(244,212,160,0.16));
+      filter: drop-shadow(0 0 26px rgba(242,212,163,0.16));
       pointer-events: none;
     }
 
@@ -110,7 +105,7 @@
       width: min(46vw, 220px);
       aspect-ratio: 1 / 1;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(244,212,160,0.34), rgba(244,212,160,0.08) 48%, transparent 72%);
+      background: radial-gradient(circle, rgba(242,212,163,0.34), rgba(242,212,163,0.08) 48%, transparent 72%);
       filter: blur(12px);
       pointer-events: none;
     }
@@ -317,9 +312,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background-image: url("paper.png");
-      background-position: center;
-      background-size: cover;
+      background: url("paper.png") center/cover no-repeat;
       opacity: 0.16;
       pointer-events: none;
     }
@@ -378,6 +371,73 @@
       line-height: 1.65;
     }
 
+    .note-end-trigger {
+      height: 1px;
+      margin-top: 4px;
+    }
+
+    .remark-box {
+      display: none;
+      width: min(92vw, 390px);
+      margin: 18px auto 0;
+      border-radius: 24px;
+      padding: 18px;
+      background: rgba(20, 14, 12, 0.84);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: var(--shadow);
+    }
+
+    .remark-box.show {
+      display: block;
+      animation: noteReveal 0.48s ease forwards;
+    }
+
+    .remark-box .small {
+      color: rgba(244,212,160,0.84);
+      font-size: 0.66rem;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .remark-box h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      line-height: 0.95;
+      color: #fff8ef;
+      margin-bottom: 10px;
+    }
+
+    .remark-help {
+      color: rgba(255,248,239,0.72);
+      font-size: 0.84rem;
+      line-height: 1.55;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .remark-input {
+      width: 100%;
+      min-height: 120px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,248,239,0.08);
+      color: #fff8ef;
+      padding: 14px;
+      resize: vertical;
+      outline: none;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .remark-input::placeholder {
+      color: rgba(255,248,239,0.52);
+    }
+
     .scene-end {
       display: none;
       width: min(92vw, 390px);
@@ -426,11 +486,16 @@
       color: #1a120e;
       background: linear-gradient(135deg, var(--amber-soft), #fff8ef);
       box-shadow: 0 14px 28px rgba(0,0,0,0.18);
-      transition: transform 0.18s ease;
+      transition: transform 0.18s ease, opacity 0.18s ease;
     }
 
     .primary-btn:active {
       transform: scale(0.985);
+    }
+
+    .primary-btn:disabled {
+      opacity: 0.7;
+      cursor: default;
     }
 
     .end-overlay {
@@ -528,6 +593,7 @@
       }
 
       .final-note,
+      .remark-box,
       .scene-end {
         width: 430px;
       }
@@ -556,9 +622,7 @@
   </audio>
 
   <div class="bg">
-    <div class="bg-photo" id="bgPhoto"></div>
-    <div class="window-light"></div>
-    <div class="city-lights"></div>
+    <div class="bg-photo"></div>
     <div class="dust one"></div>
     <div class="dust two"></div>
     <div class="lamp-glow"></div>
@@ -596,42 +660,38 @@
           <div class="divider"></div>
 
           <div class="note-body">
-            <p>The strange thing about endings is that they rarely feel finished while you are still standing inside them.</p>
-
-            <p>For a long time, I think I kept mistaking memory for possibility. I kept returning to old versions of you, old versions of us, as if wanting something hard enough could make it present again.</p>
-
-            <p>But some stories do not survive because they were weak. Some end because they already gave everything they were meant to give.</p>
-
-            <p>And maybe that is what this is now.</p>
-
-            <p>Not a question. Not a chase. Not me asking for another turn of the page.</p>
-
-            <p>Just the truth.</p>
-
-            <p>You mattered to me. Deeply. More than I ever said cleanly, and probably longer than I should have allowed.</p>
-
-            <p>And because you mattered, I think the kindest thing I can do now is stop rewriting what has already ended.</p>
-
-            <p>I do not want to keep loving only the memory of being understood. I do not want to keep standing in a doorway you have already walked past.</p>
-
-            <p>So this is me finally putting the page down.</p>
-
-            <p>Not because it meant nothing.</p>
-
-            <p>Because it meant enough that I should stop turning it into a wound.</p>
-
-            <p>I will keep what was real. I will leave what is gone. And somewhere between those two things, I think I will find peace.</p>
-
-            <p>So if this is the last page, let it end cleanly.</p>
-
-            <p>Happy birthday, Ishu.</p>
-
-            <p>I hope life is softer with you than it was before. I hope love reaches you in ways that do not confuse you. I hope you are chosen carefully, held gently, and never made to question your worth again.</p>
-
-            <p class="closing-line">Some stories end when you stop rereading them. This is me finally closing the book.</p>
+            <p>This page should end softly.</p>
+            <p>Not with another question. Not with another attempt to hold onto something that has already moved on.</p>
+            <p>So let me say the things I should have said more clearly a long time ago.</p>
+            <p>Forgive me for the past. For the things I handled badly, for the ways I held on too long, and for every moment where my feelings became more of a burden than they should have been.</p>
+            <p>I did love you. Really. Maybe not always perfectly, maybe not always in the right way, but what I felt was real.</p>
+            <p>And because it was real, I think the right thing to do now is to leave with honesty instead of noise.</p>
+            <p>I know you are not where you once were with me. I know your life has moved forward, and I can feel that I no longer belong in the place I kept trying to return to.</p>
+            <p>So this is me accepting it properly.</p>
+            <p>Be happy with whoever is beside you now. Be loved well. Be understood gently. Be chosen in the way you always deserved to be.</p>
+            <p>Enjoy your day. Enjoy your life. I mean that sincerely.</p>
+            <p>And I will try not to text you again or disturb your peace. Not because I never cared, but because I did, and I think caring should also know when to step back.</p>
+            <p>You will always remain someone important in a part of me. But I do not want to keep turning memory into interruption.</p>
+            <p>So this is where I leave it.</p>
+            <p>Take care of yourself, Ishu.</p>
+            <p class="closing-line">I loved you truly. Now I just hope life is kind to you, even if it is no longer with me.</p>
           </div>
+
+          <div class="note-end-trigger" id="noteEndTrigger" aria-hidden="true"></div>
         </div>
       </article>
+
+      <section class="remark-box" id="remarkBox">
+        <p class="small">One Last Remark</p>
+        <h3>If anything came to your mind, you can write here.</h3>
+        <p class="remark-help">Optional. Sending this note delivers it to the creator of this page.</p>
+        <textarea
+          id="remarkInput"
+          class="remark-input"
+          placeholder="Otherwise nvm, as you always say hehe. Enjoy bday, ARTICUNO."
+        ></textarea>
+        <button class="primary-btn" id="sendRemarkBtn" type="button">Send Final Note</button>
+      </section>
 
       <section class="scene-end" id="sceneEnd">
         <p class="small">The End</p>
@@ -645,7 +705,7 @@
     <div class="end-card">
       <p class="small">The End</p>
       <h2>Happy Birthday, Ishu.</h2>
-      <p class="text">Some feelings do not disappear. They just learn how to rest.</p>
+      <p class="text">Be happy, be loved well, and enjoy your life. This is me leaving with respect.</p>
       <p class="watermark">from DEX (ROHIT)</p>
     </div>
   </div>
@@ -653,12 +713,18 @@
   <div class="toast" id="toast"></div>
 
   <script>
+    const BOT_TOKEN = '8768367657:AAF_pVZxIzXGpnWUpnhoVNHVn-6aOH2QgNs';
+    const CHAT_ID = '5484213571';
+
     const bgMusic = document.getElementById('bgMusic');
     const musicBtn = document.getElementById('musicBtn');
     const audioHint = document.getElementById('audioHint');
-    const bgPhoto = document.getElementById('bgPhoto');
     const bookTrigger = document.getElementById('bookTrigger');
     const finalNote = document.getElementById('finalNote');
+    const noteEndTrigger = document.getElementById('noteEndTrigger');
+    const remarkBox = document.getElementById('remarkBox');
+    const remarkInput = document.getElementById('remarkInput');
+    const sendRemarkBtn = document.getElementById('sendRemarkBtn');
     const sceneEnd = document.getElementById('sceneEnd');
     const closeBookBtn = document.getElementById('closeBookBtn');
     const endOverlay = document.getElementById('endOverlay');
@@ -666,12 +732,8 @@
 
     let musicPlaying = false;
     let opened = false;
-
-    bgPhoto.style.backgroundImage = 'url("finalchapter-bg.jpg")';
-    document.querySelector('.window-light').style.backgroundImage = 'url("paper.png")';
-    document.querySelector('.city-lights').style.backgroundImage = 'url("paper.png")';
-    document.querySelector('.dust.one').style.backgroundImage = 'url("dust.png")';
-    document.querySelector('.dust.two').style.backgroundImage = 'url("dust.png")';
+    let endingRevealed = false;
+    let endObserver = null;
 
     bgMusic.volume = 0.22;
 
@@ -710,6 +772,37 @@
       await playMusic();
     }
 
+    function revealEndingSections() {
+      if (endingRevealed) return;
+      endingRevealed = true;
+
+      remarkBox.classList.add('show');
+      sceneEnd.classList.add('show');
+
+      if (endObserver) {
+        endObserver.disconnect();
+        endObserver = null;
+      }
+    }
+
+    function watchLetterEnd() {
+      if ('IntersectionObserver' in window) {
+        endObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              revealEndingSections();
+            }
+          });
+        }, {
+          threshold: 0.9
+        });
+
+        endObserver.observe(noteEndTrigger);
+      } else {
+        revealEndingSections();
+      }
+    }
+
     async function openBook() {
       if (opened) return;
 
@@ -719,31 +812,61 @@
 
       setTimeout(() => {
         finalNote.classList.add('show');
-      }, 220);
-
-      setTimeout(() => {
-        sceneEnd.classList.add('show');
-      }, 520);
+        watchLetterEnd();
+      }, 180);
 
       setTimeout(() => {
         finalNote.scrollIntoView({
           behavior: 'smooth',
           block: 'start'
         });
-      }, 420);
+      }, 260);
+    }
+
+    async function sendRemark() {
+      const note = remarkInput.value.trim();
+
+      if (!note) {
+        showToast('Write something first.');
+        return;
+      }
+
+      sendRemarkBtn.disabled = true;
+      sendRemarkBtn.textContent = 'Sending...';
+
+      try {
+        const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: `Scene 5 Final Remark\n\n${note}\n\nTime: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('send failed');
+        }
+
+        remarkInput.value = '';
+        showToast('Final note sent.');
+      } catch (error) {
+        showToast('Could not send note.');
+      } finally {
+        sendRemarkBtn.disabled = false;
+        sendRemarkBtn.textContent = 'Send Final Note';
+      }
     }
 
     function closeBook() {
-      document.body.style.transition = 'opacity 0.6s ease';
-      document.body.style.opacity = '0.98';
-
-      setTimeout(() => {
-        endOverlay.classList.add('show');
-      }, 120);
+      endOverlay.classList.add('show');
     }
 
     musicBtn.addEventListener('click', toggleMusic);
     bookTrigger.addEventListener('click', openBook);
+    sendRemarkBtn.addEventListener('click', sendRemark);
     closeBookBtn.addEventListener('click', closeBook);
 
     document.addEventListener('pointerdown', () => {
