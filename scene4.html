@@ -18,13 +18,10 @@
     :root {
       --bg: #0b0508;
       --wine: #2b0d17;
-      --wine-2: #5f2033;
-      --crimson: #7b263f;
       --silver: #d9d3dd;
       --ivory: #f8f1f4;
       --muted: rgba(248, 241, 244, 0.74);
-      --paper: rgba(22, 11, 16, 0.82);
-      --paper-2: rgba(30, 14, 20, 0.94);
+      --paper: rgba(22, 11, 16, 0.86);
       --line: rgba(255, 255, 255, 0.1);
       --shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
     }
@@ -52,8 +49,8 @@
       background:
         radial-gradient(circle at 20% 16%, rgba(123,38,63,0.18), transparent 26%),
         radial-gradient(circle at 84% 20%, rgba(217,211,221,0.08), transparent 24%),
-        linear-gradient(180deg, rgba(10,5,8,0.28), rgba(10,5,8,0.78)),
-        var(--bg);
+        linear-gradient(180deg, rgba(10,5,8,0.28), rgba(10,5,8,0.82)),
+        #0b0508;
     }
 
     .bg-photo,
@@ -66,38 +63,34 @@
     }
 
     .bg-photo {
-      background-position: center;
-      background-size: cover;
+      background: url("midnight-bg.jpg") center/cover no-repeat;
       opacity: 0.28;
       filter: contrast(1.08) saturate(0.88) brightness(0.68);
       transform: scale(1.03);
     }
 
     .window-light {
-      background-position: center;
-      background-size: cover;
-      opacity: 0.15;
+      background: url("window-light.png") center/cover no-repeat;
+      opacity: 0.12;
       mix-blend-mode: screen;
     }
 
     .city-lights {
-      background-position: bottom center;
-      background-size: cover;
-      opacity: 0.18;
+      background: url("city-lights.png") bottom center/cover no-repeat;
+      opacity: 0.16;
       mix-blend-mode: screen;
     }
 
     .smoke {
-      background-position: center;
-      background-size: cover;
-      opacity: 0.15;
+      background: url("smoke.png") center/cover no-repeat;
+      opacity: 0.14;
       animation: smokeShift 20s ease-in-out infinite alternate;
     }
 
     .smoke.two {
-      opacity: 0.1;
+      opacity: 0.08;
       transform: scale(1.08);
-      animation-delay: 2.2s;
+      animation-delay: 2s;
       animation-duration: 24s;
     }
 
@@ -123,7 +116,7 @@
     .vignette {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle, transparent 45%, rgba(0,0,0,0.44) 100%);
+      background: radial-gradient(circle, transparent 45%, rgba(0,0,0,0.46) 100%);
       pointer-events: none;
     }
 
@@ -216,7 +209,7 @@
     .stage {
       position: relative;
       min-height: 620px;
-      padding-top: 24px;
+      padding-top: 20px;
       padding-bottom: 72px;
     }
 
@@ -232,95 +225,11 @@
       opacity: 0.85;
     }
 
-    .invitation-shell {
-      position: relative;
-      z-index: 10;
-      width: min(92vw, 390px);
-      margin: 0 auto;
-    }
-
-    .seal-trigger {
-      position: relative;
-      display: block;
-      width: 100%;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      color: inherit;
-      font-family: inherit;
-      text-align: left;
-      border-radius: 28px;
-      transition: transform 0.2s ease, opacity 0.5s ease;
-    }
-
-    .seal-trigger:active {
-      transform: scale(0.985);
-    }
-
-    .seal-trigger.hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-16px);
-    }
-
-    .envelope-art {
-      display: block;
-      width: 100%;
-      height: auto;
-      filter: drop-shadow(0 24px 40px rgba(0,0,0,0.32));
-    }
-
-    .seal-copy {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 26px;
-      text-align: center;
-      z-index: 4;
-    }
-
-    .seal-copy .mini {
-      color: rgba(255,255,255,0.7);
-      font-size: 0.66rem;
-      letter-spacing: 1.6px;
-      text-transform: uppercase;
-      font-weight: 900;
-      margin-bottom: 8px;
-    }
-
-    .seal-copy h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.1rem, 10vw, 3.1rem);
-      line-height: 0.94;
-      color: #fff8fb;
-      margin-bottom: 56px;
-    }
-
-    .seal-copy .tap {
-      color: rgba(255,255,255,0.88);
-      font-size: 0.9rem;
-      font-weight: 900;
-      letter-spacing: 0.4px;
-    }
-
-    .wax-seal {
-      position: absolute;
-      left: 50%;
-      top: 56%;
-      transform: translate(-50%, -50%);
-      width: clamp(84px, 26vw, 106px);
-      z-index: 5;
-      filter: drop-shadow(0 14px 24px rgba(0,0,0,0.28));
-      pointer-events: none;
-    }
-
     .letter-panel {
-      display: none;
       position: relative;
       z-index: 12;
+      width: min(92vw, 390px);
+      margin: 0 auto;
       border-radius: 30px;
       padding: 22px 18px 20px;
       background:
@@ -329,22 +238,6 @@
       border: 1px solid rgba(255,255,255,0.09);
       box-shadow: var(--shadow);
       overflow: hidden;
-    }
-
-    .letter-panel.show {
-      display: block;
-      animation: revealPanel 0.58s ease forwards;
-    }
-
-    @keyframes revealPanel {
-      from {
-        opacity: 0;
-        transform: translateY(24px) scale(0.98);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
     }
 
     .letter-panel::before {
@@ -412,7 +305,6 @@
     }
 
     .scene-next {
-      display: none;
       margin-top: 18px;
       border-radius: 24px;
       padding: 18px;
@@ -420,11 +312,9 @@
       border: 1px solid rgba(255,255,255,0.1);
       box-shadow: var(--shadow);
       text-align: center;
-    }
-
-    .scene-next.show {
-      display: block;
-      animation: revealPanel 0.48s ease forwards;
+      width: min(92vw, 390px);
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .scene-next .small {
@@ -500,7 +390,8 @@
         width: 170px;
       }
 
-      .invitation-shell {
+      .letter-panel,
+      .scene-next {
         width: 430px;
       }
 
@@ -528,11 +419,11 @@
   </audio>
 
   <div class="bg">
-    <div class="bg-photo" id="bgPhoto"></div>
-    <div class="window-light" id="windowLight"></div>
-    <div class="city-lights" id="cityLights"></div>
-    <div class="smoke one" id="smokeOne"></div>
-    <div class="smoke two" id="smokeTwo"></div>
+    <div class="bg-photo"></div>
+    <div class="window-light"></div>
+    <div class="city-lights"></div>
+    <div class="smoke one"></div>
+    <div class="smoke two"></div>
     <img class="moon" src="moon.png" alt="Moon" />
     <div class="vignette"></div>
   </div>
@@ -544,112 +435,102 @@
     <header class="hero">
       <div class="small">Private Invitation</div>
       <h1>After Midnight</h1>
-      <p>A private invitation waits for you.</p>
+      <p>Some truths only sound real this late.</p>
     </header>
 
     <section class="stage">
       <img class="rose" src="black-rose.png" alt="Black Rose" />
 
-      <div class="invitation-shell">
-        <button class="seal-trigger" id="sealTrigger" type="button" aria-label="Break the seal">
-          <img class="envelope-art" src="black-envelope.png" alt="Black Envelope" />
-          <div class="seal-copy">
-            <span class="mini">Private Invitation</span>
-            <h2>After Midnight</h2>
-            <span class="tap">Break the Seal</span>
-          </div>
-          <img class="wax-seal" src="wax-seal.png" alt="Wax Seal" />
-        </button>
+      <article class="letter-panel" id="letterPanel">
+        <div class="letter-head">
+          <p class="small">Opened Invitation</p>
+          <h2>After Midnight</h2>
+        </div>
 
-        <article class="letter-panel" id="letterPanel">
-          <div class="letter-head">
-            <p class="small">Opened Invitation</p>
-            <h2>After Midnight</h2>
-          </div>
+        <div class="divider"></div>
 
-          <div class="divider"></div>
+        <div class="letter-body">
+          <p>This would be easier if you were a stranger.</p>
 
-          <div class="letter-body">
-            <p>This would be easier if you were a stranger.</p>
+          <p>Strangers are simple. You can want them from a distance and still call it harmless.</p>
 
-            <p>Strangers are simple. You can want them from a distance and still call it harmless.</p>
+          <p>But you are not harmless. And you were never a stranger.</p>
 
-            <p>But you are not harmless. And you were never a stranger.</p>
+          <p>You are someone my hands have already learned once. Someone my silence already knows. Someone my heart should have gotten over cleanly, and somehow never did.</p>
 
-            <p>You are someone my hands have already learned once. Someone my silence already knows. Someone my heart should have gotten over cleanly, and somehow never did.</p>
+          <p>That is what makes this dangerous.</p>
 
-            <p>That is what makes this dangerous.</p>
+          <p>Not the attraction. Not the memory. The familiarity.</p>
 
-            <p>Not the attraction. Not the memory. The familiarity.</p>
+          <p>Because new people can tempt you. Old love does something worse.</p>
 
-            <p>Because new people can tempt you. Old love does something worse.</p>
+          <p>It remembers the door. It knows exactly how to get back in.</p>
 
-            <p>It remembers the door. It knows exactly how to get back in.</p>
+          <p>And if I am honest, that is the part of you I still feel after midnight.</p>
 
-            <p>And if I am honest, that is the part of you I still feel after midnight.</p>
+          <p>Not just your face. Not just your voice. But the fact that with you, closeness never felt imaginary. It felt known. Like something my body recognized before my pride could argue with it.</p>
 
-            <p>Not just your face. Not just your voice. But the fact that with you, closeness never felt imaginary. It felt known. Like something my body recognized before my pride could argue with it.</p>
+          <p>That is the trouble with us.</p>
 
-            <p>That is the trouble with us.</p>
+          <p>We have already been something. Already crossed the safe line. Already learned what it means when the room gets quiet and neither person moves away first.</p>
 
-            <p>We have already been something. Already crossed the safe line. Already learned what it means when the room gets quiet and neither person moves away first.</p>
+          <p>So if tonight feels heavier, more intimate, more dangerous than it should, it is because this is not the tension of strangers.</p>
 
-            <p>So if tonight feels heavier, more intimate, more dangerous than it should, it is because this is not the tension of strangers.</p>
+          <p>This is the tension of two people who already know.</p>
 
-            <p>This is the tension of two people who already know.</p>
+          <p>Know how easily old heat wakes up. Know how one look can undo distance. Know how unfinished something can feel even after it has supposedly ended.</p>
 
-            <p>Know how easily old heat wakes up. Know how one look can undo distance. Know how unfinished something can feel even after it has supposedly ended.</p>
+          <p>And maybe that is why you still affect me the way you do.</p>
 
-            <p>And maybe that is why you still affect me the way you do.</p>
+          <p>Because with you, desire does not arrive like a surprise. It arrives like recognition.</p>
 
-            <p>Because with you, desire does not arrive like a surprise. It arrives like recognition.</p>
+          <p>Slow. Precise. Certain.</p>
 
-            <p>Slow. Precise. Certain.</p>
+          <p>Like something that remembers exactly where it left off.</p>
 
-            <p>Like something that remembers exactly where it left off.</p>
+          <p>If you stood close to me tonight, I do not think the silence would feel awkward.</p>
 
-            <p>If you stood close to me tonight, I do not think the silence would feel awkward.</p>
+          <p>I think it would feel familiar.</p>
 
-            <p>I think it would feel familiar.</p>
+          <p>And that is more dangerous than anything else.</p>
 
-            <p>And that is more dangerous than anything else.</p>
+          <p>Because some people are tempting because they are unknown.</p>
 
-            <p>Because some people are tempting because they are unknown.</p>
+          <p>You are tempting because you are not.</p>
 
-            <p>You are tempting because you are not.</p>
+          <p>And maybe this is the part where I finally stop confusing memory with hope.</p>
 
-            <p>And maybe this is the part where I finally stop confusing memory with hope.</p>
+          <p>Because the truth is, you are not the same with me anymore. I can feel it. In the distance. In the silence. In the way I keep reaching the version of you that only exists in the past.</p>
 
-            <p>Because the truth is, you are not the same with me anymore. I can feel it. In the distance. In the silence. In the way I keep reaching the version of you that only exists in the past.</p>
+          <p>Maybe that is what hurts most. Not that we ended. That I kept talking to what we were, long after you had already left it behind.</p>
 
-            <p>Maybe that is what hurts most. Not that we ended. That I kept talking to what we were, long after you had already left it behind.</p>
+          <p>You started treating me like I was just some mad stranger, like everything we had could be forgotten that easily. Maybe I could have made this better if you had just talked to me honestly, but you never really did. Never mind, Ishita.</p>
 
-            <p>So let me be honest one last time.</p>
+          <p>So let me be honest one last time.</p>
 
-            <p>I think I have to let go of thinking of you the way I still do. I think I have to stop waiting for warmth where there is only distance now. I think I have to stop romanticizing a silence that already sounds too much like an answer.</p>
+          <p>I think I have to let go of thinking of you the way I still do. I think I have to stop waiting for warmth where there is only distance now. I think I have to stop romanticizing a silence that already sounds too much like an answer.</p>
 
-            <p>And if what you want is for me to disappear from your space, then do it cleanly. Cut me off. Block me. Let it be sharp if it has to be.</p>
+          <p>And if what you want is for me to disappear from your space, then do it cleanly. Cut me off. Block me. Let it be sharp if it has to be.</p>
 
-            <p>Because at least a sharp ending is still an ending. And maybe that is kinder than keeping me close enough to remember, but never close enough to return.</p>
+          <p>Because at least a sharp ending is still an ending. And maybe that is kinder than keeping me close enough to remember, but never close enough to return.</p>
 
-            <p>You are not mine anymore. Maybe you have not been for a while.</p>
+          <p>You are not mine anymore. Maybe you have not been for a while.</p>
 
-            <p>And maybe this is me finally accepting that the person I still reach for does not exist anywhere except in the part of me that has not learned how to leave yet.</p>
+          <p>And maybe this is me finally accepting that the person I still reach for does not exist anywhere except in the part of me that has not learned how to leave yet.</p>
 
-            <p>But I am trying.</p>
+          <p>But I am trying.</p>
 
-            <p>And this time, I think I really have to.</p>
+          <p>And this time, I think I really have to.</p>
 
-            <p class="closing-line">Some endings do not arrive loudly. They just teach you to stop waiting.</p>
-          </div>
-        </article>
+          <p class="closing-line">Some endings do not arrive loudly. They just teach you to stop waiting.</p>
+        </div>
+      </article>
 
-        <section class="scene-next" id="sceneNext">
-          <p class="small">Final Page</p>
-          <h3>Open The Final Chapter</h3>
-          <button class="primary-btn" id="nextBtn" type="button">Open The Final Chapter</button>
-        </section>
-      </div>
+      <section class="scene-next" id="sceneNext">
+        <p class="small">Final Page</p>
+        <h3>Open The Final Chapter</h3>
+        <button class="primary-btn" id="nextBtn" type="button">Open The Final Chapter</button>
+      </section>
     </section>
   </main>
 
@@ -659,25 +540,10 @@
     const bgMusic = document.getElementById('bgMusic');
     const musicBtn = document.getElementById('musicBtn');
     const audioHint = document.getElementById('audioHint');
-    const bgPhoto = document.getElementById('bgPhoto');
-    const windowLight = document.getElementById('windowLight');
-    const cityLights = document.getElementById('cityLights');
-    const smokeOne = document.getElementById('smokeOne');
-    const smokeTwo = document.getElementById('smokeTwo');
-    const sealTrigger = document.getElementById('sealTrigger');
-    const letterPanel = document.getElementById('letterPanel');
-    const sceneNext = document.getElementById('sceneNext');
     const nextBtn = document.getElementById('nextBtn');
     const toast = document.getElementById('toast');
 
     let musicPlaying = false;
-    let opened = false;
-
-    bgPhoto.style.backgroundImage = 'url("midnight-bg.jpg")';
-    windowLight.style.backgroundImage = 'url("window-light.png")';
-    cityLights.style.backgroundImage = 'url("city-lights.png")';
-    smokeOne.style.backgroundImage = 'url("smoke.png")';
-    smokeTwo.style.backgroundImage = 'url("smoke.png")';
 
     bgMusic.volume = 0.24;
 
@@ -716,31 +582,7 @@
       await playMusic();
     }
 
-    async function openLetter() {
-      if (opened) return;
-
-      opened = true;
-      sealTrigger.classList.add('hidden');
-      await playMusic();
-
-      setTimeout(() => {
-        letterPanel.classList.add('show');
-      }, 220);
-
-      setTimeout(() => {
-        sceneNext.classList.add('show');
-      }, 520);
-
-      setTimeout(() => {
-        letterPanel.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }, 420);
-    }
-
     musicBtn.addEventListener('click', toggleMusic);
-    sealTrigger.addEventListener('click', openLetter);
 
     nextBtn.addEventListener('click', () => {
       document.body.style.transition = 'opacity 0.7s ease';
@@ -757,7 +599,7 @@
 
     window.addEventListener('load', async () => {
       await playMusic();
-      showToast('Break the seal.');
+      showToast('Read the letter.');
     });
   </script>
 </body>
