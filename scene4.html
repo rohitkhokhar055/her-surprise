@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#12080d" />
+  <title>After Midnight</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Nunito:wght@400;600;700;800;900&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0b0508;
+      --wine: #2b0d17;
+      --wine-2: #5f2033;
+      --crimson: #7b263f;
+      --silver: #d9d3dd;
+      --ivory: #f8f1f4;
+      --muted: rgba(248, 241, 244, 0.74);
+      --paper: rgba(22, 11, 16, 0.82);
+      --paper-2: rgba(30, 14, 20, 0.94);
+      --line: rgba(255, 255, 255, 0.1);
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--ivory);
+      font-family: 'Nunito', sans-serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      position: relative;
+      min-height: 100vh;
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 16%, rgba(123,38,63,0.18), transparent 26%),
+        radial-gradient(circle at 84% 20%, rgba(217,211,221,0.08), transparent 24%),
+        linear-gradient(180deg, rgba(10,5,8,0.28), rgba(10,5,8,0.78)),
+        var(--bg);
+    }
+
+    .bg-photo,
+    .window-light,
+    .city-lights,
+    .smoke {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .bg-photo {
+      background-position: center;
+      background-size: cover;
+      opacity: 0.28;
+      filter: contrast(1.08) saturate(0.88) brightness(0.68);
+      transform: scale(1.03);
+    }
+
+    .window-light {
+      background-position: center;
+      background-size: cover;
+      opacity: 0.15;
+      mix-blend-mode: screen;
+    }
+
+    .city-lights {
+      background-position: bottom center;
+      background-size: cover;
+      opacity: 0.18;
+      mix-blend-mode: screen;
+    }
+
+    .smoke {
+      background-position: center;
+      background-size: cover;
+      opacity: 0.15;
+      animation: smokeShift 20s ease-in-out infinite alternate;
+    }
+
+    .smoke.two {
+      opacity: 0.1;
+      transform: scale(1.08);
+      animation-delay: 2.2s;
+      animation-duration: 24s;
+    }
+
+    @keyframes smokeShift {
+      0% {
+        transform: translateX(0) translateY(0) scale(1.02);
+      }
+      100% {
+        transform: translateX(-12px) translateY(8px) scale(1.08);
+      }
+    }
+
+    .moon {
+      position: absolute;
+      top: 7%;
+      right: 4%;
+      width: min(26vw, 118px);
+      opacity: 0.82;
+      filter: drop-shadow(0 0 24px rgba(217,211,221,0.12));
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, transparent 45%, rgba(0,0,0,0.44) 100%);
+      pointer-events: none;
+    }
+
+    .music-btn {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 80;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(18, 9, 14, 0.72);
+      color: var(--ivory);
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.26);
+    }
+
+    .audio-hint {
+      position: fixed;
+      top: 52px;
+      right: 12px;
+      z-index: 80;
+      max-width: 200px;
+      border-radius: 14px;
+      padding: 8px 11px;
+      background: rgba(18, 9, 14, 0.82);
+      color: var(--muted);
+      font-size: 0.74rem;
+      line-height: 1.35;
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    .audio-hint.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .page {
+      position: relative;
+      z-index: 10;
+      width: min(100%, 500px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 70px 14px 28px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .hero .small {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--silver);
+      font-size: 0.68rem;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 8px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.9rem, 14vw, 4.8rem);
+      line-height: 0.92;
+      color: #fff8fb;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 0.94rem;
+      font-weight: 800;
+    }
+
+    .stage {
+      position: relative;
+      min-height: 620px;
+      padding-top: 24px;
+      padding-bottom: 72px;
+    }
+
+    .rose {
+      position: absolute;
+      left: -16px;
+      bottom: 20px;
+      width: clamp(112px, 34vw, 150px);
+      z-index: 6;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 18px 28px rgba(0,0,0,0.26));
+      opacity: 0.85;
+    }
+
+    .invitation-shell {
+      position: relative;
+      z-index: 10;
+      width: min(92vw, 390px);
+      margin: 0 auto;
+    }
+
+    .seal-trigger {
+      position: relative;
+      display: block;
+      width: 100%;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: inherit;
+      font-family: inherit;
+      text-align: left;
+      border-radius: 28px;
+      transition: transform 0.2s ease, opacity 0.5s ease;
+    }
+
+    .seal-trigger:active {
+      transform: scale(0.985);
+    }
+
+    .seal-trigger.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-16px);
+    }
+
+    .envelope-art {
+      display: block;
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 24px 40px rgba(0,0,0,0.32));
+    }
+
+    .seal-copy {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 26px;
+      text-align: center;
+      z-index: 4;
+    }
+
+    .seal-copy .mini {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.66rem;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .seal-copy h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.1rem, 10vw, 3.1rem);
+      line-height: 0.94;
+      color: #fff8fb;
+      margin-bottom: 56px;
+    }
+
+    .seal-copy .tap {
+      color: rgba(255,255,255,0.88);
+      font-size: 0.9rem;
+      font-weight: 900;
+      letter-spacing: 0.4px;
+    }
+
+    .wax-seal {
+      position: absolute;
+      left: 50%;
+      top: 56%;
+      transform: translate(-50%, -50%);
+      width: clamp(84px, 26vw, 106px);
+      z-index: 5;
+      filter: drop-shadow(0 14px 24px rgba(0,0,0,0.28));
+      pointer-events: none;
+    }
+
+    .letter-panel {
+      display: none;
+      position: relative;
+      z-index: 12;
+      border-radius: 30px;
+      padding: 22px 18px 20px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.05), transparent 26%),
+        linear-gradient(135deg, rgba(40,16,25,0.96), rgba(22,10,16,0.95));
+      border: 1px solid rgba(255,255,255,0.09);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .letter-panel.show {
+      display: block;
+      animation: revealPanel 0.58s ease forwards;
+    }
+
+    @keyframes revealPanel {
+      from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .letter-panel::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      pointer-events: none;
+    }
+
+    .letter-head {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 16px;
+    }
+
+    .letter-head .small {
+      color: rgba(217,211,221,0.74);
+      font-size: 0.66rem;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .letter-head h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.3rem, 11vw, 3.5rem);
+      line-height: 0.92;
+      color: #fff8fb;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 0 0 18px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      position: relative;
+      z-index: 2;
+    }
+
+    .letter-body {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .letter-body p {
+      color: rgba(248,241,244,0.86);
+      font-size: 0.98rem;
+      line-height: 1.75;
+      font-weight: 700;
+    }
+
+    .closing-line {
+      margin-top: 6px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.74);
+      font-style: italic;
+      font-size: 0.94rem;
+      line-height: 1.65;
+    }
+
+    .scene-next {
+      display: none;
+      margin-top: 18px;
+      border-radius: 24px;
+      padding: 18px;
+      background: rgba(22, 10, 16, 0.84);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .scene-next.show {
+      display: block;
+      animation: revealPanel 0.48s ease forwards;
+    }
+
+    .scene-next .small {
+      color: rgba(217,211,221,0.74);
+      font-size: 0.66rem;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .scene-next h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      line-height: 0.95;
+      color: #fff8fb;
+      margin-bottom: 14px;
+    }
+
+    .primary-btn {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 13px 16px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: #180b11;
+      background: linear-gradient(135deg, var(--silver), #fff8fb);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.22);
+      transition: transform 0.18s ease;
+    }
+
+    .primary-btn:active {
+      transform: scale(0.985);
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      z-index: 90;
+      width: min(92vw, 360px);
+      border-radius: 999px;
+      padding: 11px 14px;
+      text-align: center;
+      background: rgba(18, 9, 14, 0.92);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #fff8fb;
+      font-weight: 900;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateX(-50%) translateY(14px);
+      pointer-events: none;
+      transition: all 0.22s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (min-width: 560px) {
+      .page {
+        width: min(100%, 720px);
+      }
+
+      .rose {
+        left: 22px;
+        width: 170px;
+      }
+
+      .invitation-shell {
+        width: 430px;
+      }
+
+      .scene-next .primary-btn {
+        width: auto;
+        min-width: 240px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <audio id="bgMusic" loop preload="auto" playsinline>
+    <source src="midnight-theme.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="bg">
+    <div class="bg-photo" id="bgPhoto"></div>
+    <div class="window-light" id="windowLight"></div>
+    <div class="city-lights" id="cityLights"></div>
+    <div class="smoke one" id="smokeOne"></div>
+    <div class="smoke two" id="smokeTwo"></div>
+    <img class="moon" src="moon.png" alt="Moon" />
+    <div class="vignette"></div>
+  </div>
+
+  <button class="music-btn" id="musicBtn" type="button">Music On</button>
+  <div class="audio-hint" id="audioHint">Tap once if music does not start.</div>
+
+  <main class="page">
+    <header class="hero">
+      <div class="small">Private Invitation</div>
+      <h1>After Midnight</h1>
+      <p>A private invitation waits for you.</p>
+    </header>
+
+    <section class="stage">
+      <img class="rose" src="black-rose.png" alt="Black Rose" />
+
+      <div class="invitation-shell">
+        <button class="seal-trigger" id="sealTrigger" type="button" aria-label="Break the seal">
+          <img class="envelope-art" src="black-envelope.png" alt="Black Envelope" />
+          <div class="seal-copy">
+            <span class="mini">Private Invitation</span>
+            <h2>After Midnight</h2>
+            <span class="tap">Break the Seal</span>
+          </div>
+          <img class="wax-seal" src="wax-seal.png" alt="Wax Seal" />
+        </button>
+
+        <article class="letter-panel" id="letterPanel">
+          <div class="letter-head">
+            <p class="small">Opened Invitation</p>
+            <h2>After Midnight</h2>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="letter-body">
+            <p>This would be easier if you were a stranger.</p>
+
+            <p>Strangers are simple. You can want them from a distance and still call it harmless.</p>
+
+            <p>But you are not harmless. And you were never a stranger.</p>
+
+            <p>You are someone my hands have already learned once. Someone my silence already knows. Someone my heart should have gotten over cleanly, and somehow never did.</p>
+
+            <p>That is what makes this dangerous.</p>
+
+            <p>Not the attraction. Not the memory. The familiarity.</p>
+
+            <p>Because new people can tempt you. Old love does something worse.</p>
+
+            <p>It remembers the door. It knows exactly how to get back in.</p>
+
+            <p>And if I am honest, that is the part of you I still feel after midnight.</p>
+
+            <p>Not just your face. Not just your voice. But the fact that with you, closeness never felt imaginary. It felt known. Like something my body recognized before my pride could argue with it.</p>
+
+            <p>That is the trouble with us.</p>
+
+            <p>We have already been something. Already crossed the safe line. Already learned what it means when the room gets quiet and neither person moves away first.</p>
+
+            <p>So if tonight feels heavier, more intimate, more dangerous than it should, it is because this is not the tension of strangers.</p>
+
+            <p>This is the tension of two people who already know.</p>
+
+            <p>Know how easily old heat wakes up. Know how one look can undo distance. Know how unfinished something can feel even after it has supposedly ended.</p>
+
+            <p>And maybe that is why you still affect me the way you do.</p>
+
+            <p>Because with you, desire does not arrive like a surprise. It arrives like recognition.</p>
+
+            <p>Slow. Precise. Certain.</p>
+
+            <p>Like something that remembers exactly where it left off.</p>
+
+            <p>If you stood close to me tonight, I do not think the silence would feel awkward.</p>
+
+            <p>I think it would feel familiar.</p>
+
+            <p>And that is more dangerous than anything else.</p>
+
+            <p>Because some people are tempting because they are unknown.</p>
+
+            <p>You are tempting because you are not.</p>
+
+            <p>And maybe this is the part where I finally stop confusing memory with hope.</p>
+
+            <p>Because the truth is, you are not the same with me anymore. I can feel it. In the distance. In the silence. In the way I keep reaching the version of you that only exists in the past.</p>
+
+            <p>Maybe that is what hurts most. Not that we ended. That I kept talking to what we were, long after you had already left it behind.</p>
+
+            <p>So let me be honest one last time.</p>
+
+            <p>I think I have to let go of thinking of you the way I still do. I think I have to stop waiting for warmth where there is only distance now. I think I have to stop romanticizing a silence that already sounds too much like an answer.</p>
+
+            <p>And if what you want is for me to disappear from your space, then do it cleanly. Cut me off. Block me. Let it be sharp if it has to be.</p>
+
+            <p>Because at least a sharp ending is still an ending. And maybe that is kinder than keeping me close enough to remember, but never close enough to return.</p>
+
+            <p>You are not mine anymore. Maybe you have not been for a while.</p>
+
+            <p>And maybe this is me finally accepting that the person I still reach for does not exist anywhere except in the part of me that has not learned how to leave yet.</p>
+
+            <p>But I am trying.</p>
+
+            <p>And this time, I think I really have to.</p>
+
+            <p class="closing-line">Some endings do not arrive loudly. They just teach you to stop waiting.</p>
+          </div>
+        </article>
+
+        <section class="scene-next" id="sceneNext">
+          <p class="small">Final Page</p>
+          <h3>Open The Final Chapter</h3>
+          <button class="primary-btn" id="nextBtn" type="button">Open The Final Chapter</button>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const bgMusic = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicBtn');
+    const audioHint = document.getElementById('audioHint');
+    const bgPhoto = document.getElementById('bgPhoto');
+    const windowLight = document.getElementById('windowLight');
+    const cityLights = document.getElementById('cityLights');
+    const smokeOne = document.getElementById('smokeOne');
+    const smokeTwo = document.getElementById('smokeTwo');
+    const sealTrigger = document.getElementById('sealTrigger');
+    const letterPanel = document.getElementById('letterPanel');
+    const sceneNext = document.getElementById('sceneNext');
+    const nextBtn = document.getElementById('nextBtn');
+    const toast = document.getElementById('toast');
+
+    let musicPlaying = false;
+    let opened = false;
+
+    bgPhoto.style.backgroundImage = 'url("midnight-bg.jpg")';
+    windowLight.style.backgroundImage = 'url("window-light.png")';
+    cityLights.style.backgroundImage = 'url("city-lights.png")';
+    smokeOne.style.backgroundImage = 'url("smoke.png")';
+    smokeTwo.style.backgroundImage = 'url("smoke.png")';
+
+    bgMusic.volume = 0.24;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
+    function updateMusicButton() {
+      musicBtn.textContent = musicPlaying ? 'Music On' : 'Music Off';
+    }
+
+    async function playMusic() {
+      try {
+        await bgMusic.play();
+        musicPlaying = true;
+        audioHint.classList.remove('show');
+      } catch (error) {
+        musicPlaying = false;
+        audioHint.classList.add('show');
+      }
+      updateMusicButton();
+    }
+
+    async function toggleMusic() {
+      if (musicPlaying) {
+        bgMusic.pause();
+        musicPlaying = false;
+        updateMusicButton();
+        return;
+      }
+      await playMusic();
+    }
+
+    async function openLetter() {
+      if (opened) return;
+
+      opened = true;
+      sealTrigger.classList.add('hidden');
+      await playMusic();
+
+      setTimeout(() => {
+        letterPanel.classList.add('show');
+      }, 220);
+
+      setTimeout(() => {
+        sceneNext.classList.add('show');
+      }, 520);
+
+      setTimeout(() => {
+        letterPanel.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }, 420);
+    }
+
+    musicBtn.addEventListener('click', toggleMusic);
+    sealTrigger.addEventListener('click', openLetter);
+
+    nextBtn.addEventListener('click', () => {
+      document.body.style.transition = 'opacity 0.7s ease';
+      document.body.style.opacity = '0';
+
+      setTimeout(() => {
+        window.location.href = 'scene5.html';
+      }, 700);
+    });
+
+    document.addEventListener('pointerdown', () => {
+      if (!musicPlaying) playMusic();
+    }, { once: true });
+
+    window.addEventListener('load', async () => {
+      await playMusic();
+      showToast('Break the seal.');
+    });
+  </script>
+</body>
+</html>
