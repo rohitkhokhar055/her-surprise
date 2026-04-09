@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#16110f" />
+  <title>The Last Page</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Nunito:wght@400;600;700;800;900&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #110c0b;
+      --amber: #d9aa68;
+      --amber-soft: #f4d4a0;
+      --paper: #f6eddc;
+      --paper-2: #eadcc2;
+      --ink: #3a2a1f;
+      --muted: rgba(58, 42, 31, 0.72);
+      --ivory: #fff8ef;
+      --line: rgba(255, 255, 255, 0.1);
+      --shadow: 0 22px 60px rgba(0, 0, 0, 0.36);
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--ivory);
+      font-family: 'Nunito', sans-serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      position: relative;
+      min-height: 100vh;
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 22% 14%, rgba(217,170,104,0.12), transparent 24%),
+        radial-gradient(circle at 80% 18%, rgba(255,248,239,0.06), transparent 22%),
+        linear-gradient(180deg, rgba(7, 5, 4, 0.3), rgba(7, 5, 4, 0.8)),
+        #110c0b;
+    }
+
+    .bg-photo,
+    .dust {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .bg-photo {
+      background-position: center;
+      background-size: cover;
+      opacity: 0.24;
+      filter: saturate(0.84) contrast(1.05) brightness(0.68);
+      transform: scale(1.03);
+    }
+
+    .dust {
+      background-position: center;
+      background-size: cover;
+      opacity: 0.08;
+      animation: dustShift 18s ease-in-out infinite alternate;
+    }
+
+    .dust.two {
+      opacity: 0.05;
+      transform: scale(1.08);
+      animation-delay: 2s;
+      animation-duration: 24s;
+    }
+
+    @keyframes dustShift {
+      0% {
+        transform: translateX(0) translateY(0) scale(1.02);
+      }
+      100% {
+        transform: translateX(-10px) translateY(8px) scale(1.08);
+      }
+    }
+
+    .lamp {
+      position: absolute;
+      top: 2%;
+      right: 2%;
+      width: min(28vw, 120px);
+      opacity: 0.84;
+      filter: drop-shadow(0 0 26px rgba(244,212,160,0.16));
+      pointer-events: none;
+    }
+
+    .lamp-glow {
+      position: absolute;
+      top: 2%;
+      right: -4%;
+      width: min(46vw, 220px);
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(244,212,160,0.34), rgba(244,212,160,0.08) 48%, transparent 72%);
+      filter: blur(12px);
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, transparent 44%, rgba(0,0,0,0.46) 100%);
+      pointer-events: none;
+    }
+
+    .music-btn {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 80;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(18, 13, 11, 0.76);
+      color: var(--ivory);
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.26);
+    }
+
+    .audio-hint {
+      position: fixed;
+      top: 52px;
+      right: 12px;
+      z-index: 80;
+      max-width: 200px;
+      border-radius: 14px;
+      padding: 8px 11px;
+      background: rgba(18, 13, 11, 0.84);
+      color: rgba(255,248,239,0.74);
+      font-size: 0.74rem;
+      line-height: 1.35;
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    .audio-hint.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .page {
+      position: relative;
+      z-index: 10;
+      width: min(100%, 500px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 68px 14px 28px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .hero .small {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--amber-soft);
+      font-size: 0.68rem;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 8px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 14vw, 4.8rem);
+      line-height: 0.92;
+      color: #fff8ef;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      color: rgba(255,248,239,0.74);
+      font-size: 0.94rem;
+      font-weight: 800;
+    }
+
+    .stage {
+      position: relative;
+      flex: 1;
+      min-height: 560px;
+      padding-top: 12px;
+    }
+
+    .book-trigger {
+      position: relative;
+      z-index: 10;
+      display: block;
+      width: min(92vw, 360px);
+      margin: 26px auto 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: inherit;
+      font-family: inherit;
+      text-align: left;
+      transition: opacity 0.48s ease, transform 0.48s ease;
+    }
+
+    .book-trigger.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-18px);
+    }
+
+    .book-art {
+      display: block;
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 24px 40px rgba(0,0,0,0.32));
+    }
+
+    .book-copy {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      text-align: center;
+      z-index: 4;
+    }
+
+    .book-copy .mini {
+      color: rgba(255,248,239,0.66);
+      font-size: 0.66rem;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .book-copy h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.1rem, 10vw, 3rem);
+      line-height: 0.95;
+      color: #fff8ef;
+      margin-bottom: 20px;
+    }
+
+    .book-copy .tap {
+      color: rgba(255,248,239,0.9);
+      font-size: 0.9rem;
+      font-weight: 900;
+    }
+
+    .final-note {
+      display: none;
+      position: relative;
+      z-index: 12;
+      width: min(92vw, 390px);
+      margin: 6px auto 0;
+      border-radius: 30px;
+      padding: 22px 18px 18px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.22), transparent 18%),
+        linear-gradient(135deg, var(--paper) 0%, #fff7ea 40%, var(--paper-2) 100%);
+      border: 1px solid rgba(255,255,255,0.82);
+      box-shadow: var(--shadow);
+      color: var(--ink);
+      overflow: hidden;
+    }
+
+    .final-note.show {
+      display: block;
+      animation: noteReveal 0.58s ease forwards;
+    }
+
+    @keyframes noteReveal {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .final-note::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("paper.png");
+      background-position: center;
+      background-size: cover;
+      opacity: 0.16;
+      pointer-events: none;
+    }
+
+    .note-inner {
+      position: relative;
+      z-index: 2;
+    }
+
+    .note-head {
+      margin-bottom: 16px;
+    }
+
+    .note-head .small {
+      color: #8e6533;
+      font-size: 0.66rem;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .note-head h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.3rem, 11vw, 3.4rem);
+      line-height: 0.92;
+      color: var(--ink);
+    }
+
+    .divider {
+      height: 1px;
+      margin: 0 0 18px;
+      background: linear-gradient(90deg, transparent, rgba(58,42,31,0.18), transparent);
+    }
+
+    .note-body {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .note-body p {
+      color: rgba(58, 42, 31, 0.86);
+      font-size: 0.98rem;
+      line-height: 1.75;
+      font-weight: 800;
+    }
+
+    .closing-line {
+      margin-top: 4px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(58,42,31,0.12);
+      color: rgba(58,42,31,0.72);
+      font-style: italic;
+      font-size: 0.94rem;
+      line-height: 1.65;
+    }
+
+    .scene-end {
+      display: none;
+      width: min(92vw, 390px);
+      margin: 18px auto 0;
+      border-radius: 24px;
+      padding: 18px;
+      background: rgba(20, 14, 12, 0.84);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .scene-end.show {
+      display: block;
+      animation: noteReveal 0.48s ease forwards;
+    }
+
+    .scene-end .small {
+      color: rgba(244,212,160,0.84);
+      font-size: 0.66rem;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .scene-end h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      line-height: 0.95;
+      color: #fff8ef;
+      margin-bottom: 14px;
+    }
+
+    .primary-btn {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 13px 16px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: #1a120e;
+      background: linear-gradient(135deg, var(--amber-soft), #fff8ef);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.18);
+      transition: transform 0.18s ease;
+    }
+
+    .primary-btn:active {
+      transform: scale(0.985);
+    }
+
+    .end-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 120;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background:
+        radial-gradient(circle at center, rgba(244,212,160,0.08), rgba(12,8,7,0.96)),
+        rgba(10,7,6,0.98);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .end-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .end-card {
+      width: min(92vw, 420px);
+      text-align: center;
+      padding: 26px 20px;
+    }
+
+    .end-card p.small {
+      color: rgba(244,212,160,0.84);
+      font-size: 0.68rem;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .end-card h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 14vw, 4.4rem);
+      line-height: 0.92;
+      color: #fff8ef;
+      margin-bottom: 12px;
+    }
+
+    .end-card p.text {
+      color: rgba(255,248,239,0.78);
+      font-size: 0.96rem;
+      line-height: 1.7;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .watermark {
+      color: rgba(244,212,160,0.72);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      z-index: 90;
+      width: min(92vw, 360px);
+      border-radius: 999px;
+      padding: 11px 14px;
+      text-align: center;
+      background: rgba(18, 13, 11, 0.92);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #fff8ef;
+      font-weight: 900;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateX(-50%) translateY(14px);
+      pointer-events: none;
+      transition: all 0.22s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (min-width: 560px) {
+      .page {
+        width: min(100%, 720px);
+      }
+
+      .book-trigger {
+        width: 420px;
+      }
+
+      .final-note,
+      .scene-end {
+        width: 430px;
+      }
+
+      .scene-end .primary-btn {
+        width: auto;
+        min-width: 220px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <audio id="bgMusic" loop preload="auto" playsinline>
+    <source src="finalchapter-theme.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="bg">
+    <div class="bg-photo" id="bgPhoto"></div>
+    <div class="window-light"></div>
+    <div class="city-lights"></div>
+    <div class="dust one"></div>
+    <div class="dust two"></div>
+    <div class="lamp-glow"></div>
+    <img class="lamp" src="lamp.png" alt="Lamp" />
+    <div class="vignette"></div>
+  </div>
+
+  <button class="music-btn" id="musicBtn" type="button">Music On</button>
+  <div class="audio-hint" id="audioHint">Tap once if music does not start.</div>
+
+  <main class="page">
+    <header class="hero">
+      <div class="small">Final Chapter</div>
+      <h1>The Last Page</h1>
+      <p>There is only one page left now.</p>
+    </header>
+
+    <section class="stage">
+      <button class="book-trigger" id="bookTrigger" type="button" aria-label="Open the last page">
+        <img class="book-art" src="book.png" alt="Book" />
+        <div class="book-copy">
+          <span class="mini">Final Chapter</span>
+          <h2>The Last Page</h2>
+          <span class="tap">Open The Last Page</span>
+        </div>
+      </button>
+
+      <article class="final-note" id="finalNote">
+        <div class="note-inner">
+          <div class="note-head">
+            <p class="small">Last Page</p>
+            <h2>The Last Page</h2>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="note-body">
+            <p>The strange thing about endings is that they rarely feel finished while you are still standing inside them.</p>
+
+            <p>For a long time, I think I kept mistaking memory for possibility. I kept returning to old versions of you, old versions of us, as if wanting something hard enough could make it present again.</p>
+
+            <p>But some stories do not survive because they were weak. Some end because they already gave everything they were meant to give.</p>
+
+            <p>And maybe that is what this is now.</p>
+
+            <p>Not a question. Not a chase. Not me asking for another turn of the page.</p>
+
+            <p>Just the truth.</p>
+
+            <p>You mattered to me. Deeply. More than I ever said cleanly, and probably longer than I should have allowed.</p>
+
+            <p>And because you mattered, I think the kindest thing I can do now is stop rewriting what has already ended.</p>
+
+            <p>I do not want to keep loving only the memory of being understood. I do not want to keep standing in a doorway you have already walked past.</p>
+
+            <p>So this is me finally putting the page down.</p>
+
+            <p>Not because it meant nothing.</p>
+
+            <p>Because it meant enough that I should stop turning it into a wound.</p>
+
+            <p>I will keep what was real. I will leave what is gone. And somewhere between those two things, I think I will find peace.</p>
+
+            <p>So if this is the last page, let it end cleanly.</p>
+
+            <p>Happy birthday, Ishu.</p>
+
+            <p>I hope life is softer with you than it was before. I hope love reaches you in ways that do not confuse you. I hope you are chosen carefully, held gently, and never made to question your worth again.</p>
+
+            <p class="closing-line">Some stories end when you stop rereading them. This is me finally closing the book.</p>
+          </div>
+        </div>
+      </article>
+
+      <section class="scene-end" id="sceneEnd">
+        <p class="small">The End</p>
+        <h3>Close The Book</h3>
+        <button class="primary-btn" id="closeBookBtn" type="button">Close The Book</button>
+      </section>
+    </section>
+  </main>
+
+  <div class="end-overlay" id="endOverlay">
+    <div class="end-card">
+      <p class="small">The End</p>
+      <h2>Happy Birthday, Ishu.</h2>
+      <p class="text">Some feelings do not disappear. They just learn how to rest.</p>
+      <p class="watermark">from DEX (ROHIT)</p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const bgMusic = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicBtn');
+    const audioHint = document.getElementById('audioHint');
+    const bgPhoto = document.getElementById('bgPhoto');
+    const bookTrigger = document.getElementById('bookTrigger');
+    const finalNote = document.getElementById('finalNote');
+    const sceneEnd = document.getElementById('sceneEnd');
+    const closeBookBtn = document.getElementById('closeBookBtn');
+    const endOverlay = document.getElementById('endOverlay');
+    const toast = document.getElementById('toast');
+
+    let musicPlaying = false;
+    let opened = false;
+
+    bgPhoto.style.backgroundImage = 'url("finalchapter-bg.jpg")';
+    document.querySelector('.window-light').style.backgroundImage = 'url("paper.png")';
+    document.querySelector('.city-lights').style.backgroundImage = 'url("paper.png")';
+    document.querySelector('.dust.one').style.backgroundImage = 'url("dust.png")';
+    document.querySelector('.dust.two').style.backgroundImage = 'url("dust.png")';
+
+    bgMusic.volume = 0.22;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
+    function updateMusicButton() {
+      musicBtn.textContent = musicPlaying ? 'Music On' : 'Music Off';
+    }
+
+    async function playMusic() {
+      try {
+        await bgMusic.play();
+        musicPlaying = true;
+        audioHint.classList.remove('show');
+      } catch (error) {
+        musicPlaying = false;
+        audioHint.classList.add('show');
+      }
+      updateMusicButton();
+    }
+
+    async function toggleMusic() {
+      if (musicPlaying) {
+        bgMusic.pause();
+        musicPlaying = false;
+        updateMusicButton();
+        return;
+      }
+      await playMusic();
+    }
+
+    async function openBook() {
+      if (opened) return;
+
+      opened = true;
+      bookTrigger.classList.add('hidden');
+      await playMusic();
+
+      setTimeout(() => {
+        finalNote.classList.add('show');
+      }, 220);
+
+      setTimeout(() => {
+        sceneEnd.classList.add('show');
+      }, 520);
+
+      setTimeout(() => {
+        finalNote.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }, 420);
+    }
+
+    function closeBook() {
+      document.body.style.transition = 'opacity 0.6s ease';
+      document.body.style.opacity = '0.98';
+
+      setTimeout(() => {
+        endOverlay.classList.add('show');
+      }, 120);
+    }
+
+    musicBtn.addEventListener('click', toggleMusic);
+    bookTrigger.addEventListener('click', openBook);
+    closeBookBtn.addEventListener('click', closeBook);
+
+    document.addEventListener('pointerdown', () => {
+      if (!musicPlaying) playMusic();
+    }, { once: true });
+
+    window.addEventListener('load', async () => {
+      await playMusic();
+      showToast('Open the last page.');
+    });
+  </script>
+</body>
+</html>
